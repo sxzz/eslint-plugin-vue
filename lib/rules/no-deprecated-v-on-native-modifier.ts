@@ -2,6 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+difier.ts
 import utils from '../utils/index.js'
 
 export default {
