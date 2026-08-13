@@ -2,8 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-ent-is.ts
-import utils from '../utils/index.js'
+import * as utils from '../utils/index.js'
 
 export default {
   meta: {

@@ -2,8 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-ribute.ts
-import utils from '../utils/index.js'
+import * as utils from '../utils/index.js'
 import slotScopeAttribute from './syntaxes/slot-scope-attribute.js'
 
 export default {
