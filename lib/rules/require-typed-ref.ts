@@ -4,7 +4,12 @@
  */
 import { findVariable } from '@eslint-community/eslint-utils'
 import { iterateDefineRefs } from '../utils/ref-object-references.ts'
-import * as utils from '../utils/index.js'
+import {
+  isVueFile,
+  isTypeScriptFile,
+  isVElement,
+  hasAttribute
+} from '../utils/index.js'
 
 type FunctionNode =
   FunctionDeclaration | FunctionExpression | ArrowFunctionExpression
@@ -142,11 +147,11 @@ export default {
   },
   create(context: RuleContext) {
     const filename = context.filename
-    if (!utils.isVueFile(filename) && !utils.isTypeScriptFile(filename)) {
+    if (!isVueFile(filename) && !isTypeScriptFile(filename)) {
       return {}
     }
 
-    if (utils.isVueFile(filename)) {
+    if (isVueFile(filename)) {
       const sourceCode = context.sourceCode
       const documentFragment =
         sourceCode.parserServices.getDocumentFragment &&
@@ -156,11 +161,9 @@ export default {
       }
       const scripts = documentFragment.children.filter(
         (element): element is VElement =>
-          utils.isVElement(element) && element.name === 'script'
+          isVElement(element) && element.name === 'script'
       )
-      if (
-        scripts.every((script) => !utils.hasAttribute(script, 'lang', 'ts'))
-      ) {
+      if (scripts.every((script) => !hasAttribute(script, 'lang', 'ts'))) {
         return {}
       }
     }
