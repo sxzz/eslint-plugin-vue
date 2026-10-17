@@ -58,10 +58,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vuejs/eslint-plugin-vue.git"
+    "url": "git+https://github.com/sxzz/eslint-plugin-vue.git"
   },
   "bugs": {
-    "url": "https://github.com/vuejs/eslint-plugin-vue/issues"
+    "url": "https://github.com/sxzz/eslint-plugin-vue/issues"
   },
   "engines": {
     "node": "^22.19.0 || ^24.11.0 || >=26.0.0"

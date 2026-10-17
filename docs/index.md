@@ -27,8 +27,8 @@ According to our policy, any minor update may report more linting errors than th
 
 ## :newspaper: Changelog
 
-We are using [GitHub Releases](https://github.com/vuejs/eslint-plugin-vue/releases).
+We are using [GitHub Releases](https://github.com/sxzz/eslint-plugin-vue/releases).
 
 ## :lock: License
 
-See the [LICENSE](https://github.com/vuejs/eslint-plugin-vue/blob/master/LICENSE) file for license rights and limitations (MIT).
+See the [LICENSE](https://github.com/sxzz/eslint-plugin-vue/blob/main/LICENSE) file for license rights and limitations (MIT).

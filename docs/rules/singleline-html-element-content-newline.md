@@ -81,7 +81,7 @@ This rule enforces a line break before and after the contents of a singleline el
     default `[]`
 
 ::: info
-  All inline non void elements can be found [here](https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json).
+  All inline non void elements can be found [here](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/utils/inline-non-void-elements.json).
 :::
 
 ### `"ignoreWhenNoAttributes": true`
@@ -128,5 +128,5 @@ This rule was introduced in eslint-plugin-vue v5.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/rules/singleline-html-element-content-newline.ts)
-- [Test source](https://github.com/vuejs/eslint-plugin-vue/blob/master/tests/lib/rules/singleline-html-element-content-newline.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/singleline-html-element-content-newline.ts)
+- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/singleline-html-element-content-newline.test.ts)

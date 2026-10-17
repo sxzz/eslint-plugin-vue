@@ -84,5 +84,5 @@ This rule was introduced in eslint-plugin-vue v9.16.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/rules/no-deprecated-model-definition.js)
-- [Test source](https://github.com/vuejs/eslint-plugin-vue/blob/master/tests/lib/rules/no-deprecated-model-definition.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-deprecated-model-definition.js)
+- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-deprecated-model-definition.test.ts)

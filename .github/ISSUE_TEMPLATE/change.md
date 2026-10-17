@@ -6,7 +6,7 @@ about: Request a change that is not a bug fix, rule change, or new rule
 <!--
   Before proposing changes, please make sure it hasn't been posted already.
   You can see all open propositions here:
-  https://github.com/vuejs/eslint-plugin-vue/issues?q=is%3Aopen+is%3Aissue+label%3A%22new+rule+proposition%22
+  https://github.com/sxzz/eslint-plugin-vue/issues?q=is%3Aopen+is%3Aissue+label%3A%22new+rule+proposition%22
 -->
 
 **Tell us about your environment**

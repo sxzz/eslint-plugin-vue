@@ -195,12 +195,12 @@ export default async () => {
     themeConfig: {
       editLink: {
         pattern:
-          'https://github.com/vuejs/eslint-plugin-vue/edit/master/docs/:path'
+          'https://github.com/sxzz/eslint-plugin-vue/edit/main/docs/:path'
       },
       socialLinks: [
         {
           icon: 'github',
-          link: 'https://github.com/vuejs/eslint-plugin-vue'
+          link: 'https://github.com/sxzz/eslint-plugin-vue'
         }
       ],
 

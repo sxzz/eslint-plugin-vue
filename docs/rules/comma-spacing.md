@@ -33,7 +33,7 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/rules/comma-spacing.js)
-- [Test source](https://github.com/vuejs/eslint-plugin-vue/blob/master/tests/lib/rules/comma-spacing.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/comma-spacing.js)
+- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/comma-spacing.test.ts)
 
 <sup>Taken with ❤️ [from ESLint Stylistic](https://eslint.style/rules/comma-spacing)</sup>

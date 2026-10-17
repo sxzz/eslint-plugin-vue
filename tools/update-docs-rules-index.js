@@ -258,7 +258,7 @@ const removedRuleLinkDefinitions = removedRules.map(
 )
 const releaseLinkDefinitions = releases.map(
   (release) =>
-    `[${release}]: https://github.com/vuejs/eslint-plugin-vue/releases/tag/${release}`
+    `[${release}]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/${release}`
 )
 
 // -----------------------------------------------------------------------------

@@ -129,5 +129,5 @@ This rule was introduced in eslint-plugin-vue v9.5.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/rules/define-emits-declaration.js)
-- [Test source](https://github.com/vuejs/eslint-plugin-vue/blob/master/tests/lib/rules/define-emits-declaration.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/define-emits-declaration.js)
+- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/define-emits-declaration.test.ts)

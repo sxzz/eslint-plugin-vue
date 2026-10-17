@@ -201,8 +201,8 @@ This rule was introduced in eslint-plugin-vue ${this.since}
         : ''
     }## :mag: Implementation
 
-- [Rule source](https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/rules/${name}${ext})
-- [Test source](https://github.com/vuejs/eslint-plugin-vue/blob/master/tests/lib/rules/${name}.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/${name}${ext})
+- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/${name}.test.ts)
 ${
   meta.docs.extensionSource
     ? `
