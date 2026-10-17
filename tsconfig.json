@@ -7,7 +7,6 @@
     "lib": ["es2022"],
     "types": ["vitest/globals"],
     "allowJs": true,
-    "declaration": false,
     "checkJs": true,
     "noEmit": true,
     "strict": true,
