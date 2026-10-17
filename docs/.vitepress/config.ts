@@ -1,8 +1,7 @@
 import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import path from 'pathe'
-import { viteCommonjs, vitePluginRequireResolve } from './vite-plugin.ts'
-import eslint4b, { requireESLintUseAtYourOwnRisk4b } from 'vite-plugin-eslint4b'
+import eslint4b from 'vite-plugin-eslint4b'
 
 // eslint-disable-next-line unicorn/no-anonymous-default-export
 export default async () => {
@@ -106,12 +105,7 @@ export default async () => {
 
     vite: {
       publicDir: path.resolve(import.meta.dirname, './public'),
-      plugins: [
-        vitePluginRequireResolve(),
-        viteCommonjs(),
-        eslint4b() as any,
-        requireESLintUseAtYourOwnRisk4b()
-      ],
+      plugins: [eslint4b() as any],
       resolve: {
         alias: {
           'node:assert': 'assert/',
