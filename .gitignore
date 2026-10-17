@@ -11,3 +11,4 @@
 typings/eslint/lib/rules
 eslint-typegen.d.ts
 dist
+.wrangler

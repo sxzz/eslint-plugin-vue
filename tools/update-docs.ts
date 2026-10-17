@@ -32,7 +32,10 @@ const ROOT = path.resolve(import.meta.dirname, '../docs/rules')
 function pickSince(content: string) {
   const fileIntro = /^---\n(.*\n)+---\n*/g.exec(content)
   if (fileIntro) {
-    const since = /since: (v\d+\.\d+\.\d+)/.exec(fileIntro[0])
+    const since =
+      /since: (v\d+\.\d+\.\d+(?:-[\da-z.-]+)?(?:\+[\da-z.-]+)?)/i.exec(
+        fileIntro[0]
+      )
     if (since) {
       return since[1]
     }

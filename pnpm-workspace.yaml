@@ -3,6 +3,8 @@ packages:
 
 minimumReleaseAgeExcludePrune: true
 allowBuilds:
+  esbuild: true
   unrs-resolver: true
+  workerd: true
 minimumReleaseAgeExclude:
   - eslint@10.13.0
