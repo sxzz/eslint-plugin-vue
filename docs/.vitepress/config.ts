@@ -4,9 +4,6 @@ import path from 'pathe'
 import { viteCommonjs, vitePluginRequireResolve } from './vite-plugin.ts'
 import eslint4b, { requireESLintUseAtYourOwnRisk4b } from 'vite-plugin-eslint4b'
 
-// Pre-build cjs packages that cannot be bundled well.
-import './build-system/build.ts'
-
 // eslint-disable-next-line unicorn/no-anonymous-default-export
 export default async () => {
   const rulesPath = '../../tools/lib/rules.ts' // Avoid bundle
@@ -117,43 +114,20 @@ export default async () => {
       ],
       resolve: {
         alias: {
-          'vue-eslint-parser': path.join(
-            import.meta.dirname,
-            './build-system/shim/vue-eslint-parser.mjs'
-          ),
-          '@typescript-eslint/parser': path.join(
-            import.meta.dirname,
-            './build-system/shim/@typescript-eslint/parser.mjs'
-          ),
-
+          'node:assert': 'assert/',
+          'node:events': 'events/',
+          util: 'util/',
+          'node:util': 'util/',
           tslib: path.join(
             import.meta.dirname,
             '../../node_modules/tslib/tslib.es6.js'
           ),
-          globby: path.join(
-            import.meta.dirname,
-            './build-system/shim/empty.mjs'
-          ),
-          'fast-glob': path.join(
-            import.meta.dirname,
-            './build-system/shim/empty.mjs'
-          ),
-          tinyglobby: path.join(
-            import.meta.dirname,
-            './build-system/shim/empty.mjs'
-          ),
-          module: path.join(
-            import.meta.dirname,
-            './build-system/shim/module.mjs'
-          ),
-          'node:module': path.join(
-            import.meta.dirname,
-            './build-system/shim/module.mjs'
-          ),
-          'node:url': path.join(
-            import.meta.dirname,
-            './build-system/shim/url.mjs'
-          )
+          globby: path.join(import.meta.dirname, './shims/empty.ts'),
+          'fast-glob': path.join(import.meta.dirname, './shims/empty.ts'),
+          tinyglobby: path.join(import.meta.dirname, './shims/empty.ts'),
+          module: path.join(import.meta.dirname, './shims/module.ts'),
+          'node:module': path.join(import.meta.dirname, './shims/module.ts'),
+          'node:url': path.join(import.meta.dirname, './shims/url.ts')
         }
       },
       define: {
@@ -215,10 +189,8 @@ export default async () => {
         level: 'deep'
       },
 
-      algolia: {
-        appId: '2L4MGZSULB',
-        apiKey: 'fdf57932b27a6c230d01a890492ab76d',
-        indexName: 'eslint-plugin-vue'
+      search: {
+        provider: 'local'
       }
     }
   })
