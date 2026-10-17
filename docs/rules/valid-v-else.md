@@ -11,12 +11,9 @@ since: v3.11.0
 > enforce valid `v-else` directives
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/essential"]`
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/essential"`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["essential"]`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 This rule checks whether every `v-else` directive is valid.
 

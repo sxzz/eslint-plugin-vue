@@ -4,23 +4,13 @@ import type { Linter } from 'eslint'
 declare const vue: {
   meta: any
   configs: {
-    base: Linter.LegacyConfig
-
-    essential: Linter.LegacyConfig
-    'strongly-recommended': Linter.LegacyConfig
-    'strongly-recommended-error': Linter.LegacyConfig
-    recommended: Linter.LegacyConfig
-    'recommended-error': Linter.LegacyConfig
-
-    'flat/base': Linter.FlatConfig[]
-
-    'flat/essential': Linter.FlatConfig[]
-    'flat/strongly-recommended': Linter.FlatConfig[]
-    'flat/strongly-recommended-error': Linter.FlatConfig[]
-    'flat/recommended': Linter.FlatConfig[]
-    'flat/recommended-error': Linter.FlatConfig[]
-
-    'no-layout-rules': Linter.LegacyConfig
+    base: Linter.FlatConfig[]
+    essential: Linter.FlatConfig[]
+    'strongly-recommended': Linter.FlatConfig[]
+    'strongly-recommended-error': Linter.FlatConfig[]
+    recommended: Linter.FlatConfig[]
+    'recommended-error': Linter.FlatConfig[]
+    'no-layout-rules': Linter.FlatConfig
   }
   rules: Record<string, any>
   processors: {

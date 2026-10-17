@@ -11,12 +11,9 @@ since: v3.7.0
 > enforce that a return statement is present in computed property
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/essential"]`
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/essential"`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["essential"]`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 ## :book: Rule Details
 

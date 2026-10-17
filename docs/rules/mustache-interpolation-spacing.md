@@ -11,10 +11,8 @@ since: v3.13.0
 > enforce unified spacing in mustache interpolations
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 - :wrench: The `--fix` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the problems reported by this rule.
 
 ## :book: Rule Details

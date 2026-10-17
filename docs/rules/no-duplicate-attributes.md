@@ -11,12 +11,9 @@ since: v3.0.0
 > disallow duplication of attributes
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/essential"]`
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/essential"`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["essential"]`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 When there are multiple attributes with the same name on a component, only the last one is used and the rest are ignored, so this is usually a mistake.
 

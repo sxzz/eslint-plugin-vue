@@ -11,10 +11,8 @@ since: v7.0.0
 > enforce specific casing for component definition name
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 - :wrench: The `--fix` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the problems reported by this rule.
 
 Define a style for component definition name casing for consistency purposes.

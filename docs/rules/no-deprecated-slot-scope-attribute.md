@@ -11,12 +11,9 @@ since: v6.1.0
 > disallow deprecated `slot-scope` attribute
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/essential"]`
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/essential"`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["essential"]`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 - :wrench: The `--fix` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the problems reported by this rule.
 
 ## :book: Rule Details

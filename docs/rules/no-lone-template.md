@@ -11,8 +11,7 @@ since: v7.0.0
 > disallow unnecessary `<template>`
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/recommended"`
+  - `*.configs["recommended"]`
 
 ## :book: Rule Details
 

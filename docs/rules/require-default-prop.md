@@ -11,10 +11,8 @@ since: v3.13.0
 > require default value for props
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 ## :book: Rule Details
 

@@ -11,8 +11,7 @@ since: v3.2.0
 > enforce order of properties in components
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/recommended"`
+  - `*.configs["recommended"]`
 - :wrench: The `--fix` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the problems reported by this rule.
 - :bulb: Some problems reported by this rule are manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 

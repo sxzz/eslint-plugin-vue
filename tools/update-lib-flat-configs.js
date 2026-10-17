@@ -5,7 +5,7 @@
  */
 
 /*
-This script updates `lib/configs/flat/*.js` files from rule's meta data.
+This script updates `lib/configs/*.ts` files from rule's meta data.
 */
 
 import fs from 'node:fs'
@@ -51,7 +51,7 @@ function formatCategory(category, shouldAlwaysError = false) {
  * This file has been automatically generated,
  * in order to update its content execute "pnpm run update"
  */
-import plugin from '../../plugin.ts'
+import plugin from '../plugin.ts'
 import vueParser from 'vue-eslint-parser'
 
 export default [
@@ -109,7 +109,7 @@ export default [
 }
 
 // Update files.
-const ROOT = path.resolve(import.meta.dirname, '../lib/configs/flat/')
+const ROOT = path.resolve(import.meta.dirname, '../lib/configs/')
 for (const category of categories) {
   const filePath = path.join(ROOT, `${category.categoryId}.ts`)
   const content = formatCategory(category)

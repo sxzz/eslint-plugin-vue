@@ -11,10 +11,8 @@ since: v4.3.0
 > enforce specific casing for the Prop name in Vue components
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 ## :book: Rule Details
 

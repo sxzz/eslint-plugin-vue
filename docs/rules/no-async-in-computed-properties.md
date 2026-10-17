@@ -11,12 +11,9 @@ since: v3.8.0
 > disallow asynchronous actions in computed properties
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/essential"]`
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/essential"`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["essential"]`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 Computed properties and functions should be synchronous. Asynchronous actions inside them may not work as expected and can lead to unexpected behaviour; that's why you should avoid them.
 If you need async computed properties, consider using the [`computedAsync`] composable from VueUse.

@@ -11,14 +11,10 @@ since: v4.1.0
 > support comment-directives in `<template>`
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/base"]`
-  - `*.configs["flat/essential"]`
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/base"`
-  - `"plugin:vue/essential"`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["base"]`
+  - `*.configs["essential"]`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 Sole purpose of this rule is to provide `eslint-disable` functionality in the `<template>` and in the block level.
 It supports usage of the following comments:

@@ -11,10 +11,8 @@ since: v5.0.0
 > disallow variable declarations from shadowing variables declared in the outer scope
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/recommended"]`
-  - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/recommended"`
+  - `*.configs["strongly-recommended"]`
+  - `*.configs["recommended"]`
 
 `no-template-shadow` should report variable definitions of v-for directives or scope attributes if they shadow the variables in parent scopes.
 

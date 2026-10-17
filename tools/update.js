@@ -6,7 +6,6 @@
  */
 
 await import('./update-no-layout-rules-config.js')
-await import('./update-lib-configs.js')
 await import('./update-lib-flat-configs.js')
 await import('./update-lib-plugin.js')
 await import('./update-docs.js')

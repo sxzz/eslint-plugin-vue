@@ -34,7 +34,7 @@ Rules in this category are enabled for all presets provided by eslint-plugin-vue
 
 ## Priority A: Essential (Error Prevention)
 
-- The rules in this category are included in all of `*.configs["flat/essential"]`, `*.configs["flat/strongly-recommended"]`, `*.configs["flat/recommended"]`, `"plugin:vue/essential"`, `"plugin:vue/strongly-recommended"` and `"plugin:vue/recommended"` presets.
+- The rules in this category are included in all of `*.configs["essential"]`, `*.configs["strongly-recommended"]` and `*.configs["recommended"]` presets.
 
 <rules-table>
 
@@ -128,7 +128,7 @@ Rules in this category are enabled for all presets provided by eslint-plugin-vue
 
 ## Priority B: Strongly Recommended (Improving Readability)
 
-- The rules in this category are included in all of `*.configs["flat/strongly-recommended"]`, `*.configs["flat/recommended"]`, `"plugin:vue/strongly-recommended"` and `"plugin:vue/recommended"` presets.
+- The rules in this category are included in `*.configs["strongly-recommended"]` and `*.configs["recommended"]` presets.
 
 <rules-table>
 
@@ -164,7 +164,7 @@ Rules in this category are enabled for all presets provided by eslint-plugin-vue
 
 ## Priority C: Recommended (Potentially Dangerous Patterns)
 
-- The rules in this category are included in `*.configs["flat/recommended"]` and `"plugin:vue/recommended"` presets.
+- The rules in this category are included in `*.configs["recommended"]` preset.
 
 <rules-table>
 

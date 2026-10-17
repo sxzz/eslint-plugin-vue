@@ -29,7 +29,7 @@ function mergeConfig(configs: Linter.FlatConfig[]): Linter.FlatConfig {
 
 describe('flat configs', () => {
   it('should export base config', () => {
-    const base = plugin.configs['flat/base']
+    const base = plugin.configs.base
     assert.ok(base)
     assert.equal(typeof base, 'object')
 
@@ -51,7 +51,7 @@ describe('flat configs', () => {
   })
 
   it('should export essential config', () => {
-    const essential = plugin.configs['flat/essential']
+    const essential = plugin.configs.essential
     assert.ok(essential)
     assert.equal(typeof essential, 'object')
 
@@ -79,7 +79,7 @@ describe('flat configs', () => {
   })
 
   it('should export strongly-recommended config', () => {
-    const stronglyRecommended = plugin.configs['flat/strongly-recommended']
+    const stronglyRecommended = plugin.configs['strongly-recommended']
     assert.ok(stronglyRecommended)
     assert.equal(typeof stronglyRecommended, 'object')
 
@@ -107,7 +107,7 @@ describe('flat configs', () => {
   })
 
   it('should export recommended config', () => {
-    const recommended = plugin.configs['flat/recommended']
+    const recommended = plugin.configs.recommended
     assert.ok(recommended)
     assert.equal(typeof recommended, 'object')
 
@@ -138,7 +138,7 @@ describe('flat configs', () => {
 
   it('should work the suppress comments with base config', async () => {
     if (!FlatESLint) return
-    const base = plugin.configs['flat/base']
+    const base = plugin.configs.base
     const eslint = new FlatESLint({
       overrideConfigFile: true,
       overrideConfig: [
@@ -163,7 +163,7 @@ describe('flat configs', () => {
 
   it('should work the suppress comments with recommended config', async () => {
     if (!FlatESLint) return
-    const recommended = plugin.configs['flat/recommended']
+    const recommended = plugin.configs.recommended
     const eslint = new FlatESLint({
       overrideConfigFile: true,
       overrideConfig: recommended
@@ -181,7 +181,7 @@ describe('flat configs', () => {
 
   it('should error with recommended config', async () => {
     if (!FlatESLint) return
-    const recommended = plugin.configs['flat/recommended']
+    const recommended = plugin.configs.recommended
     const eslint = new FlatESLint({
       overrideConfigFile: true,
       overrideConfig: recommended

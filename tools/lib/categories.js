@@ -39,26 +39,16 @@ for (const rule of rules) {
 }
 
 const presetConfigNames = {
-  base: 'flat/base',
-  'vue3-essential': 'flat/essential',
-  'vue3-strongly-recommended': 'flat/strongly-recommended',
-  'vue3-recommended': 'flat/recommended'
-}
-const legacyPresetConfigNames = {
   base: 'base',
   'vue3-essential': 'essential',
   'vue3-strongly-recommended': 'strongly-recommended',
   'vue3-recommended': 'recommended'
 }
 
-const getPresetNames = (presetIds) => [
-  ...presetIds.map(
+const getPresetNames = (presetIds) =>
+  presetIds.map(
     (categoryId) => `\`*.configs["${presetConfigNames[categoryId]}"]\``
-  ),
-  ...presetIds.map(
-    (categoryId) => `\`"plugin:vue/${legacyPresetConfigNames[categoryId]}"\``
   )
-]
 
 export default {
   getPresetNames,
