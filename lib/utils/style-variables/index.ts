@@ -1,4 +1,4 @@
-import { isVElement } from '../index.js'
+import { isVElement } from '../index.ts'
 
 export class StyleVariablesContext {
   context: RuleContext

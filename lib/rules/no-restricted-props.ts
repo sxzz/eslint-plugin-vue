@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import type { ComponentProp } from '../utils/index.js'
+import type { ComponentProp } from '../utils/index.ts'
 import {
   compositingVisitors,
   defineScriptSetupVisitor,
@@ -10,7 +10,7 @@ import {
   getPropsDestructure,
   defineVueVisitor,
   getComponentPropsFromOptions
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
 interface ParsedOption {

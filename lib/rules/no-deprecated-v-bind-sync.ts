@@ -2,7 +2,7 @@
  * @author Przemyslaw Falowski (@przemkow)
  * @fileoverview Disallow use of deprecated `.sync` modifier on `v-bind` directive (in Vue.js 3.0.0+)
  */
-import * as utils from '../utils/index.js'
+import * as utils from '../utils/index.ts'
 
 export default {
   meta: {

@@ -56,5 +56,5 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-lifecycle-after-await.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-lifecycle-after-await.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-lifecycle-after-await.test.ts)

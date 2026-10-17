@@ -1,0 +1,53 @@
+/**
+ * @author Sosuke Suzuki
+ */
+
+import {
+  executeOnVue,
+  findProperty,
+  iterateWatchHandlerValues
+} from '../utils/index.ts'
+
+export default {
+  meta: {
+    type: 'problem',
+    docs: {
+      description: 'disallow using arrow functions to define watcher',
+      categories: ['vue3-essential'],
+      url: 'https://eslint.vuejs.org/rules/no-arrow-functions-in-watch.html'
+    },
+    fixable: null,
+    schema: [],
+    messages: {
+      noArrowFunctionsInWatch:
+        'You should not use an arrow function to define a watcher.'
+    }
+  },
+
+  create(context: RuleContext) {
+    return executeOnVue(context, (obj: any) => {
+      const watchNode = findProperty(obj, 'watch')
+      if (watchNode == null) {
+        return
+      }
+      const watchValue = watchNode.value
+      if (watchValue.type !== 'ObjectExpression') {
+        return
+      }
+      for (const property of watchValue.properties) {
+        if (property.type !== 'Property') {
+          continue
+        }
+
+        for (const handler of iterateWatchHandlerValues(property)) {
+          if (handler.type === 'ArrowFunctionExpression') {
+            context.report({
+              node: handler,
+              messageId: 'noArrowFunctionsInWatch'
+            })
+          }
+        }
+      }
+    })
+  }
+}

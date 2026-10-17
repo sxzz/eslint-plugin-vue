@@ -2,10 +2,10 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import canConvertToVSlot from './utils/can-convert-to-v-slot.js'
+import canConvertToVSlot from './utils/can-convert-to-v-slot.ts'
 import { toRegExpGroupMatcher } from '../../utils/regexp.ts'
 import { pascalCase, kebabCase } from '../../utils/casing.ts'
-import { isVElement } from '../../utils/index.js'
+import { isVElement } from '../../utils/index.ts'
 
 export default {
   deprecated: '2.6.0',

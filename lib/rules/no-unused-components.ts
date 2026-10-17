@@ -13,7 +13,7 @@ import {
   hasAttribute,
   executeOnVue,
   getRegisteredComponents
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import {
   isPascalCase,
   isCamelCase,

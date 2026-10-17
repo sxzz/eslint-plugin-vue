@@ -194,9 +194,6 @@ importers:
       '@stylistic/eslint-plugin':
         specifier: ^5.10.0
         version: 5.10.0(eslint@10.13.0(jiti@2.7.0)(supports-color@7.2.0))
-      '@types/eslint':
-        specifier: ^9.6.1
-        version: 9.6.1
       '@types/estree':
         specifier: ^1.0.9
         version: 1.0.9
@@ -4341,6 +4338,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.9
       '@types/json-schema': 7.0.15
+    optional: true
 
   '@types/esrecurse@4.3.1': {}
 

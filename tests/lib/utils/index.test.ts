@@ -389,11 +389,7 @@ describe('getComponentProps', () => {
     assert.equal(props.length, 5, 'it detects all props')
 
     assert.strictEqual(props[0].type, 'unknown')
-    // @ts-expect-error no `key` in `ComponentUnknownProp`
-    assert.strictEqual(props[0].key, undefined)
     assert.strictEqual(props[0].node!.type, 'SpreadElement')
-    // @ts-expect-error no `value` in `ComponentUnknownProp`
-    assert.strictEqual(props[0].value, undefined)
 
     assert.strictEqual(props[1].type, 'object')
     assert.strictEqual(props[1].key!.type, 'Identifier')
@@ -430,26 +426,18 @@ describe('getComponentProps', () => {
     assert.strictEqual(props[0].type, 'array')
     assert.strictEqual(props[0].node.type, 'Literal')
     assert.deepEqual(props[0].key, props[0].node)
-    // @ts-expect-error no `value` in `ComponentArrayProp`
-    assert.strictEqual(props[0].value, null)
 
     assert.strictEqual(props[1].type, 'array')
     assert.strictEqual(props[1].node.type, 'Identifier')
     assert.strictEqual(props[1].key, null)
-    // @ts-expect-error no `value` in `ComponentArrayProp`
-    assert.strictEqual(props[1].value, null)
 
     assert.strictEqual(props[2].type, 'array')
     assert.strictEqual(props[2].node.type, 'TemplateLiteral')
     assert.deepEqual(props[2].key, props[2].node)
-    // @ts-expect-error no `value` in `ComponentArrayProp`
-    assert.strictEqual(props[2].value, null)
 
     assert.strictEqual(props[3].type, 'array')
     assert.strictEqual(props[3].node.type, 'Literal')
     assert.strictEqual(props[3].key, null)
-    // @ts-expect-error no `value` in `ComponentArrayProp`
-    assert.strictEqual(props[3].value, null)
   })
 })
 

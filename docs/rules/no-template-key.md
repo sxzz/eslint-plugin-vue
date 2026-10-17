@@ -59,5 +59,5 @@ This rule was introduced in eslint-plugin-vue v3.4.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-template-key.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-template-key.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-template-key.test.ts)

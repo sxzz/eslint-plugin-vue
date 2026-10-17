@@ -108,5 +108,5 @@ This rule was introduced in eslint-plugin-vue v4.6.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-use-v-if-with-v-for.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-use-v-if-with-v-for.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-use-v-if-with-v-for.test.ts)

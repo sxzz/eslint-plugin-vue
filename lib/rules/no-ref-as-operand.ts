@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import type { VueObjectData } from '../utils/index.js'
+import type { VueObjectData } from '../utils/index.ts'
 import type {
   RefObjectReferences,
   RefObjectReferenceForIdentifier
@@ -20,7 +20,7 @@ import {
   defineVueVisitor,
   skipDefaultParamValue,
   findAssignmentProperty
-} from '../utils/index.js'
+} from '../utils/index.ts'
 
 /**
  * Checks whether the given identifier reference has been initialized with a ref object.
@@ -303,6 +303,7 @@ export default {
             collectReferenceIds(emitProperty.value, emitReferenceIds)
           } else {
             // `setup(props, context)`
+            if (contextParam.type !== 'Identifier') return
             collectReferenceIds(contextParam, contextReferenceIds)
           }
           setupContexts.set(vueNode, {

@@ -1,4 +1,4 @@
-import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.js'
+import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.ts'
 import { getConverter } from '../utils/casing.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 

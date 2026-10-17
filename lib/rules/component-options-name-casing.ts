@@ -2,7 +2,7 @@
  * @author Pig Fang
  * See LICENSE file in root directory for full license.
  */
-import { executeOnVue, findProperty } from '../utils/index.js'
+import { executeOnVue, findProperty } from '../utils/index.ts'
 import {
   allowedCaseOptions,
   getChecker,

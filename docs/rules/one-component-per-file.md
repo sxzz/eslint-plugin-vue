@@ -65,5 +65,5 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/one-component-per-file.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/one-component-per-file.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/one-component-per-file.test.ts)

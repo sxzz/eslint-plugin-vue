@@ -125,5 +125,5 @@ This rule was introduced in eslint-plugin-vue v3.2.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/order-in-components.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/order-in-components.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/order-in-components.test.ts)

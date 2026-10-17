@@ -97,5 +97,5 @@ This rule was introduced in eslint-plugin-vue v4.1.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/html-closing-bracket-spacing.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/html-closing-bracket-spacing.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/html-closing-bracket-spacing.test.ts)

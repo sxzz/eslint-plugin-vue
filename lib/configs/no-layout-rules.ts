@@ -3,6 +3,7 @@
  * This file has been automatically generated,
  * in order to update its content execute "ppnpm run update"
  */
+import type { Linter } from 'eslint'
 export default {
   rules: {
     'vue/array-bracket-newline': 'off',
@@ -54,4 +55,4 @@ export default {
     'vue/template-curly-spacing': 'off',
     'vue/v-for-delimiter-style': 'off'
   }
-}
+} satisfies Linter.Config

@@ -3,7 +3,7 @@
  * See LICENSE file in root directory for full license.
  */
 import { findVariable } from '@eslint-community/eslint-utils'
-import type { NameWithLoc } from '../utils/index.js'
+import type { NameWithLoc } from '../utils/index.ts'
 import {
   skipChainExpression,
   getStaticPropertyName,
@@ -14,7 +14,7 @@ import {
   skipDefaultParamValue,
   findAssignmentProperty,
   getScope
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
 interface ParsedOption {
@@ -191,6 +191,7 @@ export default {
               }
             } else {
               // `setup(props, context)`
+              if (contextParam.type !== 'Identifier') return
               const variable = findVariable(
                 getScope(context, contextParam),
                 contextParam
@@ -243,7 +244,7 @@ export default {
           }
         }),
         {
-          CallExpression(node) {
+          CallExpression(node: CallExpression) {
             const nameWithLoc = getNameParamNode(node)
             if (!nameWithLoc) {
               // cannot check

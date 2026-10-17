@@ -8,7 +8,7 @@ import {
   executeOnVue,
   findProperty,
   defineScriptSetupVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { getChecker, getExactConverter } from '../utils/casing.ts'
 
 const allowedCaseOptions = ['PascalCase', 'kebab-case']

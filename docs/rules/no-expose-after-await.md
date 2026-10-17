@@ -72,5 +72,5 @@ This rule was introduced in eslint-plugin-vue v8.1.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-expose-after-await.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-expose-after-await.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-expose-after-await.test.ts)

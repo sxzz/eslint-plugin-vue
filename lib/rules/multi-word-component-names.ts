@@ -13,7 +13,7 @@ import {
   findProperty,
   defineScriptSetupVisitor,
   isVueFile
-} from '../utils/index.js'
+} from '../utils/index.ts'
 
 export default {
   meta: {
@@ -105,7 +105,7 @@ export default {
         }
       }),
       {
-        'Program:exit'(node) {
+        'Program:exit'(node: Program) {
           if (hasName) return
           if (!hasVue && node.body.length > 0) return
           const fileName = context.filename

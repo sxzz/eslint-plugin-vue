@@ -2,7 +2,7 @@
  * @author Valentin Yushkevich
  * See LICENSE file in root directory for full license.
  */
-import * as utils from '../utils/index.js'
+import * as utils from '../utils/index.ts'
 
 export default {
   meta: {

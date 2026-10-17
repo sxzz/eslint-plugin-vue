@@ -17,7 +17,7 @@ import {
   defineVueVisitor,
   skipDefaultParamValue,
   findAssignmentProperty
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import type { ComponentEmit, ComponentUnknownEmit } from '../utils'
 import type { ReportSourceLocation } from 'eslint'
 import type { HasLocation } from '../../typings/eslint-plugin-vue/util-types/node'
@@ -206,7 +206,7 @@ export default {
               emitReferenceIds
             })
           },
-          CallExpression(node) {
+          CallExpression(node: CallExpression) {
             const callee = skipChainExpression(node.callee)
             const programNode = context.sourceCode.ast
             const setupContext = setupContexts.get(programNode)
@@ -255,6 +255,7 @@ export default {
                 emitReferenceIds.add(reference.identifier)
               }
             } else {
+              if (contextParam.type !== 'Identifier') return
               const variable = findVariable(
                 getScope(context, contextParam),
                 contextParam
@@ -301,7 +302,7 @@ export default {
           }
         }),
         {
-          CallExpression(node) {
+          CallExpression(node: CallExpression) {
             const emit = getCalleeMemberNode(node)
             if (emit && emit.name === '$emit') {
               // this.$emit()

@@ -55,5 +55,5 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-v-for-template-key-on-child.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-v-for-template-key-on-child.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-v-for-template-key-on-child.test.ts)

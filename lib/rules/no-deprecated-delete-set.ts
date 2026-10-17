@@ -1,0 +1,112 @@
+/**
+ * @author Wayne Zhang
+ * See LICENSE file in root directory for full license.
+ */
+
+import {
+  isThis,
+  compositingVisitors,
+  defineVueVisitor,
+  defineScriptSetupVisitor,
+  getScope
+} from '../utils/index.ts'
+import { ReferenceTracker } from '@eslint-community/eslint-utils'
+
+export type TraceMap = import('@eslint-community/eslint-utils').TYPES.TraceMap
+
+const deletedImportApisMap = {
+  set: {
+    [ReferenceTracker.CALL]: true
+  },
+  del: {
+    [ReferenceTracker.CALL]: true
+  }
+}
+const deprecatedDollarApis = new Set(['$set', '$delete'])
+
+function getVueDeprecatedCallExpression(
+  identifier: Identifier,
+  context: RuleContext
+) {
+  // Instance API: this.$set()
+  if (
+    deprecatedDollarApis.has(identifier.name) &&
+    identifier.parent.type === 'MemberExpression' &&
+    isThis(identifier.parent.object, context) &&
+    identifier.parent.parent.type === 'CallExpression' &&
+    identifier.parent.parent.callee === identifier.parent
+  ) {
+    return identifier.parent.parent
+  }
+
+  return undefined
+}
+
+export default {
+  meta: {
+    type: 'problem',
+    docs: {
+      description:
+        'disallow using deprecated `$delete` and `$set` (in Vue.js 3.0.0+)',
+      categories: ['vue3-essential'],
+      url: 'https://eslint.vuejs.org/rules/no-deprecated-delete-set.html'
+    },
+    fixable: null,
+    schema: [],
+    messages: {
+      deprecated: 'The `$delete`, `$set` is deprecated.'
+    }
+  },
+
+  create(context: RuleContext) {
+    const nodeVisitor = {
+      Identifier(node: Identifier) {
+        const callExpression = getVueDeprecatedCallExpression(node, context)
+        if (!callExpression) {
+          return
+        }
+
+        context.report({
+          node,
+          messageId: 'deprecated'
+        })
+      }
+    }
+
+    return compositingVisitors(
+      defineVueVisitor(context, nodeVisitor),
+      defineScriptSetupVisitor(context, nodeVisitor),
+      {
+        Program(node: Program) {
+          const tracker = new ReferenceTracker(getScope(context, node))
+
+          // import { set } from 'vue'; set()
+          const esmTraceMap: TraceMap = {
+            vue: {
+              [ReferenceTracker.ESM]: true,
+              ...deletedImportApisMap
+            }
+          }
+          // const { set } = require('vue'); set()
+          const cjsTraceMap = {
+            vue: {
+              ...deletedImportApisMap
+            }
+          }
+
+          for (const { node } of [
+            ...tracker.iterateEsmReferences(esmTraceMap),
+            ...tracker.iterateCjsReferences(cjsTraceMap as unknown as TraceMap)
+          ]) {
+            if (node.type !== 'CallExpression') continue
+            const refNode = node
+            context.report({
+              node: refNode.callee,
+              messageId: 'deprecated'
+            })
+          }
+        }
+      }
+    )
+  }
+}

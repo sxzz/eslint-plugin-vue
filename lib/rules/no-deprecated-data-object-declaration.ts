@@ -1,0 +1,79 @@
+/**
+ * @fileoverview disallow using deprecated object declaration on data
+ * @author yoyo930021
+ */
+
+import { executeOnVue, findProperty } from '../utils/index.ts'
+
+function isOpenParen(token: Token) {
+  return token.type === 'Punctuator' && token.value === '('
+}
+
+function isCloseParen(token: Token) {
+  return token.type === 'Punctuator' && token.value === ')'
+}
+
+function getFirstAndLastTokens(node: Expression, sourceCode: SourceCode) {
+  let first = sourceCode.getFirstToken(node)
+  let last = sourceCode.getLastToken(node)
+
+  // If the value enclosed by parentheses, update the 'first' and 'last' by the parentheses.
+  while (true) {
+    const prev = sourceCode.getTokenBefore(first)
+    const next = sourceCode.getTokenAfter(last)
+    if (isOpenParen(prev) && isCloseParen(next)) {
+      first = prev
+      last = next
+    } else {
+      return { first, last }
+    }
+  }
+}
+
+export default {
+  meta: {
+    type: 'problem',
+    docs: {
+      description:
+        'disallow using deprecated object declaration on data (in Vue.js 3.0.0+)',
+      categories: ['vue3-essential'],
+      url: 'https://eslint.vuejs.org/rules/no-deprecated-data-object-declaration.html'
+    },
+    fixable: 'code',
+    schema: [],
+    messages: {
+      objectDeclarationIsDeprecated:
+        "Object declaration on 'data' property is deprecated. Using function declaration instead."
+    }
+  },
+
+  create(context: RuleContext) {
+    const sourceCode = context.sourceCode
+
+    return executeOnVue(context, (obj: any) => {
+      const invalidData = findProperty(
+        obj,
+        'data',
+        (p: any) =>
+          p.value.type !== 'FunctionExpression' &&
+          p.value.type !== 'ArrowFunctionExpression' &&
+          p.value.type !== 'Identifier'
+      )
+
+      if (invalidData) {
+        context.report({
+          node: invalidData,
+          messageId: 'objectDeclarationIsDeprecated',
+          fix(fixer: any) {
+            const tokens = getFirstAndLastTokens(invalidData.value, sourceCode)
+
+            return [
+              fixer.insertTextBefore(tokens.first, 'function() {\nreturn '),
+              fixer.insertTextAfter(tokens.last, ';\n}')
+            ]
+          }
+        })
+      }
+    })
+  }
+}

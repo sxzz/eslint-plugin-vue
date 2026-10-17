@@ -15,7 +15,7 @@ import {
   hasInvalidEOF,
   executeOnVue,
   getRegisteredComponents
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { getChecker, getExactConverter, pascalCase } from '../utils/casing.ts'
 import { toRegExpGroupMatcher, isRegExp } from '../utils/regexp.ts'
 

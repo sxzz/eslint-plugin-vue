@@ -1,0 +1,67 @@
+/**
+ * @fileoverview disallow using deprecated events api
+ * @author yoyo930021
+ */
+
+import {
+  defineVueVisitor,
+  skipChainExpression,
+  getStaticPropertyName,
+  isThis
+} from '../utils/index.ts'
+
+export default {
+  meta: {
+    type: 'problem',
+    docs: {
+      description: 'disallow using deprecated events api (in Vue.js 3.0.0+)',
+      categories: ['vue3-essential'],
+      url: 'https://eslint.vuejs.org/rules/no-deprecated-events-api.html'
+    },
+    fixable: null,
+    schema: [],
+    messages: {
+      noDeprecatedEventsApi:
+        'The Events api `$on`, `$off` `$once` is deprecated. Using external library instead, for example mitt.'
+    }
+  },
+
+  create(context: RuleContext) {
+    return defineVueVisitor(context, {
+      'CallExpression > MemberExpression, CallExpression > ChainExpression > MemberExpression'(
+        node: MemberExpression &
+          (
+            | { parent: CallExpression }
+            | { parent: ChainExpression & { parent: CallExpression } }
+          )
+      ) {
+        const call =
+          // eslint-disable-next-line unicorn/prefer-minimal-ternary -- factoring `.parent` out would widen the type from `CallExpression` to `CallExpression | ChainExpression`
+          node.parent.type === 'ChainExpression'
+            ? node.parent.parent
+            : node.parent
+
+        if (call.optional) {
+          // It is OK because checking whether it is deprecated.
+          // e.g. `this.$on?.()`
+          return
+        }
+
+        if (
+          skipChainExpression(call.callee) !== node ||
+          !['$on', '$off', '$once'].includes(getStaticPropertyName(node) || '')
+        ) {
+          return
+        }
+        if (!isThis(node.object, context)) {
+          return
+        }
+
+        context.report({
+          node: node.property,
+          messageId: 'noDeprecatedEventsApi'
+        })
+      }
+    })
+  }
+}

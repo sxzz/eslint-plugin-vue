@@ -8,7 +8,7 @@ import {
   executeOnVue,
   findProperty,
   defineScriptSetupVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { kebabCase, pascalCase } from '../utils/casing.ts'
 import path from 'node:path'
 

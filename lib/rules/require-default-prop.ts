@@ -1,0 +1,214 @@
+/**
+ * @fileoverview Require default value for props
+ * @author Michał Sajnóg <msajnog93@gmail.com> (https://github.com/michalsnik)
+ */
+
+export type ComponentProp = import('../utils').ComponentProp
+export type ComponentObjectProp = import('../utils').ComponentObjectProp
+export type ComponentTypeProp = import('../utils').ComponentTypeProp
+export type ComponentObjectPropObject = ComponentObjectProp & {
+  value: ObjectExpression
+}
+
+import * as utils from '../utils/index.ts'
+
+const NATIVE_TYPES = new Set([
+  'String',
+  'Number',
+  'Boolean',
+  'Function',
+  'Object',
+  'Array',
+  'Symbol'
+])
+
+/**
+ * Detects whether given value node is a Boolean type
+ */
+function isValueNodeOfBooleanType(value: Expression) {
+  if (value.type === 'Identifier' && value.name === 'Boolean') {
+    return true
+  }
+  if (value.type === 'ArrayExpression') {
+    const elements = value.elements.filter(utils.isDef)
+    return (
+      elements.length === 1 &&
+      elements[0].type === 'Identifier' &&
+      elements[0].name === 'Boolean'
+    )
+  }
+  return false
+}
+
+export default {
+  meta: {
+    type: 'suggestion',
+    docs: {
+      description: 'require default value for props',
+      categories: ['vue3-strongly-recommended'],
+      url: 'https://eslint.vuejs.org/rules/require-default-prop.html'
+    },
+    fixable: null,
+    schema: [],
+    messages: {
+      missingDefault: `Prop '{{propName}}' requires default value to be set.`
+    }
+  },
+
+  create(context: RuleContext) {
+    /**
+     * Checks if the passed prop is required
+     */
+    function propIsRequired(propValue: ObjectExpression) {
+      const propRequiredNode = propValue.properties.find(
+        (p: any) =>
+          p.type === 'Property' &&
+          utils.getStaticPropertyName(p) === 'required' &&
+          p.value.type === 'Literal' &&
+          p.value.value === true
+      )
+
+      return Boolean(propRequiredNode)
+    }
+
+    /**
+     * Checks if the passed prop has a default value
+     */
+    function propHasDefault(propValue: ObjectExpression) {
+      const propDefaultNode = propValue.properties.find(
+        (p: any) =>
+          p.type === 'Property' && utils.getStaticPropertyName(p) === 'default'
+      )
+
+      return Boolean(propDefaultNode)
+    }
+
+    /**
+     * Checks whether the given props that don't have a default value
+     */
+    function isWithoutDefaultValue(prop: ComponentObjectProp) {
+      if (prop.value.type !== 'ObjectExpression') {
+        if (prop.value.type === 'Identifier') {
+          return NATIVE_TYPES.has(prop.value.name)
+        }
+        // `CallExpression`/`MemberExpression` are OK; anything else is NG.
+        return (
+          prop.value.type !== 'CallExpression' &&
+          prop.value.type !== 'MemberExpression'
+        )
+      }
+
+      return !propIsRequired(prop.value) && !propHasDefault(prop.value)
+    }
+
+    /**
+     * Detects whether given prop node is a Boolean
+     */
+    function isBooleanProp(prop: ComponentObjectProp) {
+      const value = utils.skipTSAsExpression(prop.value)
+
+      return (
+        isValueNodeOfBooleanType(value) ||
+        (value.type === 'ObjectExpression' &&
+          value.properties.some(
+            (p: any) =>
+              p.type === 'Property' &&
+              p.key.type === 'Identifier' &&
+              p.key.name === 'type' &&
+              isValueNodeOfBooleanType(p.value)
+          ))
+      )
+    }
+
+    function processProps(
+      props: ComponentProp[],
+      shouldIgnore?: (prop: ComponentObjectProp | ComponentTypeProp) => boolean
+    ) {
+      for (const prop of props) {
+        if (prop.type === 'object') {
+          if (prop.node.shorthand) {
+            continue
+          }
+          if (!isWithoutDefaultValue(prop)) {
+            continue
+          }
+          if (isBooleanProp(prop)) {
+            continue
+          }
+          if (shouldIgnore?.(prop)) {
+            continue
+          }
+          const propName =
+            prop.propName ?? `[${context.sourceCode.getText(prop.node.key)}]`
+
+          context.report({
+            node: prop.node,
+            messageId: `missingDefault`,
+            data: {
+              propName
+            }
+          })
+        } else if (prop.type === 'type') {
+          if (prop.required) {
+            continue
+          }
+          if (prop.types.length === 1 && prop.types[0] === 'Boolean') {
+            continue
+          }
+          if (shouldIgnore?.(prop)) {
+            continue
+          }
+          context.report({
+            node: prop.node,
+            messageId: `missingDefault`,
+            data: {
+              propName: prop.propName
+            }
+          })
+        }
+      }
+    }
+
+    return utils.compositingVisitors(
+      utils.defineScriptSetupVisitor(context, {
+        onDefinePropsEnter(node: any, props: any) {
+          const hasWithDefaults = utils.hasWithDefaults(node)
+          const defaultsByWithDefaults = utils.getWithDefaultsPropExpressions(
+            context,
+            node
+          )
+          const isUsingPropsDestructure = utils.isUsingPropsDestructure(node)
+          const defaultsByAssignmentPatterns =
+            utils.getDefaultPropExpressionsForPropsDestructure(node)
+
+          processProps(props, (prop: any) => {
+            if (prop.type === 'type') {
+              if (!hasWithDefaults && !isUsingPropsDestructure) {
+                // If don't use withDefaults() and props destructure, exclude it from the report.
+                return true
+              }
+              if (
+                defaultsByWithDefaults.hasUnknown ||
+                defaultsByWithDefaults.props[prop.propName]
+              ) {
+                return true
+              }
+            }
+            if (!isUsingPropsDestructure) {
+              return false
+            }
+            if (prop.propName == null) {
+              // If using Props Destructure but the property name cannot be determined,
+              // it will be ignored.
+              return true
+            }
+            return Boolean(defaultsByAssignmentPatterns[prop.propName])
+          })
+        }
+      }),
+      utils.executeOnVue(context, (obj: any) => {
+        processProps(utils.getComponentPropsFromOptions(obj))
+      })
+    )
+  }
+}

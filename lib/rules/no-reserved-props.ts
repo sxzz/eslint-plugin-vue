@@ -2,13 +2,13 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import type { ComponentProp } from '../utils/index.js'
+import type { ComponentProp } from '../utils/index.ts'
 import {
   compositingVisitors,
   defineScriptSetupVisitor,
   executeOnVue,
   getComponentPropsFromOptions
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { kebabCase } from '../utils/casing.ts'
 
 const RESERVED = new Set(['key', 'ref'])

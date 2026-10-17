@@ -3,6 +3,7 @@
  * This file has been automatically generated,
  * in order to update its content execute "pnpm run update"
  */
+import type { Linter } from 'eslint'
 import config from './base.ts'
 
 export default [
@@ -95,4 +96,4 @@ export default [
       'vue/valid-v-text': 'error'
     }
   }
-]
+] satisfies Linter.Config[]

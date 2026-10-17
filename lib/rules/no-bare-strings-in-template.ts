@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import { defineTemplateBodyVisitor } from '../utils/index.js'
+import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { isRegExp, toRegExp, escape } from '../utils/regexp.ts'
 import { isKebabCase, pascalCase } from '../utils/casing.ts'
 

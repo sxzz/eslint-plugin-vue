@@ -33,7 +33,7 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/operator-linebreak.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/operator-linebreak.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/operator-linebreak.test.ts)
 
 <sup>Taken with ❤️ [from ESLint Stylistic](https://eslint.style/rules/operator-linebreak)</sup>

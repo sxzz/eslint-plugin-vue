@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import { isVElement, hasInvalidEOF } from '../utils/index.js'
+import { isVElement, hasInvalidEOF } from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
 interface ParsedOption {

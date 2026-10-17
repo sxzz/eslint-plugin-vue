@@ -5,7 +5,7 @@
 import {
   getStaticPropertyName,
   findAssignmentProperty
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import {
   extractRefObjectReferences,
   extractReactiveVariableReferences

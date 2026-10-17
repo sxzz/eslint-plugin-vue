@@ -10,7 +10,7 @@ import {
   isVElement,
   hasAttribute,
   getScope
-} from '../utils/index.js'
+} from '../utils/index.ts'
 
 type FunctionNode =
   FunctionDeclaration | FunctionExpression | ArrowFunctionExpression

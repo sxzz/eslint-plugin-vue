@@ -8,10 +8,10 @@ import type {
   ComponentTypeProp,
   ComponentInferTypeProp,
   VueObjectData
-} from '../utils/index.js'
-import * as utils from '../utils/index.js'
+} from '../utils/index.ts'
+import * as utils from '../utils/index.ts'
 import { capitalize } from '../utils/casing.ts'
-import { inferRuntimeType } from '../utils/ts-utils/ts-ast.js'
+import { inferRuntimeType } from '../utils/ts-utils/ts-ast.ts'
 
 const NATIVE_TYPES = new Set([
   'String',

@@ -2,7 +2,7 @@
  * @author Toru Nagashima <https://github.com/mysticatea>
  */
 import type { Linter } from 'eslint'
-import meta from './meta.ts'
+import { meta } from './meta.ts'
 
 type LintMessage = Linter.LintMessage
 
@@ -11,7 +11,7 @@ interface GroupState {
   disableRuleKeys: Map<string, string[]>
 }
 
-export default {
+export const processor = {
   preprocess(code: string): string[] {
     return [code]
   },

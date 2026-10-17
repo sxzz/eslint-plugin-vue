@@ -2,18 +2,18 @@
  * @author Wayne Zhang
  * See LICENSE file in root directory for full license.
  */
-import { defineTemplateBodyVisitor } from '../utils/index.js'
+import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 import htmlElements from '../utils/html-elements.json' with { type: 'json' }
 import deprecatedHtmlElements from '../utils/deprecated-html-elements.json' with { type: 'json' }
 import svgElements from '../utils/svg-elements.json' with { type: 'json' }
-import vue3builtinComponents from '../utils/vue3-builtin-components.js'
+import { vue3BuiltinComponents } from '../utils/vue3-builtin-components.ts'
 
 const reservedNames = new Set([
   ...htmlElements,
   ...deprecatedHtmlElements,
   ...svgElements,
-  ...vue3builtinComponents
+  ...vue3BuiltinComponents
 ])
 
 export default {

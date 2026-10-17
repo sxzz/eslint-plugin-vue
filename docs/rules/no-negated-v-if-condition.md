@@ -64,5 +64,5 @@ This rule was introduced in eslint-plugin-vue v10.4.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-negated-v-if-condition.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-negated-v-if-condition.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-negated-v-if-condition.test.ts)

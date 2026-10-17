@@ -106,7 +106,7 @@ export default {
 
     /**
      * Checks whether code may be using lang="ts" or lang="typescript".
-     * @returns {boolean} If `true`, may be using lang="ts" or lang="typescript".
+     * @returns If `true`, may be using lang="ts" or lang="typescript".
      */
     langTs() {
       return /lang\s*=\s*(?:"ts"|ts|'ts'|"typescript"|typescript|'typescript')/u.test(

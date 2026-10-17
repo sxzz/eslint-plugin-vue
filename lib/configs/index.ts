@@ -5,8 +5,19 @@ import vue3StronglyRecommendedError from './vue3-strongly-recommended-error.ts'
 import vue3Recommended from './vue3-recommended.ts'
 import vue3RecommendedError from './vue3-recommended-error.ts'
 import noLayoutRules from './no-layout-rules.ts'
+import type { Linter } from 'eslint'
 
-const configs = {
+export interface Configs {
+  base: Linter.FlatConfig[]
+  essential: Linter.FlatConfig[]
+  'strongly-recommended': Linter.FlatConfig[]
+  'strongly-recommended-error': Linter.FlatConfig[]
+  recommended: Linter.FlatConfig[]
+  'recommended-error': Linter.FlatConfig[]
+  'no-layout-rules': Linter.FlatConfig
+}
+
+export const configs: Configs = {
   base,
   essential: vue3Essential,
   'strongly-recommended': vue3StronglyRecommended,
@@ -15,5 +26,3 @@ const configs = {
   'recommended-error': vue3RecommendedError,
   'no-layout-rules': noLayoutRules
 }
-
-export default configs

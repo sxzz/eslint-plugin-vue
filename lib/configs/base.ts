@@ -3,7 +3,8 @@
  * This file has been automatically generated,
  * in order to update its content execute "pnpm run update"
  */
-import plugin from '../plugin.ts'
+import type { Linter } from 'eslint'
+import { plugin } from '../plugin.ts'
 import vueParser from 'vue-eslint-parser'
 
 export default [
@@ -36,4 +37,4 @@ export default [
     },
     processor: 'vue/vue'
   }
-]
+] satisfies Linter.Config[]

@@ -2,7 +2,7 @@
  * @author rzzf
  * See LICENSE file in root directory for full license.
  */
-import { defineTemplateBodyVisitor } from '../utils/index.js'
+import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 
 const EXPRESSION_TYPES: Partial<

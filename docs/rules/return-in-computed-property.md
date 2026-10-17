@@ -136,5 +136,5 @@ This rule was introduced in eslint-plugin-vue v3.7.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/return-in-computed-property.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/return-in-computed-property.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/return-in-computed-property.test.ts)

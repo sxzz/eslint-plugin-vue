@@ -1,4 +1,4 @@
-import { hasInvalidEOF } from './index.js'
+import { hasInvalidEOF } from './index.ts'
 
 export interface CommentParserConfig {
   exceptions?: string[]

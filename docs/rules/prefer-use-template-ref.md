@@ -74,5 +74,5 @@ This rule was introduced in eslint-plugin-vue v9.31.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/prefer-use-template-ref.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/prefer-use-template-ref.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/prefer-use-template-ref.test.ts)

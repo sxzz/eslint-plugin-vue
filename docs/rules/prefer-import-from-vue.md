@@ -59,5 +59,5 @@ This rule was introduced in eslint-plugin-vue v8.5.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/prefer-import-from-vue.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/prefer-import-from-vue.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/prefer-import-from-vue.test.ts)

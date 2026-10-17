@@ -26,7 +26,7 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/dot-notation.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/dot-notation.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/dot-notation.test.ts)
 
 <sup>Taken with ❤️ [from ESLint core](https://eslint.org/docs/latest/rules/dot-notation)</sup>

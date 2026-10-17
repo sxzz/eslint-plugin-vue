@@ -2,13 +2,13 @@
  * @author CZB
  * See LICENSE file in root directory for full license.
  */
-import type { ComponentProp } from '../utils/index.js'
+import type { ComponentProp } from '../utils/index.ts'
 import {
   compositingVisitors,
   defineScriptSetupVisitor,
   defineVueVisitor,
   getComponentPropsFromOptions
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { isBlockComment, isJSDocComment } from '../utils/comments.ts'
 
 export default {

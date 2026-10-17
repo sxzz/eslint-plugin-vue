@@ -8,7 +8,7 @@ import {
   isCustomComponent,
   defineTemplateBodyVisitor,
   getDirective
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { kebabCase } from '../utils/casing.ts'
 
 /**
@@ -144,8 +144,6 @@ export default {
   create(context: RuleContext) {
     /**
      * Map to store conditionally rendered components and their respective conditional directives.
-     *
-     * @type {Map<VElement, ConditionalFamily>}
      */
     const conditionalFamilies = new Map()
 
@@ -154,7 +152,7 @@ export default {
      * node instance. Each Map represents a different scope level, and maps a component name to
      * an object containing the count and a reference to the first node.
      */
-    /** @type {Map<string, { count: number; firstNode: any }>[]} */
+
     const componentUsageStack = [new Map()]
 
     /**
@@ -189,8 +187,6 @@ export default {
        * Callback to be executed when a Vue element is traversed. This function checks if the
        * element is a component, increments the usage count of the component in the
        * current scope, and checks for the key directive if the component is repeated.
-       *
-       * @param {VElement} node - The traversed Vue element.
        */
       VElement(node) {
         if (exemptTags.has(node.rawName)) {

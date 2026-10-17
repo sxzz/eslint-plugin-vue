@@ -13,7 +13,7 @@ import {
   isClosingBracketToken,
   isOpeningBracketToken
 } from '@eslint-community/eslint-utils'
-import { isTypeNode } from './ts-utils/index.js'
+import { isTypeNode } from './ts-utils/index.ts'
 
 type MaybeNode = { type: string } & HasLocation
 

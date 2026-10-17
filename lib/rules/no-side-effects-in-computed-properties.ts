@@ -1,0 +1,217 @@
+/**
+ * @fileoverview Don't introduce side effects in computed properties
+ * @author Michał Sajnóg
+ */
+import { ReferenceTracker, findVariable } from '@eslint-community/eslint-utils'
+import {
+  isThis as utilsIsThis,
+  findMutating,
+  getScope,
+  getScriptSetupElement,
+  compositingVisitors,
+  iterateReferencesTraceMap,
+  getGetterBodyFromComputedFunction,
+  defineScriptSetupVisitor,
+  defineVueVisitor,
+  getComputedProperties
+} from '../utils/index.ts'
+
+export type VueObjectData = import('../utils').VueObjectData
+export type VueVisitor = import('../utils').VueVisitor
+export type ComponentComputedProperty =
+  import('../utils').ComponentComputedProperty
+
+export default {
+  meta: {
+    type: 'problem',
+    docs: {
+      description: 'disallow side effects in computed properties',
+      categories: ['vue3-essential'],
+      url: 'https://eslint.vuejs.org/rules/no-side-effects-in-computed-properties.html'
+    },
+    fixable: null,
+    schema: [],
+    messages: {
+      unexpectedSideEffectInFunction:
+        'Unexpected side effect in computed function.',
+      unexpectedSideEffectInProperty:
+        'Unexpected side effect in "{{key}}" computed property.'
+    }
+  },
+
+  create(context: RuleContext) {
+    const computedPropertiesMap = new Map()
+
+    const computedCallNodes: Array<
+      FunctionExpression | ArrowFunctionExpression
+    > = []
+    type ScopeStack = {
+      upper: ScopeStack | null
+      body: BlockStatement | Expression | null
+    }
+
+    const setupRanges: [number, number][] = []
+
+    let scopeStack: ScopeStack | null = null
+
+    function onFunctionEnter(
+      node: FunctionExpression | ArrowFunctionExpression | FunctionDeclaration
+    ) {
+      scopeStack = {
+        upper: scopeStack,
+        body: node.body
+      }
+    }
+
+    function onFunctionExit() {
+      scopeStack &&= scopeStack.upper
+    }
+
+    const nodeVisitor: any = {
+      ':function': onFunctionEnter,
+      ':function:exit': onFunctionExit,
+
+      'MemberExpression > :matches(Identifier, ThisExpression)'(
+        node: (Identifier | ThisExpression) & { parent: MemberExpression },
+        info?: VueObjectData | undefined
+      ) {
+        if (!scopeStack) {
+          return
+        }
+        const targetBody = scopeStack.body
+
+        const computedProperty = (
+          info ? computedPropertiesMap.get(info.node) || [] : []
+        ).find(
+          (cp: any) =>
+            cp.value &&
+            cp.value.range[0] <= node.range[0] &&
+            node.range[1] <= cp.value.range[1] &&
+            targetBody === cp.value
+        )
+        if (computedProperty) {
+          const mem = node.parent
+          if (mem.object !== node) {
+            return
+          }
+
+          const isThis = utilsIsThis(node, context)
+          const isVue = node.type === 'Identifier' && node.name === 'Vue'
+
+          const isVueSet =
+            mem.parent.type === 'CallExpression' &&
+            mem.property.type === 'Identifier' &&
+            ((isThis && mem.property.name === '$set') ||
+              (isVue && mem.property.name === 'set'))
+
+          const invalid = isVueSet
+            ? { node: mem.property }
+            : isThis && findMutating(mem)
+
+          if (invalid) {
+            context.report({
+              node: invalid.node,
+              messageId: 'unexpectedSideEffectInProperty',
+              data: { key: computedProperty.key || 'Unknown' }
+            })
+          }
+          return
+        }
+
+        // ignore `this` for computed functions
+        if (node.type === 'ThisExpression') {
+          return
+        }
+
+        const computedFunction: any = computedCallNodes.find(
+          (c) =>
+            c.range[0] <= node.range[0] &&
+            node.range[1] <= c.range[1] &&
+            targetBody === c.body
+        )
+        if (!computedFunction) {
+          return
+        }
+
+        const mem = node.parent
+        if (mem.object !== node) {
+          return
+        }
+
+        const variable = findVariable(getScope(context, node), node)
+        if (!variable || variable.defs.length !== 1) {
+          return
+        }
+
+        const def = variable.defs[0]
+        if (
+          ['ImplicitGlobalVariable', 'TDZ', 'ImportBinding'].includes(def.type)
+        ) {
+          return
+        }
+
+        const isDeclaredInsideSetup: any = setupRanges.some(
+          ([start, end]) =>
+            start <= def.node.range[0] && def.node.range[1] <= end
+        )
+        if (!isDeclaredInsideSetup) {
+          return
+        }
+
+        if (
+          computedFunction.range[0] <= def.node.range[0] &&
+          def.node.range[1] <= computedFunction.range[1]
+        ) {
+          // mutating local variables are accepted
+          return
+        }
+
+        const invalid = findMutating(node)
+        if (invalid) {
+          context.report({
+            node: invalid.node,
+            messageId: 'unexpectedSideEffectInFunction'
+          })
+        }
+      }
+    }
+    const scriptSetupNode = getScriptSetupElement(context)
+    if (scriptSetupNode) {
+      setupRanges.push(scriptSetupNode.range)
+    }
+    return compositingVisitors(
+      {
+        Program(program: Program) {
+          const tracker = new ReferenceTracker(getScope(context, program))
+
+          const computedRefs = iterateReferencesTraceMap(tracker, {
+            computed: {
+              [ReferenceTracker.CALL]: true
+            }
+          })
+          for (const { node } of computedRefs) {
+            if (node.type !== 'CallExpression') {
+              continue
+            }
+
+            const getterBody = getGetterBodyFromComputedFunction(node)
+            if (getterBody) {
+              computedCallNodes.push(getterBody)
+            }
+          }
+        }
+      },
+      scriptSetupNode
+        ? defineScriptSetupVisitor(context, nodeVisitor)
+        : defineVueVisitor(context, {
+            onVueObjectEnter(node: any) {
+              computedPropertiesMap.set(node, getComputedProperties(node))
+            },
+            onSetupFunctionEnter(node: any) {
+              setupRanges.push(node.body.range)
+            },
+            ...nodeVisitor
+          })
+    )
+  }
+}

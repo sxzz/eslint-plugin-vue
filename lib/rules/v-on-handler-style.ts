@@ -1,0 +1,567 @@
+/**
+ * @author Yosuke Ota <https://github.com/ota-meshi>
+ * See LICENSE file in root directory for full license.
+ */
+
+import {
+  defineTemplateBodyVisitor,
+  defineVueVisitor,
+  iterateProperties
+} from '../utils/index.ts'
+
+export type ReportDescriptorFix = import('eslint').ReportDescriptorFix
+export type HandlerKind = 'method' | 'inline' | 'inline-function'
+export type ObjectOption = { ignoreIncludesComment?: boolean }
+
+function parseOptions(context: RuleContext) {
+  const options = context.options
+
+  const allows = []
+  if (options[0]) {
+    if (Array.isArray(options[0])) {
+      allows.push(...options[0])
+    } else {
+      allows.push(options[0])
+    }
+  } else {
+    allows.push('method', 'inline-function')
+  }
+
+  const option = options[1] || {}
+  const shouldIgnoreIncludesComment = !!option.ignoreIncludesComment
+
+  return { allows, shouldIgnoreIncludesComment }
+}
+
+/**
+ * Check whether the given token is a quote.
+ */
+function isQuote(token: Token) {
+  return (
+    token != null &&
+    token.type === 'Punctuator' &&
+    (token.value === '"' || token.value === "'")
+  )
+}
+/**
+ * Check whether the given node is an identifier call expression. e.g. `foo()`
+ */
+function isIdentifierCallExpression(
+  node: Expression
+): node is CallExpression & { callee: Identifier } {
+  if (node.type !== 'CallExpression') {
+    return false
+  }
+  if (node.optional) {
+    // optional chaining
+    return false
+  }
+  const callee = node.callee
+  return callee.type === 'Identifier'
+}
+
+/**
+ * Returns a call expression node if the given VOnExpression or BlockStatement consists
+ * of only a single identifier call expression.
+ * e.g.
+ */
+function getIdentifierCallExpression(node: VOnExpression | BlockStatement) {
+  let exprStatement
+  let body = node.body
+  while (true) {
+    const statements = body.filter((st: any) => st.type !== 'EmptyStatement')
+    if (statements.length !== 1) {
+      return null
+    }
+    const statement = statements[0]
+    if (statement.type === 'ExpressionStatement') {
+      exprStatement = statement
+      break
+    }
+    if (statement.type === 'BlockStatement') {
+      body = statement.body
+      continue
+    }
+    return null
+  }
+  const expression = exprStatement.expression
+  if (!isIdentifierCallExpression(expression)) {
+    return null
+  }
+  return expression
+}
+
+export default {
+  meta: {
+    type: 'suggestion',
+    docs: {
+      description: 'enforce writing style for handlers in `v-on` directives',
+      categories: undefined,
+      url: 'https://eslint.vuejs.org/rules/v-on-handler-style.html'
+    },
+    fixable: 'code',
+    schema: [
+      {
+        oneOf: [
+          { enum: ['inline', 'inline-function'] },
+          {
+            type: 'array',
+            items: [
+              { const: 'method' },
+              { enum: ['inline', 'inline-function'] }
+            ],
+            uniqueItems: true,
+            additionalItems: false,
+            minItems: 2,
+            maxItems: 2
+          }
+        ]
+      },
+      {
+        type: 'object',
+        properties: {
+          ignoreIncludesComment: {
+            type: 'boolean'
+          }
+        },
+        additionalProperties: false
+      }
+    ],
+    messages: {
+      preferMethodOverInline:
+        'Prefer method handler over inline handler in v-on.',
+      preferMethodOverInlineWithoutIdCall:
+        'Prefer method handler over inline handler in v-on. Note that you may need to create a new method.',
+      preferMethodOverInlineFunction:
+        'Prefer method handler over inline function in v-on.',
+      preferMethodOverInlineFunctionWithoutIdCall:
+        'Prefer method handler over inline function in v-on. Note that you may need to create a new method.',
+      preferInlineOverMethod:
+        'Prefer inline handler over method handler in v-on.',
+      preferInlineOverInlineFunction:
+        'Prefer inline handler over inline function in v-on.',
+      preferInlineOverInlineFunctionWithMultipleParams:
+        'Prefer inline handler over inline function in v-on. Note that the custom event must be changed to a single payload.',
+      preferInlineFunctionOverMethod:
+        'Prefer inline function over method handler in v-on.',
+      preferInlineFunctionOverInline:
+        'Prefer inline function over inline handler in v-on.'
+    }
+  },
+
+  create(context: RuleContext) {
+    const sourceCode = context.sourceCode
+    const { allows, shouldIgnoreIncludesComment } = parseOptions(context)
+
+    const upperElements = new Set<VElement>()
+
+    const methodParamCountMap = new Map()
+
+    const $eventIdentifiers: Identifier[] = []
+
+    /**
+     * Verify for inline handler.
+     */
+    function verifyForInlineHandler(node: VOnExpression, kind: HandlerKind) {
+      switch (kind) {
+        case 'method': {
+          return verifyCanUseMethodHandlerForInlineHandler(node)
+        }
+        case 'inline-function': {
+          reportCanUseInlineFunctionForInlineHandler(node)
+          return true
+        }
+      }
+      return false
+    }
+    /**
+     * Report for method handler.
+     */
+    function reportForMethodHandler(node: Identifier, kind: HandlerKind) {
+      switch (kind) {
+        case 'inline':
+        case 'inline-function': {
+          context.report({
+            node,
+            messageId:
+              kind === 'inline'
+                ? 'preferInlineOverMethod'
+                : 'preferInlineFunctionOverMethod'
+          })
+          return true
+        }
+      }
+      // This path is currently not taken.
+      return false
+    }
+    /**
+     * Verify for inline function handler.
+     */
+    function verifyForInlineFunction(
+      node: ArrowFunctionExpression | FunctionExpression,
+      kind: HandlerKind
+    ) {
+      switch (kind) {
+        case 'method': {
+          return verifyCanUseMethodHandlerForInlineFunction(node)
+        }
+        case 'inline': {
+          reportCanUseInlineHandlerForInlineFunction(node)
+          return true
+        }
+      }
+      return false
+    }
+
+    /**
+     * Get token information for the given VExpressionContainer node.
+     */
+    function getVExpressionContainerTokenInfo(node: VExpressionContainer) {
+      const tokenStore = sourceCode.parserServices.getTemplateBodyTokenStore()
+      const tokens = tokenStore.getTokens(node, {
+        includeComments: true
+      })
+      const firstToken = tokens[0]
+      const lastToken = tokens.at(-1)
+
+      if (!lastToken) {
+        const rangeWithoutQuotes = [0, 0]
+        return {
+          rangeWithoutQuotes,
+          hasComment: false,
+          hasQuote: false
+        }
+      }
+
+      const hasQuote = isQuote(firstToken)
+
+      const rangeWithoutQuotes = hasQuote
+        ? [firstToken.range[1], lastToken.range[0]]
+        : [firstToken.range[0], lastToken.range[1]]
+
+      return {
+        rangeWithoutQuotes,
+        get hasComment() {
+          return tokens.some(
+            (token: any) => token.type === 'Block' || token.type === 'Line'
+          )
+        },
+        hasQuote
+      }
+    }
+
+    /**
+     * Checks whether the given node refers to a variable of the element.
+     */
+    function hasReferenceUpperElementVariable(
+      node: Expression | VOnExpression
+    ) {
+      for (const element of upperElements) {
+        for (const vv of element.variables) {
+          for (const reference of vv.references) {
+            const { range } = reference.id
+            if (node.range[0] <= range[0] && range[1] <= node.range[1]) {
+              return true
+            }
+          }
+        }
+      }
+      return false
+    }
+    /**
+     * Check if `v-on:click="foo()"` can be converted to `v-on:click="foo"` and report if it can.
+     */
+    function verifyCanUseMethodHandlerForInlineHandler(node: VOnExpression) {
+      const { rangeWithoutQuotes, hasComment } =
+        getVExpressionContainerTokenInfo(node.parent)
+      if (shouldIgnoreIncludesComment && hasComment) {
+        return false
+      }
+
+      const idCallExpr = getIdentifierCallExpression(node)
+      if (
+        (!idCallExpr || idCallExpr.arguments.length > 0) &&
+        hasReferenceUpperElementVariable(node)
+      ) {
+        // It cannot be converted to method because it refers to the variable of the element.
+        // e.g. <template v-for="e in list"><button @click="foo(e)" /></template>
+        return false
+      }
+
+      context.report({
+        node,
+        messageId: idCallExpr
+          ? 'preferMethodOverInline'
+          : 'preferMethodOverInlineWithoutIdCall',
+        fix: (fixer: any) => {
+          if (
+            hasComment /* The statement contains comment and cannot be fixed. */ ||
+            !idCallExpr /* The statement is not a simple identifier call and cannot be fixed. */ ||
+            idCallExpr.arguments.length > 0
+          ) {
+            return null
+          }
+          const paramCount = methodParamCountMap.get(idCallExpr.callee.name)
+          if (paramCount != null && paramCount > 0) {
+            // The behavior of target method can change given the arguments.
+            return null
+          }
+          return fixer.replaceTextRange(
+            rangeWithoutQuotes,
+            sourceCode.getText(idCallExpr.callee)
+          )
+        }
+      })
+      return true
+    }
+    /**
+     * Check if `v-on:click="() => foo()"` can be converted to `v-on:click="foo"` and report if it can.
+     */
+    function verifyCanUseMethodHandlerForInlineFunction(
+      node: ArrowFunctionExpression | FunctionExpression
+    ) {
+      if (node.parent.type !== 'VExpressionContainer') return false
+      const { rangeWithoutQuotes, hasComment } =
+        getVExpressionContainerTokenInfo(node.parent)
+      if (shouldIgnoreIncludesComment && hasComment) {
+        return false
+      }
+
+      let idCallExpr = null
+      if (node.body.type === 'BlockStatement') {
+        idCallExpr = getIdentifierCallExpression(node.body)
+      } else if (isIdentifierCallExpression(node.body)) {
+        idCallExpr = node.body
+      }
+      if (
+        (!idCallExpr || !isSameParamsAndArgs(idCallExpr)) &&
+        hasReferenceUpperElementVariable(node)
+      ) {
+        // It cannot be converted to method because it refers to the variable of the element.
+        // e.g. <template v-for="e in list"><button @click="() => foo(e)" /></template>
+        return false
+      }
+
+      context.report({
+        node,
+        messageId: idCallExpr
+          ? 'preferMethodOverInlineFunction'
+          : 'preferMethodOverInlineFunctionWithoutIdCall',
+        fix: (fixer: any) => {
+          if (
+            hasComment /* The function contains comment and cannot be fixed. */ ||
+            !idCallExpr /* The function is not a simple identifier call and cannot be fixed. */
+          ) {
+            return null
+          }
+          if (!isSameParamsAndArgs(idCallExpr)) {
+            // It is not a call with the arguments given as is.
+            return null
+          }
+          const paramCount = methodParamCountMap.get(idCallExpr.callee.name)
+          if (
+            paramCount != null &&
+            paramCount !== idCallExpr.arguments.length
+          ) {
+            // The behavior of target method can change given the arguments.
+            return null
+          }
+          return fixer.replaceTextRange(
+            rangeWithoutQuotes,
+            sourceCode.getText(idCallExpr.callee)
+          )
+        }
+      })
+      return true
+
+      /**
+       * Checks whether parameters are passed as arguments as-is.
+       */
+      function isSameParamsAndArgs(expression: CallExpression) {
+        return (
+          node.params.length === expression.arguments.length &&
+          node.params.every((param: any, index: any) => {
+            if (param.type !== 'Identifier') {
+              return false
+            }
+            const arg = expression.arguments[index]
+            if (!arg || arg.type !== 'Identifier') {
+              return false
+            }
+            return param.name === arg.name
+          })
+        )
+      }
+    }
+    /**
+     * Report `v-on:click="foo()"` can be converted to `v-on:click="()=>foo()"`.
+     */
+    function reportCanUseInlineFunctionForInlineHandler(node: VOnExpression) {
+      context.report({
+        node,
+        messageId: 'preferInlineFunctionOverInline',
+        *fix(fixer: any) {
+          const has$Event: any = $eventIdentifiers.some(
+            ({ range }) =>
+              node.range[0] <= range[0] && range[1] <= node.range[1]
+          )
+          if (has$Event) {
+            /* The statements contains $event and cannot be fixed. */
+            return
+          }
+          const { rangeWithoutQuotes, hasQuote } =
+            getVExpressionContainerTokenInfo(node.parent)
+          if (!hasQuote) {
+            /* The statements is not enclosed in quotes and cannot be fixed. */
+            return
+          }
+          yield fixer.insertTextBeforeRange(rangeWithoutQuotes, '() => ')
+          const tokenStore =
+            sourceCode.parserServices.getTemplateBodyTokenStore()
+          const firstToken = tokenStore.getFirstToken(node)
+          const lastToken = tokenStore.getLastToken(node)
+          if (firstToken.value === '{' && lastToken.value === '}') return
+          if (
+            lastToken.value !== ';' &&
+            node.body.length === 1 &&
+            node.body[0].type === 'ExpressionStatement'
+          ) {
+            // it is a single expression
+            return
+          }
+          yield fixer.insertTextBefore(firstToken, '{')
+          yield fixer.insertTextAfter(lastToken, '}')
+        }
+      })
+    }
+    /**
+     * Report `v-on:click="() => foo()"` can be converted to `v-on:click="foo()"`.
+     */
+    function reportCanUseInlineHandlerForInlineFunction(
+      node: ArrowFunctionExpression | FunctionExpression
+    ) {
+      // If a function has one parameter, you can turn it into an inline handler using $event.
+      // If a function has two or more parameters, it cannot be easily converted to an inline handler.
+      // However, users can use inline handlers by changing the payload of the component's custom event.
+      // So we report it regardless of the number of parameters.
+
+      context.report({
+        node,
+        messageId:
+          node.params.length > 1
+            ? 'preferInlineOverInlineFunctionWithMultipleParams'
+            : 'preferInlineOverInlineFunction',
+        fix:
+          node.params.length > 0
+            ? null /* The function has parameters and cannot be fixed. */
+            : (fixer: any) => {
+                let text = sourceCode.getText(node.body)
+                if (node.body.type === 'BlockStatement') {
+                  text = text.slice(1, -1) // strip braces
+                }
+                return fixer.replaceText(node, text)
+              }
+      })
+    }
+
+    return defineTemplateBodyVisitor(
+      context,
+      {
+        VElement(node: any) {
+          upperElements.add(node)
+        },
+        'VElement:exit'(node: any) {
+          upperElements.delete(node)
+        },
+
+        "VAttribute[directive=true][key.name.name='on'][key.argument!=null] > VExpressionContainer.value:exit"(
+          node: VExpressionContainer
+        ) {
+          const expression = node.expression
+          if (!expression) {
+            return
+          }
+          switch (expression.type) {
+            case 'VOnExpression': {
+              // e.g. v-on:click="foo()"
+              if (allows[0] === 'inline') {
+                return
+              }
+              for (const allow of allows) {
+                if (verifyForInlineHandler(expression, allow)) {
+                  return
+                }
+              }
+              break
+            }
+            case 'Identifier': {
+              // e.g. v-on:click="foo"
+              if (allows[0] === 'method') {
+                return
+              }
+              for (const allow of allows) {
+                if (reportForMethodHandler(expression, allow)) {
+                  return
+                }
+              }
+              break
+            }
+            case 'ArrowFunctionExpression':
+            case 'FunctionExpression': {
+              // e.g. v-on:click="()=>foo()"
+              if (allows[0] === 'inline-function') {
+                return
+              }
+              for (const allow of allows) {
+                if (verifyForInlineFunction(expression, allow)) {
+                  return
+                }
+              }
+              break
+            }
+            default: {
+              return
+            }
+          }
+        },
+        ...(allows.includes('inline-function')
+          ? // Collect $event identifiers to check for side effects
+            // when converting from `v-on:click="foo($event)"` to `v-on:click="()=>foo($event)"` .
+            {
+              'Identifier[name="$event"]'(node: any) {
+                $eventIdentifiers.push(node)
+              }
+            }
+          : {})
+      },
+      allows.includes('method')
+        ? // Collect method definition with params information to check for side effects.
+          // when converting from `v-on:click="foo()"` to `v-on:click="foo"`, or
+          // converting from `v-on:click="() => foo()"` to `v-on:click="foo"`.
+          defineVueVisitor(context, {
+            onVueObjectEnter(node: any) {
+              const methods = iterateProperties(node, new Set(['methods']))
+              for (const method of methods) {
+                if (method.type !== 'object') {
+                  // This branch is usually not passed.
+                  continue
+                }
+                const value = method.property.value
+                if (
+                  value.type === 'FunctionExpression' ||
+                  value.type === 'ArrowFunctionExpression'
+                ) {
+                  methodParamCountMap.set(
+                    method.name,
+                    value.params.some((p: any) => p.type === 'RestElement')
+                      ? Infinity
+                      : value.params.length
+                  )
+                }
+              }
+            }
+          })
+        : {}
+    )
+  }
+}

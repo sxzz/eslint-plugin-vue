@@ -53,5 +53,5 @@ This rule was introduced in eslint-plugin-vue v9.29.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-deprecated-delete-set.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-deprecated-delete-set.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-deprecated-delete-set.test.ts)

@@ -1,0 +1,147 @@
+/**
+ * @author Yosuke Ota
+ * See LICENSE file in root directory for full license.
+ */
+import { ReferenceTracker } from '@eslint-community/eslint-utils'
+import {
+  compositingVisitors,
+  getScope,
+  iterateReferencesTraceMap,
+  defineVueVisitor,
+  inRange
+} from '../utils/index.ts'
+
+function isMaybeUsedStopHandle(node: CallExpression | ChainExpression) {
+  const parent = node.parent
+  if (parent) {
+    if (parent.type === 'VariableDeclarator') {
+      // var foo = watch()
+      return true
+    }
+    if (parent.type === 'AssignmentExpression') {
+      // foo = watch()
+      return true
+    }
+    if (parent.type === 'CallExpression') {
+      // foo(watch())
+      return true
+    }
+    if (parent.type === 'Property') {
+      // {foo: watch()}
+      return true
+    }
+    if (parent.type === 'ArrayExpression') {
+      // [watch()]
+      return true
+    }
+    if (parent.type === 'ChainExpression') {
+      return isMaybeUsedStopHandle(parent)
+    }
+  }
+  return false
+}
+
+export default {
+  meta: {
+    type: 'suggestion',
+    docs: {
+      description: 'disallow asynchronously registered `watch`',
+      categories: ['vue3-essential'],
+      url: 'https://eslint.vuejs.org/rules/no-watch-after-await.html'
+    },
+    fixable: null,
+    schema: [],
+    messages: {
+      forbidden: '`watch` is forbidden after an `await` expression.'
+    }
+  },
+
+  create(context: RuleContext) {
+    const watchCallNodes = new Set()
+
+    const setupScopes = new Map()
+    type ScopeStack = {
+      upper: ScopeStack | null
+      scopeNode:
+        FunctionExpression | ArrowFunctionExpression | FunctionDeclaration
+    }
+
+    let scopeStack: ScopeStack | null = null
+
+    return compositingVisitors(
+      {
+        Program(program: Program) {
+          const tracker = new ReferenceTracker(getScope(context, program))
+
+          const watchRefs = iterateReferencesTraceMap(tracker, {
+            watch: {
+              [ReferenceTracker.CALL]: true
+            },
+            watchEffect: {
+              [ReferenceTracker.CALL]: true
+            }
+          })
+          for (const { node } of watchRefs) {
+            watchCallNodes.add(node)
+          }
+        }
+      },
+      defineVueVisitor(context, {
+        onSetupFunctionEnter(node: any) {
+          setupScopes.set(node, {
+            afterAwait: false,
+            range: node.range
+          })
+        },
+
+        ':function'(
+          node:
+            FunctionExpression | ArrowFunctionExpression | FunctionDeclaration
+        ) {
+          scopeStack = {
+            upper: scopeStack,
+            scopeNode: node
+          }
+        },
+        ':function:exit'() {
+          scopeStack &&= scopeStack.upper
+        },
+
+        AwaitExpression(node: AwaitExpression) {
+          if (!scopeStack) {
+            return
+          }
+          const setupScope = setupScopes.get(scopeStack.scopeNode)
+          if (!setupScope || !inRange(setupScope.range, node)) {
+            return
+          }
+          setupScope.afterAwait = true
+        },
+
+        CallExpression(node: CallExpression) {
+          if (!scopeStack) {
+            return
+          }
+          const setupScope = setupScopes.get(scopeStack.scopeNode)
+          if (
+            !setupScope ||
+            !setupScope.afterAwait ||
+            !inRange(setupScope.range, node)
+          ) {
+            return
+          }
+
+          if (watchCallNodes.has(node) && !isMaybeUsedStopHandle(node)) {
+            context.report({
+              node,
+              messageId: 'forbidden'
+            })
+          }
+        },
+        onSetupFunctionExit(node: any) {
+          setupScopes.delete(node)
+        }
+      })
+    )
+  }
+}

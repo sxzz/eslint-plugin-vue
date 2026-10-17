@@ -61,5 +61,5 @@ This rule was introduced in eslint-plugin-vue v8.6.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/prefer-prop-type-boolean-first.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/prefer-prop-type-boolean-first.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/prefer-prop-type-boolean-first.test.ts)

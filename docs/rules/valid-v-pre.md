@@ -51,5 +51,5 @@ This rule was introduced in eslint-plugin-vue v3.11.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/valid-v-pre.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/valid-v-pre.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/valid-v-pre.test.ts)

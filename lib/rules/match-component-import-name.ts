@@ -6,7 +6,7 @@ import {
   executeOnVueComponent,
   findProperty,
   getStaticPropertyName
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { kebabCase, pascalCase } from '../utils/casing.ts'
 
 function getExpectedNames(identifier: Identifier): string[] {

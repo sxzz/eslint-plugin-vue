@@ -2,8 +2,8 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import * as utils from '../utils/index.js'
-import scopeAttribute from './syntaxes/scope-attribute.js'
+import * as utils from '../utils/index.ts'
+import scopeAttribute from './syntaxes/scope-attribute.ts'
 
 export default {
   meta: {

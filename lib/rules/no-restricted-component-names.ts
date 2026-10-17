@@ -8,7 +8,7 @@ import {
   compositingVisitors,
   defineVueVisitor,
   defineScriptSetupVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { kebabCase, pascalCase } from '../utils/casing.ts'
 import { isRegExp, toRegExp } from '../utils/regexp.ts'
 

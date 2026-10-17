@@ -59,5 +59,5 @@ This rule was introduced in eslint-plugin-vue v9.15.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/max-lines-per-block.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/max-lines-per-block.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/max-lines-per-block.test.ts)

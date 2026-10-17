@@ -10,7 +10,7 @@ import {
   iterateReferencesTraceMap,
   getStaticPropertyName,
   getStringLiteralValue
-} from './index.js'
+} from './index.ts'
 import { ReferenceTracker } from '@eslint-community/eslint-utils'
 
 interface IHasPropertyOption {

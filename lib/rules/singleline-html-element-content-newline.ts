@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import { defineTemplateBodyVisitor } from '../utils/index.js'
+import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { pascalCase, kebabCase } from '../utils/casing.ts'
 import INLINE_ELEMENTS from '../utils/inline-non-void-elements.json' with { type: 'json' }
 

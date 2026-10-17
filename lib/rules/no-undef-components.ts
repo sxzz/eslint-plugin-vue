@@ -19,7 +19,7 @@ import {
   executeOnVue,
   getRegisteredComponents,
   defineTemplateBodyVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import {
   capitalize,
   isPascalCase,

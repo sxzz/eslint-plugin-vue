@@ -5,7 +5,7 @@
 import {
   getStaticPropertyName,
   defineTemplateBodyVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 
 const reportForbiddenClass = (

@@ -24,7 +24,7 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-useless-concat.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-useless-concat.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-useless-concat.test.ts)
 
 <sup>Taken with ❤️ [from ESLint core](https://eslint.org/docs/latest/rules/no-useless-concat)</sup>

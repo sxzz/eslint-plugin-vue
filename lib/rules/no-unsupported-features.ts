@@ -6,16 +6,16 @@ import semver from 'semver'
 import {
   compositingVisitors,
   defineTemplateBodyVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import styleCssVarsInjection from './syntaxes/style-css-vars-injection.ts'
-import isAttributeWithVuePrefix from './syntaxes/is-attribute-with-vue-prefix.js'
-import vMemo from './syntaxes/v-memo.js'
-import vBindPropModifierShorthand from './syntaxes/v-bind-prop-modifier-shorthand.js'
-import vBindAttrModifier from './syntaxes/v-bind-attr-modifier.js'
-import defineOptions from './syntaxes/define-options.js'
-import defineSlots from './syntaxes/define-slots.js'
-import defineModel from './syntaxes/define-model.js'
-import vBindSameNameShorthand from './syntaxes/v-bind-same-name-shorthand.js'
+import isAttributeWithVuePrefix from './syntaxes/is-attribute-with-vue-prefix.ts'
+import vMemo from './syntaxes/v-memo.ts'
+import vBindPropModifierShorthand from './syntaxes/v-bind-prop-modifier-shorthand.ts'
+import vBindAttrModifier from './syntaxes/v-bind-attr-modifier.ts'
+import defineOptions from './syntaxes/define-options.ts'
+import defineSlots from './syntaxes/define-slots.ts'
+import defineModel from './syntaxes/define-model.ts'
+import vBindSameNameShorthand from './syntaxes/v-bind-same-name-shorthand.ts'
 
 interface SyntaxRule {
   supported: string

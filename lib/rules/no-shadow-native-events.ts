@@ -9,7 +9,7 @@ import type {
   NameWithLoc,
   VueObjectData,
   VueObjectType
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import {
   isScriptSetup,
   skipChainExpression,
@@ -23,7 +23,7 @@ import {
   getComponentEmitsFromOptions,
   compositingVisitors,
   defineTemplateBodyVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 
 interface VueTemplateDefineData {
   type: VueObjectType | 'setup'

@@ -3,7 +3,7 @@ import {
   Rule as ESLintRule,
   RuleTester as ESLintRuleTester,
   Linter as ESLintLinter
-} from '../../node_modules/@types/eslint'
+} from '../../node_modules/eslint/lib/types/index'
 import * as VAST from '../eslint-plugin-vue/util-types/ast'
 import * as VNODE from '../eslint-plugin-vue/util-types/node'
 import * as parserServices from '../eslint-plugin-vue/util-types/parser-services'
@@ -321,7 +321,10 @@ export namespace Rule {
   interface CodePathSegment extends ESLintRule.CodePathSegment {}
 
   // eslint-disable-next-line unicorn/consistent-compound-words -- mirrors ESLint's `RuleMetaData` type name
-  interface RuleMetaData extends ESLintRule.RuleMetaData {
+  interface RuleMetaData extends Omit<
+    ESLintRule.RuleMetaData,
+    'fixable' | 'type'
+  > {
     docs: Required<ESLintRule.RuleMetaData>['docs']
     // TODO: Temporary workaround, delete after we switch to a consistent rule creation method that unifies types.
     fixable?: ESLintRule.RuleMetaData['fixable'] | (string & {}) | null

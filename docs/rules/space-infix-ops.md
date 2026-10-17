@@ -33,7 +33,7 @@ This rule was introduced in eslint-plugin-vue v5.2.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/space-infix-ops.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/space-infix-ops.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/space-infix-ops.test.ts)
 
 <sup>Taken with ❤️ [from ESLint Stylistic](https://eslint.style/rules/space-infix-ops)</sup>

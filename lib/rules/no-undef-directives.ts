@@ -9,7 +9,7 @@ import {
   defineVueVisitor,
   defineTemplateBodyVisitor,
   executeOnVue
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { camelCase, capitalize, kebabCase } from '../utils/casing.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 

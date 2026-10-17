@@ -6,7 +6,7 @@ import {
   defineTemplateBodyVisitor,
   getAttribute,
   getDirective
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { kebabCase, pascalCase } from '../utils/casing.ts'
 
 function getComponentNames(context: RuleContext) {

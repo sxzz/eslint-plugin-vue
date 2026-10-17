@@ -7,7 +7,7 @@ import {
   compositingVisitors,
   defineVueVisitor,
   defineScriptSetupVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
 interface ParsedOption {

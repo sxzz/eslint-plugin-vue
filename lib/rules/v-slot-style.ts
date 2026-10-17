@@ -3,7 +3,7 @@
  * See LICENSE file in root directory for full license.
  */
 import { pascalCase } from '../utils/casing.ts'
-import { defineTemplateBodyVisitor } from '../utils/index.js'
+import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
 interface Options {
   /** The style for the default slot at a custom component directly. */

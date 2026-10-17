@@ -4,7 +4,7 @@
  * See LICENSE file in root directory for full license.
  */
 import { defineVisitor } from '../utils/indent-common.ts'
-import { defineTemplateBodyVisitor } from '../utils/index.js'
+import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
 export default {
   create(context: RuleContext) {

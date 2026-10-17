@@ -11,7 +11,7 @@ import {
   isMathElementNode,
   defineTemplateBodyVisitor,
   hasInvalidEOF
-} from '../utils/index.js'
+} from '../utils/index.ts'
 
 /**
  * These strings wil be displayed in error messages.

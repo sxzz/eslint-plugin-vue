@@ -7,7 +7,7 @@ import assert from 'node:assert'
 import parserVue from 'vue-eslint-parser'
 import { ESLint } from 'eslint'
 import pluginVue from '../../../dist/index.mjs'
-import processor from '../../../lib/processor'
+import { processor } from '../../../lib/processor'
 
 // Initialize linter.
 const eslint = new ESLint({

@@ -1,0 +1,275 @@
+/**
+ * @author Toru Nagashima
+ * See LICENSE file in root directory for full license.
+ */
+
+import fs from 'node:fs'
+import path from 'node:path'
+import { rules } from './lib/rules.ts'
+import { getPresetIds, formatItems } from './lib/utils.ts'
+import { removedRules } from '../lib/removed-rules.ts'
+import { getPresetNames } from './lib/categories.ts'
+
+// -----------------------------------------------------------------------------
+const categorizedRules = rules.filter(
+  (rule) => rule.meta.docs.categories && !rule.meta.docs.extensionSource
+)
+const uncategorizedRules = rules.filter(
+  (rule) =>
+    !rule.meta.docs.categories &&
+    !rule.meta.docs.extensionSource &&
+    !rule.meta.deprecated
+)
+const uncategorizedExtensionRule = rules.filter(
+  (rule) =>
+    !rule.meta.docs.categories &&
+    rule.meta.docs.extensionSource &&
+    !rule.meta.deprecated
+)
+const deprecatedRules = rules.filter((rule) => rule.meta.deprecated)
+
+const TYPE_MARK: Record<string, string> = {
+  problem: ':warning:',
+  suggestion: ':hammer:',
+  layout: ':lipstick:'
+}
+
+function toRuleRow(rule: (typeof rules)[number], kindMarks: string[] = []) {
+  const mark = [
+    rule.meta.fixable ? ':wrench:' : '',
+    rule.meta.hasSuggestions ? ':bulb:' : '',
+    rule.meta.deprecated ? ':no_entry_sign:' : ''
+  ].join('')
+  const kindMark = [...kindMarks, TYPE_MARK[rule.meta.type]].join('')
+  const link = `[${rule.ruleId}]`
+  const description = rule.meta.docs.description || '(no description)'
+
+  return `| ${link} | ${description} | ${mark} | ${kindMark} |`
+}
+
+function toDeprecatedRuleRow(rule: (typeof rules)[number]) {
+  const link = `[${rule.ruleId}]`
+  const replacedRules = rule.meta.replacedBy || []
+  const replacedBy = replacedRules
+    .map((name: string) => `[vue/${name}]`)
+    .join(', ')
+
+  return `| ${link} | ${replacedBy || '(no replacement)'} |`
+}
+
+function toRemovedRuleRow({
+  ruleName,
+  replacedBy,
+  deprecatedInVersion,
+  removedInVersion
+}: (typeof removedRules)[number]) {
+  const link = `[vue/${ruleName}]`
+  const replacement =
+    replacedBy.map((name) => `[vue/${name}]`).join(', ') || '(no replacement)'
+  const deprecatedVersionLink = deprecatedInVersion
+    ? `[${deprecatedInVersion}]`
+    : '—'
+  const removedVersionLink = `[${removedInVersion}]`
+
+  return `| ${link} | ${replacement} | ${deprecatedVersionLink} | ${removedVersionLink} |`
+}
+
+const categoryGroups = [
+  {
+    title: 'Base Rules (Enabling Correct ESLint Parsing)',
+    description:
+      'Rules in this category are enabled for all presets provided by eslint-plugin-vue.',
+    categoryId: 'base',
+    useMark: false
+  },
+  {
+    title: 'Priority A: Essential (Error Prevention)',
+    categoryId: 'vue3-essential',
+    useMark: true
+  },
+  {
+    title: 'Priority B: Strongly Recommended (Improving Readability)',
+    categoryId: 'vue3-strongly-recommended',
+    useMark: true
+  },
+  {
+    title: 'Priority C: Recommended (Potentially Dangerous Patterns)',
+    categoryId: 'vue3-recommended',
+    useMark: true
+  }
+]
+
+// -----------------------------------------------------------------------------
+let rulesTableContent = categoryGroups
+  .map((group) => {
+    const rules = categorizedRules.filter((rule) =>
+      rule.meta.docs.categories.includes(group.categoryId)
+    )
+    let content = `
+## ${group.title}
+`
+
+    if (group.description) {
+      content += `
+${group.description}
+`
+    }
+    if (group.useMark) {
+      const presets = getPresetNames(getPresetIds([group.categoryId]))
+      content += `
+- The rules in this category are included in ${formatItems(presets, [
+        'preset',
+        'presets'
+      ])}.
+`
+    }
+
+    content += `
+<rules-table>
+
+| Rule ID | Description |    |    |
+|:--------|:------------|:--:|:--:|
+${rules.map((rule) => toRuleRow(rule)).join('\n')}
+
+</rules-table>
+`
+
+    return content
+  })
+  .join('')
+
+// -----------------------------------------------------------------------------
+if (uncategorizedRules.length > 0 || uncategorizedExtensionRule.length > 0) {
+  rulesTableContent += `
+## Uncategorized
+
+No preset enables the rules in this category.
+Please enable each rule if you want.
+
+For example:
+
+\`\`\`json
+{
+  "rules": {
+    "${
+      (uncategorizedRules[0] || uncategorizedExtensionRule[0]).ruleId
+    }": "error"
+  }
+}
+\`\`\`
+`
+}
+if (uncategorizedRules.length > 0) {
+  rulesTableContent += `
+<rules-table>
+
+| Rule ID | Description |    |    |
+|:--------|:------------|:--:|:--:|
+${uncategorizedRules.map((rule) => toRuleRow(rule)).join('\n')}
+
+</rules-table>
+`
+}
+if (uncategorizedExtensionRule.length > 0) {
+  rulesTableContent += `
+### Extension Rules
+
+The following rules extend the rules provided by ESLint itself and apply them to the expressions in the \`<template>\`.
+
+<rules-table>
+
+| Rule ID | Description |    |    |
+|:--------|:------------|:--:|:--:|
+${uncategorizedExtensionRule.map((rule) => toRuleRow(rule)).join('\n')}
+
+</rules-table>
+`
+}
+
+// -----------------------------------------------------------------------------
+if (deprecatedRules.length > 0) {
+  rulesTableContent += `
+## Deprecated
+
+- :no_entry_sign: We're going to remove deprecated rules in the next major release. Please migrate to successor/new rules.
+- :innocent: We don't fix bugs which are in deprecated rules since we don't have enough resources.
+
+| Rule ID | Replaced by |
+|:--------|:------------|
+${deprecatedRules.map(toDeprecatedRuleRow).join('\n')}
+`
+}
+
+// -----------------------------------------------------------------------------
+rulesTableContent += `
+## Removed
+
+- :no_entry: These rules have been removed.
+
+| Rule ID | Replaced by | Deprecated in version  | Removed in version |
+|:--------|:------------|:-----------------------|:-------------------|
+${removedRules.map(toRemovedRuleRow).join('\n')}
+`
+
+// -----------------------------------------------------------------------------
+const releases = [
+  ...new Set(
+    removedRules
+      .flatMap((rule) => [rule.deprecatedInVersion, rule.removedInVersion])
+      .filter((version): version is string => Boolean(version))
+  )
+].sort((a, b) => a.localeCompare(b))
+const ruleLinkDefinitions = rules.map(
+  (rule) => `[${rule.ruleId}]: ./${rule.name}.md`
+)
+const removedRuleLinkDefinitions = removedRules.map(
+  (rule) => `[vue/${rule.ruleName}]: ./${rule.ruleName}.md`
+)
+const releaseLinkDefinitions = releases.map(
+  (release) =>
+    `[${release}]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/${release}`
+)
+
+// -----------------------------------------------------------------------------
+const readmeFilePath = path.resolve(
+  import.meta.dirname,
+  '../docs/rules/index.md'
+)
+fs.writeFileSync(
+  readmeFilePath,
+  `---
+sidebarDepth: 0
+pageClass: rule-list
+---
+
+# Available rules
+
+<!-- This file is automatically generated in tools/update-docs-rules-index.js, do not change! -->
+
+::: tip Legend
+  :wrench: Indicates that the rule is fixable, and using \`--fix\` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the reported problems.
+
+  :bulb: Indicates that some problems reported by the rule are manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+:::
+
+Mark indicating rule type:
+
+- <span class="emoji">:warning:</span> Possible Problems: These rules relate to possible logic errors in code.
+- :hammer: Suggestions: These rules suggest alternate ways of doing things.
+- :lipstick: Layout & Formatting: These rules care about how the code looks rather than how it executes.
+
+${rulesTableContent.trim()}
+
+<!-- link definitions for rules -->
+
+${ruleLinkDefinitions.join('\n')}
+
+<!-- link definitions for removed rules -->
+
+${removedRuleLinkDefinitions.join('\n')}
+
+<!-- link definitions for releases -->
+
+${releaseLinkDefinitions.join('\n')}
+`
+)

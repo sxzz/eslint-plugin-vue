@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import { isCustomComponent, defineTemplateBodyVisitor } from '../utils/index.js'
+import { isCustomComponent, defineTemplateBodyVisitor } from '../utils/index.ts'
 import { pascalCase, kebabCase } from '../utils/casing.ts'
 
 export default {

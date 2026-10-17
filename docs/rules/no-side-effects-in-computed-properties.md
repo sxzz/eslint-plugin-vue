@@ -121,5 +121,5 @@ This rule was introduced in eslint-plugin-vue v3.6.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-side-effects-in-computed-properties.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-side-effects-in-computed-properties.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-side-effects-in-computed-properties.test.ts)

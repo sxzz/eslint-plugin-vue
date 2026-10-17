@@ -9,10 +9,10 @@ import './build-system/build.ts'
 
 // eslint-disable-next-line unicorn/no-anonymous-default-export
 export default async () => {
-  const rulesPath = '../../tools/lib/rules.js' // Avoid bundle
-  const { default: rules } = (await import(
+  const rulesPath = '../../tools/lib/rules.ts' // Avoid bundle
+  const { rules } = (await import(
     rulesPath
-  )) as typeof import('../../tools/lib/rules.js')
+  )) as typeof import('../../tools/lib/rules.ts')
   const uncategorizedRules = rules.filter(
     (rule) =>
       !rule.meta.docs.categories &&

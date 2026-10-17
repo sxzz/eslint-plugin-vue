@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import type { NameWithLoc, VueObjectData } from '../utils/index.js'
+import type { NameWithLoc, VueObjectData } from '../utils/index.ts'
 import { findVariable } from '@eslint-community/eslint-utils'
 import {
   skipChainExpression,
@@ -15,7 +15,7 @@ import {
   defineVueVisitor,
   skipDefaultParamValue,
   findAssignmentProperty
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { getChecker } from '../utils/casing.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 
@@ -228,6 +228,7 @@ export default {
               }
             } else {
               // `setup(props, context)`
+              if (contextParam.type !== 'Identifier') return
               const variable = findVariable(
                 getScope(context, contextParam),
                 contextParam
@@ -250,7 +251,7 @@ export default {
           }
         }),
         {
-          CallExpression(node) {
+          CallExpression(node: CallExpression) {
             const nameLiteralNode = getNameParamNode(node)
             if (!nameLiteralNode) {
               // cannot check

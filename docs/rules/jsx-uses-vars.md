@@ -53,5 +53,5 @@ This rule was introduced in eslint-plugin-vue v2.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/jsx-uses-vars.js)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/jsx-uses-vars.ts)
 - [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/jsx-uses-vars.test.ts)

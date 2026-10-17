@@ -3,7 +3,7 @@
  */
 import type { HasParentNode } from '../node'
 import * as ES from './es-ast'
-import { TSESTree } from '@typescript-eslint/types'
+import type { TSESTree } from '@typescript-eslint/types'
 export type TSNode =
   | TSAsExpression
   | TSNonNullExpression

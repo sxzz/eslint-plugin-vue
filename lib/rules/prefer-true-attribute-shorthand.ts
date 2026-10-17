@@ -3,7 +3,7 @@
  * See LICENSE file in root directory for full license.
  */
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
-import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.js'
+import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.ts'
 
 type PreferOption = 'always' | 'never'
 

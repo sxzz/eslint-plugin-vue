@@ -7,6 +7,7 @@
     "lib": ["es2022"],
     "types": ["vitest/globals"],
     "allowJs": true,
+    "declaration": false,
     "checkJs": true,
     "noEmit": true,
     "strict": true,
@@ -31,8 +32,12 @@
   },
   "include": [
     "lib/**/*",
+    "tools/**/*.ts",
+    "eslint-internal-rules/**/*.ts",
+    "eslint.config.ts",
     "tests/**/*.ts",
     "typings/eslint-plugin-vue/global.d.ts",
+    "typings/jsdom.d.ts",
     "docs/.vitepress/**/*.ts"
   ],
   "exclude": ["tests/fixtures/typescript/src/**"]

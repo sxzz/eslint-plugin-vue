@@ -6,7 +6,7 @@
 import {
   isVBindSameNameShorthand,
   defineTemplateBodyVisitor
-} from '../utils/index.js'
+} from '../utils/index.ts'
 import { camelCase, isKebabCase } from '../utils/casing.ts'
 
 type VBindDirectiveKey = VDirectiveKey & {
