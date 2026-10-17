@@ -4,7 +4,13 @@
  */
 import { findVariable } from '@eslint-community/eslint-utils'
 import { iterateDefineRefs } from '../utils/ref-object-references.ts'
-import utils from '../utils/index.js'
+import {
+  isVueFile,
+  isTypeScriptFile,
+  isVElement,
+  hasAttribute,
+  getScope
+} from '../utils/index.js'
 
 type FunctionNode =
   FunctionDeclaration | FunctionExpression | ArrowFunctionExpression
@@ -33,7 +39,7 @@ function hasTypeAnnotation(node: Pattern): boolean {
  * Resolves the single definition of the given identifier reference.
  */
 function findDefinition(context: RuleContext, node: Identifier) {
-  const variable = findVariable(utils.getScope(context, node), node)
+  const variable = findVariable(getScope(context, node), node)
   return variable?.defs.length === 1 ? variable.defs[0] : null
 }
 
@@ -142,11 +148,11 @@ export default {
   },
   create(context: RuleContext) {
     const filename = context.filename
-    if (!utils.isVueFile(filename) && !utils.isTypeScriptFile(filename)) {
+    if (!isVueFile(filename) && !isTypeScriptFile(filename)) {
       return {}
     }
 
-    if (utils.isVueFile(filename)) {
+    if (isVueFile(filename)) {
       const sourceCode = context.sourceCode
       const documentFragment =
         sourceCode.parserServices.getDocumentFragment &&
@@ -156,11 +162,9 @@ export default {
       }
       const scripts = documentFragment.children.filter(
         (element): element is VElement =>
-          utils.isVElement(element) && element.name === 'script'
+          isVElement(element) && element.name === 'script'
       )
-      if (
-        scripts.every((script) => !utils.hasAttribute(script, 'lang', 'ts'))
-      ) {
+      if (scripts.every((script) => !hasAttribute(script, 'lang', 'ts'))) {
         return {}
       }
     }
