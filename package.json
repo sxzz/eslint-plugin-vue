@@ -22,7 +22,7 @@
     "tsc": "tsc",
     "update": "node ./tools/update.ts",
     "update-resources": "node ./tools/update-resources.ts",
-    "typegen": "node ./tools/generate-typegen.mjs",
+    "typegen": "node ./tools/generate-typegen.ts",
     "build": "pnpm typegen && tsdown",
     "docs:watch": "vitepress dev docs",
     "predocs:build": "pnpm run update",
