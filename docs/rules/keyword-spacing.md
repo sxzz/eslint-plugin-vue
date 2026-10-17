@@ -33,7 +33,7 @@ This rule was introduced in eslint-plugin-vue v6.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/keyword-spacing.ts)
-- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/keyword-spacing.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/keyword-spacing.ts)
+- [Test source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/keyword-spacing.test.ts)
 
 <sup>Taken with ❤️ [from ESLint Stylistic](https://eslint.style/rules/keyword-spacing)</sup>

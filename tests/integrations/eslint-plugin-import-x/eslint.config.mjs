@@ -1,6 +1,6 @@
 import vueEslintParser from 'vue-eslint-parser'
 import { importX } from 'eslint-plugin-import-x'
-import eslintPluginVue from 'eslint-plugin-v'
+import eslintPluginVuekit from 'eslint-plugin-vuekit'
 
 export default [
   {
@@ -14,7 +14,7 @@ export default [
     },
     plugins: {
       'import-x': importX,
-      vue: eslintPluginVue
+      vue: eslintPluginVuekit
     },
     rules: {
       'import-x/default': 'warn',

@@ -11,7 +11,7 @@ permissions:
 jobs:
   check-for-resources-update:
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'sxzz/eslint-plugin-vue' }}
+    if: ${{ github.repository == 'sxzz/eslint-plugin-vuekit' }}
     steps:
       - uses: sxzz/workflows/setup-js@main
       - name: Update

@@ -78,7 +78,7 @@ const categoryGroups = [
   {
     title: 'Base Rules (Enabling Correct ESLint Parsing)',
     description:
-      'Rules in this category are enabled for all presets provided by eslint-plugin-v.',
+      'Rules in this category are enabled for all presets provided by eslint-plugin-vuekit.',
     categoryId: 'base',
     useMark: false
   },
@@ -227,7 +227,7 @@ const removedRuleLinkDefinitions = removedRules.map(
 )
 const releaseLinkDefinitions = releases.map(
   (release) =>
-    `[${release}]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/${release}`
+    `[${release}]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/${release}`
 )
 
 // -----------------------------------------------------------------------------

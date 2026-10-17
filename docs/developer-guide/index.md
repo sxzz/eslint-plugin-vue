@@ -4,7 +4,7 @@ Contributing is welcome.
 
 ## :bug: Bug reporting
 
-If you think you’ve found a bug in ESLint, please [create a new issue](https://github.com/sxzz/eslint-plugin-vue/issues/new?labels=&template=bug_report.md) or a pull request on GitHub.
+If you think you’ve found a bug in ESLint, please [create a new issue](https://github.com/sxzz/eslint-plugin-vuekit/issues/new?labels=&template=bug_report.md) or a pull request on GitHub.
 
 Please include as much detail as possible to help us properly address your issue. If we need to triage issues and constantly ask people for more detail, that’s time taken away from actually fixing issues. Help us be as efficient as possible by including a lot of detail in your issues.
 
@@ -12,7 +12,7 @@ Please include as much detail as possible to help us properly address your issue
 
 To develop locally, fork the eslint-plugin-vue repository and clone it on your local machine. Use [pnpm](https://pnpm.io/) to install dependencies and the LTS version of [Node.js](https://nodejs.org/).
 
-To develop and test the `eslint-plugin-v` package:
+To develop and test the `eslint-plugin-vuekit` package:
 
 1. Run `pnpm install` in the project's root folder.
 2. Run `pnpm build && pnpm test` to make sure everything is set up correctly.
@@ -34,7 +34,7 @@ In order to add a new rule or a rule change, you should:
 - Run `ppnpm run update` in order to update readme and recommended configuration
 - Create PR and link created issue in description
 
-We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/sxzz/eslint-plugin-vue/issues), but first please make sure your question does not repeat previous ones.
+We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/sxzz/eslint-plugin-vuekit/issues), but first please make sure your question does not repeat previous ones.
 
 ## :fire: Working with rules
 
@@ -59,9 +59,9 @@ The [`vue-eslint-parser`](https://github.com/vuejs/vue-eslint-parser) provides f
 - `context.parserServices.defineTemplateBodyVisitor(visitor, scriptVisitor)`
 - `context.parserServices.getTemplateBodyTokenStore()`
 
-Check out an [example rule](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/mustache-interpolation-spacing.js) to get a better understanding of how these work.
+Check out an [example rule](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/mustache-interpolation-spacing.js) to get a better understanding of how these work.
 
-Please be aware that regarding what kind of code examples you'll write in tests, you'll have to accordingly setup the parser in `RuleTester` (you can do it on per test case basis though). [See an example here](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/attribute-hyphenation.test.ts#L17)
+Please be aware that regarding what kind of code examples you'll write in tests, you'll have to accordingly setup the parser in `RuleTester` (you can do it on per test case basis though). [See an example here](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/attribute-hyphenation.test.ts#L17)
 
 If you'll stuck, remember there are plenty of rules you can learn from already, and if you can't find the right solution - don't hesitate to reach out in issues. We're happy to help!
 

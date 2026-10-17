@@ -33,7 +33,7 @@ This rule was introduced in eslint-plugin-vue v7.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/object-curly-newline.ts)
-- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/object-curly-newline.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/object-curly-newline.ts)
+- [Test source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/object-curly-newline.test.ts)
 
 <sup>Taken with ❤️ [from ESLint Stylistic](https://eslint.style/rules/object-curly-newline)</sup>

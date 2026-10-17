@@ -97,5 +97,5 @@ This rule was introduced in eslint-plugin-vue v3.13.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/require-valid-default-prop.ts)
-- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/require-valid-default-prop.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/require-valid-default-prop.ts)
+- [Test source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/require-valid-default-prop.test.ts)

@@ -54,5 +54,5 @@ This rule was introduced in eslint-plugin-vue v9.19.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/v-if-else-key.ts)
-- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/v-if-else-key.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/v-if-else-key.ts)
+- [Test source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/v-if-else-key.test.ts)

@@ -208,8 +208,8 @@ This rule was introduced in eslint-plugin-vue ${this.since}
         : ''
     }## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/${name}${ext})
-- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/${name}.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/${name}${ext})
+- [Test source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/${name}.test.ts)
 ${
   meta.docs.extensionSource
     ? `

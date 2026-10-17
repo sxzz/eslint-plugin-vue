@@ -17,7 +17,7 @@ since: v3.9.0
 
 ## :book: Rule Details
 
-This rule prevents to use [reserved names](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/utils/vue-reserved.json) to avoid conflicts and unexpected behavior.
+This rule prevents to use [reserved names](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/utils/vue-reserved.json) to avoid conflicts and unexpected behavior.
 
 <eslint-code-block :rules="{'vue/no-reserved-keys': ['error']}">
 
@@ -81,7 +81,7 @@ export default {
 
 ## :books: Further Reading
 
-- [List of reserved keys](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/utils/vue-reserved.json)
+- [List of reserved keys](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/utils/vue-reserved.json)
 
 ## :rocket: Version
 
@@ -89,5 +89,5 @@ This rule was introduced in eslint-plugin-vue v3.9.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/no-reserved-keys.ts)
-- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/no-reserved-keys.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/no-reserved-keys.ts)
+- [Test source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/no-reserved-keys.test.ts)

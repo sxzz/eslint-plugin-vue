@@ -1,6 +1,6 @@
 {
-  "name": "eslint-plugin-v",
-  "version": "10.11.1",
+  "name": "eslint-plugin-vuekit",
+  "version": "11.0.0-alpha.0",
   "description": "Modern ESLint plugin for Vue 3",
   "type": "module",
   "exports": {
@@ -51,10 +51,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sxzz/eslint-plugin-vue.git"
+    "url": "git+https://github.com/sxzz/eslint-plugin-vuekit.git"
   },
   "bugs": {
-    "url": "https://github.com/sxzz/eslint-plugin-vue/issues"
+    "url": "https://github.com/sxzz/eslint-plugin-vuekit/issues"
   },
   "engines": {
     "node": "^22.19.0 || ^24.11.0 || >=26.0.0"

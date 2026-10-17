@@ -21,7 +21,7 @@ Mark indicating rule type:
 
 ## Base Rules (Enabling Correct ESLint Parsing)
 
-Rules in this category are enabled for all presets provided by eslint-plugin-v.
+Rules in this category are enabled for all presets provided by eslint-plugin-vuekit.
 
 <rules-table>
 
@@ -641,13 +641,13 @@ The following rules extend the rules provided by ESLint itself and apply them to
 
 <!-- link definitions for releases -->
 
-[v10.0.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v10.0.0
-[v11.0.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v11.0.0
-[v5.0.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v5.0.0
-[v7.0.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v7.0.0
-[v7.13.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v7.13.0
-[v8.4.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v8.4.0
-[v9.0.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v9.0.0
-[v9.16.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v9.16.0
-[v9.17.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v9.17.0
-[v9.7.0]: https://github.com/sxzz/eslint-plugin-vue/releases/tag/v9.7.0
+[v10.0.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v10.0.0
+[v11.0.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v11.0.0
+[v5.0.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v5.0.0
+[v7.0.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v7.0.0
+[v7.13.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v7.13.0
+[v8.4.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v8.4.0
+[v9.0.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v9.0.0
+[v9.16.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v9.16.0
+[v9.17.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v9.17.0
+[v9.7.0]: https://github.com/sxzz/eslint-plugin-vuekit/releases/tag/v9.7.0

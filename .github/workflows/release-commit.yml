@@ -6,7 +6,7 @@ permissions: {}
 
 jobs:
   release:
-    if: github.repository == 'sxzz/eslint-plugin-vue'
+    if: github.repository == 'sxzz/eslint-plugin-vuekit'
     uses: sxzz/workflows/.github/workflows/release-commit.yml@main
     with:
       compact: true

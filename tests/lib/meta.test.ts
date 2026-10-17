@@ -3,7 +3,7 @@ import plugin from '../../dist/index.mjs'
 import packageJson from '../../package.json' with { type: 'json' }
 
 const expectedMeta = {
-  name: 'eslint-plugin-v',
+  name: 'eslint-plugin-vuekit',
   version: packageJson.version
 }
 

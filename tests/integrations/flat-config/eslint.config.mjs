@@ -1,4 +1,4 @@
-import plugin from 'eslint-plugin-v'
+import plugin from 'eslint-plugin-vuekit'
 
 export default [
   ...plugin.configs.base,

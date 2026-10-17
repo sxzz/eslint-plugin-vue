@@ -331,7 +331,7 @@ This rule was introduced in eslint-plugin-vue v6.1.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/max-len.ts)
-- [Test source](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/max-len.test.ts)
+- [Rule source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/max-len.ts)
+- [Test source](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/max-len.test.ts)
 
 <sup>Taken with ❤️ [from ESLint core](https://eslint.org/docs/rules/max-len)</sup>

@@ -8,6 +8,6 @@
   "license": "MIT",
   "dependencies": {
     "eslint": "^10.0.0",
-    "eslint-plugin-v": "workspace:*"
+    "eslint-plugin-vuekit": "workspace:*"
   }
 }

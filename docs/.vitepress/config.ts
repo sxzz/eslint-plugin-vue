@@ -103,7 +103,7 @@ export default async () => {
   }
   return defineConfig({
     base: '/',
-    title: 'eslint-plugin-v',
+    title: 'eslint-plugin-vuekit',
     description: 'Modern ESLint plugin for Vue 3',
     head: [['link', { rel: 'icon', href: '/favicon.png' }]],
 
@@ -165,12 +165,12 @@ export default async () => {
     themeConfig: {
       editLink: {
         pattern:
-          'https://github.com/sxzz/eslint-plugin-vue/edit/main/docs/:path'
+          'https://github.com/sxzz/eslint-plugin-vuekit/edit/main/docs/:path'
       },
       socialLinks: [
         {
           icon: 'github',
-          link: 'https://github.com/sxzz/eslint-plugin-vue'
+          link: 'https://github.com/sxzz/eslint-plugin-vuekit'
         }
       ],
 

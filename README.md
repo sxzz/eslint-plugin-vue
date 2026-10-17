@@ -1,9 +1,9 @@
-# eslint-plugin-v
+# eslint-plugin-vuekit
 
-[![NPM version](https://img.shields.io/npm/v/eslint-plugin-v.svg?style=flat)](https://npmjs.org/package/eslint-plugin-v)
-[![NPM downloads](https://img.shields.io/npm/dm/eslint-plugin-v.svg?style=flat)](https://npmjs.org/package/eslint-plugin-v)
-[![CI](https://img.shields.io/github/actions/workflow/status/sxzz/eslint-plugin-vue/CI.yml?style=flat&label=CI)](https://github.com/sxzz/eslint-plugin-vue/actions/workflows/CI.yml)
-[![License](https://img.shields.io/github/license/sxzz/eslint-plugin-vue.svg?style=flat)](https://github.com/sxzz/eslint-plugin-vue/blob/main/LICENSE)
+[![NPM version](https://img.shields.io/npm/v/eslint-plugin-vuekit.svg?style=flat)](https://npmjs.org/package/eslint-plugin-vuekit)
+[![NPM downloads](https://img.shields.io/npm/dm/eslint-plugin-vuekit.svg?style=flat)](https://npmjs.org/package/eslint-plugin-vuekit)
+[![CI](https://img.shields.io/github/actions/workflow/status/sxzz/eslint-plugin-vuekit/unit-test.yml?style=flat&label=CI)](https://github.com/sxzz/eslint-plugin-vuekit/actions/workflows/unit-test.yml)
+[![License](https://img.shields.io/github/license/sxzz/eslint-plugin-vuekit.svg?style=flat)](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/LICENSE)
 
 > Modern ESLint plugin for Vue 3
 
@@ -26,7 +26,7 @@ According to our policy, any minor update may report more linting errors than th
 
 ## :newspaper: Releases
 
-This project uses [GitHub Releases](https://github.com/sxzz/eslint-plugin-vue/releases).
+This project uses [GitHub Releases](https://github.com/sxzz/eslint-plugin-vuekit/releases).
 
 ## :beers: Contribution Guide
 
@@ -47,11 +47,11 @@ To learn more about certain nodes in a produced AST, see the [ESTree project pag
 - `context.parserServices.defineTemplateBodyVisitor(visitor, scriptVisitor)`
 - `context.parserServices.getTemplateBodyTokenStore()`
 
-Check out an [example rule](https://github.com/sxzz/eslint-plugin-vue/blob/main/lib/rules/mustache-interpolation-spacing.js) to see usage of these services.
+Check out an [example rule](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/lib/rules/mustache-interpolation-spacing.js) to see usage of these services.
 
-Be aware that depending on the code samples you write in tests, the `RuleTester` parser property must be set accordingly (this can be done on a test by test basis). See an [example here](https://github.com/sxzz/eslint-plugin-vue/blob/main/tests/lib/rules/attribute-hyphenation.test.ts#L17).
+Be aware that depending on the code samples you write in tests, the `RuleTester` parser property must be set accordingly (this can be done on a test by test basis). See an [example here](https://github.com/sxzz/eslint-plugin-vuekit/blob/main/tests/lib/rules/attribute-hyphenation.test.ts#L17).
 
-If you're stuck, remember there are many rules available for reference. If you can't find the right solution, don't hesitate to reach out in [issues](https://github.com/sxzz/eslint-plugin-vue/issues) – we're happy to help!
+If you're stuck, remember there are many rules available for reference. If you can't find the right solution, don't hesitate to reach out in [issues](https://github.com/sxzz/eslint-plugin-vuekit/issues) – we're happy to help!
 
 ## :lock: License
 
