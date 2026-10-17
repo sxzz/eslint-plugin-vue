@@ -4,7 +4,7 @@
  */
 
 import { Linter } from 'eslint'
-import plugin from '../../../dist'
+import plugin from '../../../dist/index.mjs'
 import { strict as assert } from 'node:assert'
 import { ESLint } from 'eslint'
 

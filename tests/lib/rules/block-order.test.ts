@@ -5,7 +5,7 @@ import assert from 'node:assert'
 import parserVue from 'vue-eslint-parser'
 import rule from '../../../lib/rules/block-order'
 import { ESLint, RuleTester } from 'eslint'
-import pluginVue from '../../../dist'
+import pluginVue from '../../../dist/index.mjs'
 import processor from '../../../lib/processor'
 
 // Initialize linter.

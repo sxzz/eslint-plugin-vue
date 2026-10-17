@@ -1,5 +1,5 @@
 import assert from 'node:assert'
-import plugin from '../..'
+import plugin from '../../dist/index.mjs'
 import packageJson from '../../package.json' with { type: 'json' }
 
 const expectedMeta = {

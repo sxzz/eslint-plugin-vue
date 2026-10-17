@@ -6,7 +6,7 @@ import type { Linter as ESLintLinter } from 'eslint'
 import { Linter } from 'eslint'
 import parser from 'vue-eslint-parser'
 import assert from 'node:assert'
-import plugin from '../..'
+import plugin from '../../dist/index.mjs'
 
 const { rules } = plugin
 

@@ -422,7 +422,7 @@ tester.run('no-restricted-call-after-await', rule as RuleModule, {
       filename: path.join(import.meta.dirname, '../../../test/test.vue'),
       code: `
       <script>
-      import { foo } from '..'
+      import { foo } from '../dist/index.mjs'
       export default {
         async setup() {
           await doSomething()
@@ -431,11 +431,11 @@ tester.run('no-restricted-call-after-await', rule as RuleModule, {
       }
       </script>
       `,
-      options: [{ module: require.resolve('../../..'), path: 'foo' }],
+      options: [{ module: require.resolve('../../../dist/index.mjs'), path: 'foo' }],
       errors: [
         {
           message:
-            '`import("..").foo` is forbidden after an `await` expression.',
+            '`import("../dist/index.mjs").foo` is forbidden after an `await` expression.',
           line: 7,
           column: 11,
           endLine: 7,

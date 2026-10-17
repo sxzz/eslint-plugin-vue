@@ -4,7 +4,7 @@
  */
 import type { Linter as ESLintLinter } from 'eslint'
 import { Linter } from 'eslint'
-import plugin from '../..'
+import plugin from '../../dist/index.mjs'
 import assert from 'node:assert'
 
 const { rules } = plugin
