@@ -1,4 +1,25 @@
-import * as VAST from './ast'
+import type {
+  ArrowFunctionExpression,
+  CallExpression,
+  Expression,
+  FunctionExpression,
+  Identifier,
+  Literal,
+  NodeListenerMap,
+  ObjectExpression,
+  Property,
+  Range,
+  SourceLocation,
+  SpreadElement,
+  TSCallSignatureDeclaration,
+  TSFunctionType,
+  TSLiteralType,
+  TSMethodSignature,
+  TSPropertySignature,
+  TemplateLiteral,
+  TypeNode
+} from '../types/index.ts'
+import type * as VAST from '../types/ast.ts'
 export type NameWithLoc = {
   name: string
   loc: SourceLocation

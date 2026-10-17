@@ -1,3 +1,4 @@
+import type { ASTNode, Comment, Token } from '../types/index.ts'
 /**
  * Check whether the given token is a wildcard.
  */

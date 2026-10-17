@@ -2,6 +2,8 @@
  * @fileoverview Disallow use other than available `lang`
  * @author Yosuke Ota
  */
+import type { RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { getAttribute, defineDocumentVisitor } from '../utils/index.ts'
 
 export type BlockOptions = { lang: Set<string>; allowNoLang: boolean }
@@ -94,7 +96,7 @@ function normalizeOptions(options: UserOptions) {
   return normalized
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -203,4 +205,6 @@ export default {
       'VDocumentFragment > VElement': verify
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

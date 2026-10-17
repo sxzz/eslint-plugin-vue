@@ -2,6 +2,8 @@
  * @author Marton Csordas
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VIdentifier } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   defineTemplateBodyVisitor,
   getAttribute,
@@ -23,7 +25,7 @@ function getComponentNames(context: RuleContext) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -32,7 +34,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-router-link-tag-prop.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -88,4 +89,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

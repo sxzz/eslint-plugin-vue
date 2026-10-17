@@ -2,6 +2,21 @@
  * @fileoverview Check if there are no asynchronous actions inside computed properties.
  * @author Armano
  */
+import type {
+  ArrowFunctionExpression,
+  AwaitExpression,
+  BlockStatement,
+  CallExpression,
+  ESNode,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  MemberExpression,
+  NewExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { ReferenceTracker } from '@eslint-community/eslint-utils'
 import {
   skipChainExpression,
@@ -144,7 +159,7 @@ function isNextTick(node: CallExpression, context: RuleContext) {
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -152,7 +167,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-async-in-computed-properties.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -330,7 +344,11 @@ export default {
     return compositingVisitors(
       {
         Program(program: Program) {
-          const tracker = new ReferenceTracker(getScope(context, program))
+          const tracker = new ReferenceTracker(
+            getScope(context, program) as unknown as ConstructorParameters<
+              typeof ReferenceTracker
+            >[0]
+          )
           const computedRefs = iterateReferencesTraceMap(tracker, {
             computed: {
               [ReferenceTracker.CALL]: true
@@ -358,4 +376,6 @@ export default {
           })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

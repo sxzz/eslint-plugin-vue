@@ -3,6 +3,8 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   hasDirective,
@@ -10,7 +12,7 @@ import {
   defineTemplateBodyVisitor
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -18,7 +20,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/require-v-for-key.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       requireKey:
@@ -55,4 +56,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

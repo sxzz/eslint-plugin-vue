@@ -1,6 +1,8 @@
 /**
  * @author Doug Wade <douglas.b.wade@gmail.com>
  */
+import type { RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -9,7 +11,7 @@ import {
   isMathElementNode
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -17,7 +19,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-html-elements.html'
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -44,7 +45,7 @@ export default {
     },
     messages: {
       forbiddenElement: 'Unexpected use of forbidden element {{name}}.',
-      // eslint-disable-next-line eslint-plugin/report-message-format
+
       customMessage: '{{message}}'
     }
   },
@@ -82,4 +83,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

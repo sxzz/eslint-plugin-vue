@@ -14,7 +14,7 @@ const tester = new RuleTester({
   }
 })
 
-tester.run('no-restricted-v-on', rule as RuleModule, {
+tester.run('no-restricted-v-on', rule, {
   valid: [
     {
       filename: 'test.vue',

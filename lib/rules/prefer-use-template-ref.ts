@@ -2,6 +2,13 @@
  * @author Thomasan1999
  * See LICENSE file in root directory for full license.
  */
+import type {
+  CallExpression,
+  ModuleDeclaration,
+  RuleContext,
+  Statement
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -32,7 +39,7 @@ function getScriptRefsFromSetupFunction(
   })
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -99,4 +106,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

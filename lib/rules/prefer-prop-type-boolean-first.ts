@@ -2,6 +2,8 @@
  * @author Pig Fang
  * See LICENSE file in root directory for full license.
  */
+import type { ArrayExpression, Property, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isDef,
@@ -46,7 +48,7 @@ function checkArrayExpression(node: ArrayExpression, context: RuleContext) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -54,7 +56,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/prefer-prop-type-boolean-first.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [],
     messages: {
@@ -104,4 +105,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

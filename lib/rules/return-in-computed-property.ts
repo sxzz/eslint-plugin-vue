@@ -2,6 +2,13 @@
  * @fileoverview Enforces that a return statement is present in computed property (return-in-computed-property)
  * @author Armano
  */
+import type {
+  ArrowFunctionExpression,
+  FunctionExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { ReferenceTracker } from '@eslint-community/eslint-utils'
 import {
   getScope,
@@ -15,7 +22,7 @@ import {
 export type ComponentComputedProperty =
   import('../utils').ComponentComputedProperty
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -24,7 +31,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/return-in-computed-property.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -58,7 +64,11 @@ export default {
     return Object.assign(
       {
         Program(program: Program) {
-          const tracker = new ReferenceTracker(getScope(context, program))
+          const tracker = new ReferenceTracker(
+            getScope(context, program) as unknown as ConstructorParameters<
+              typeof ReferenceTracker
+            >[0]
+          )
           const map = {
             computed: {
               [ReferenceTracker.CALL]: true
@@ -111,4 +121,6 @@ export default {
       )
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

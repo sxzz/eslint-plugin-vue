@@ -2,6 +2,12 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  RuleFixer,
+  VDirective,
+  VStartTag
+} from '../../types/index.ts'
 
 import canConvertToVSlotForElement from './utils/can-convert-to-v-slot.ts'
 

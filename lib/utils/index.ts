@@ -3,6 +3,56 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ASTNode,
+  ArrayExpression,
+  ArrowFunctionExpression,
+  AssignmentPattern,
+  AssignmentProperty,
+  BlockStatement,
+  CallExpression,
+  ChainExpression,
+  ESNode,
+  Expression,
+  ExpressionStatement,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  Literal,
+  MemberExpression,
+  MethodDefinition,
+  NewExpression,
+  ObjectExpression,
+  ObjectPattern,
+  ParserServices,
+  Pattern,
+  Program,
+  Property,
+  Range,
+  RestElement,
+  ReturnStatement,
+  RuleContext,
+  RuleListener,
+  SourceCode,
+  SpreadElement,
+  SwitchStatement,
+  TSAsExpression,
+  TemplateListener,
+  TemplateLiteral,
+  Token,
+  VAttribute,
+  VDirective,
+  VElement,
+  VExpressionContainer,
+  VStartTag,
+  VariableDeclarator
+} from '../types/index.ts'
 
 import { getScope } from './scope.ts'
 export { getScope } from './scope.ts'
@@ -11,7 +61,7 @@ import { vueBuiltinElements } from './vue-builtin-elements.ts'
 import { createRequire } from 'node:module'
 import path from 'node:path'
 import { builtinRules } from 'eslint/use-at-your-own-risk'
-import vueEslintParser from 'vue-eslint-parser'
+import { traverseNodes, getFallbackKeys, NS } from './ast.ts'
 import { findVariable, ReferenceTracker } from '@eslint-community/eslint-utils'
 import {
   getComponentPropsFromTypeDefine,
@@ -26,49 +76,30 @@ import mathElements from './math-elements.json' with { type: 'json' }
 import voidElements from './void-elements.json' with { type: 'json' }
 const require = createRequire(import.meta.url)
 
-export type RuleModule = import('eslint').Rule.RuleModule
+export type RuleModule = import('../types/rule.ts').Rule.RuleModule
 export type Position = import('estree').Position
 export type CodePath = import('eslint').Rule.CodePath
 export type CodePathSegment = import('eslint').Rule.CodePathSegment
 
-export type ComponentArrayProp =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentArrayProp
-export type ComponentObjectProp =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentObjectProp
-export type ComponentTypeProp =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentTypeProp
-export type ComponentInferTypeProp =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentInferTypeProp
-export type ComponentUnknownProp =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentUnknownProp
-export type ComponentProp =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentProp
-export type ComponentArrayEmit =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentArrayEmit
-export type ComponentObjectEmit =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentObjectEmit
-export type ComponentTypeEmit =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentTypeEmit
-export type ComponentInferTypeEmit =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentInferTypeEmit
-export type ComponentUnknownEmit =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentUnknownEmit
-export type ComponentEmit =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentEmit
-export type NameWithLoc =
-  import('../../typings/eslint-plugin-vue/util-types/utils').NameWithLoc
-export type ComponentTypeSlot =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentTypeSlot
-export type ComponentInferTypeSlot =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentInferTypeSlot
-export type ComponentUnknownSlot =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentUnknownSlot
-export type ComponentSlot =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentSlot
-export type ComponentModelName =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentModelName
-export type ComponentModel =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ComponentModel
+export type ComponentArrayProp = import('./types.ts').ComponentArrayProp
+export type ComponentObjectProp = import('./types.ts').ComponentObjectProp
+export type ComponentTypeProp = import('./types.ts').ComponentTypeProp
+export type ComponentInferTypeProp = import('./types.ts').ComponentInferTypeProp
+export type ComponentUnknownProp = import('./types.ts').ComponentUnknownProp
+export type ComponentProp = import('./types.ts').ComponentProp
+export type ComponentArrayEmit = import('./types.ts').ComponentArrayEmit
+export type ComponentObjectEmit = import('./types.ts').ComponentObjectEmit
+export type ComponentTypeEmit = import('./types.ts').ComponentTypeEmit
+export type ComponentInferTypeEmit = import('./types.ts').ComponentInferTypeEmit
+export type ComponentUnknownEmit = import('./types.ts').ComponentUnknownEmit
+export type ComponentEmit = import('./types.ts').ComponentEmit
+export type NameWithLoc = import('./types.ts').NameWithLoc
+export type ComponentTypeSlot = import('./types.ts').ComponentTypeSlot
+export type ComponentInferTypeSlot = import('./types.ts').ComponentInferTypeSlot
+export type ComponentUnknownSlot = import('./types.ts').ComponentUnknownSlot
+export type ComponentSlot = import('./types.ts').ComponentSlot
+export type ComponentModelName = import('./types.ts').ComponentModelName
+export type ComponentModel = import('./types.ts').ComponentModel
 
 export type ComponentComputedProperty = {
   key: string | null
@@ -102,14 +133,10 @@ export type ComponentObjectPropertyData = {
 export type ComponentPropertyData =
   ComponentArrayPropertyData | ComponentObjectPropertyData
 
-export type VueObjectType =
-  import('../../typings/eslint-plugin-vue/util-types/utils').VueObjectType
-export type VueObjectData =
-  import('../../typings/eslint-plugin-vue/util-types/utils').VueObjectData
-export type VueVisitor =
-  import('../../typings/eslint-plugin-vue/util-types/utils').VueVisitor
-export type ScriptSetupVisitor =
-  import('../../typings/eslint-plugin-vue/util-types/utils').ScriptSetupVisitor
+export type VueObjectType = import('./types.ts').VueObjectType
+export type VueObjectData = import('./types.ts').VueObjectData
+export type VueVisitor = import('./types.ts').VueVisitor
+export type ScriptSetupVisitor = import('./types.ts').ScriptSetupVisitor
 
 // ------------------------------------------------------------------------------
 // Helpers
@@ -139,7 +166,6 @@ const BUILTIN_DIRECTIVE_NAMES = new Set([
   'memo',
   'is'
 ])
-const { traverseNodes, getFallbackKeys, NS } = vueEslintParser.AST
 
 const componentComments = new WeakMap()
 
@@ -147,8 +173,10 @@ const stylisticRuleMap = new Map<string, RuleModule>()
 /**
  * Get the core rule implementation from the rule name
  */
-export function getCoreRule(name: string): RuleModule | null {
-  return (builtinRules.get(name) as unknown as RuleModule | undefined) || null
+export function getCoreRule(name: string): PublicRuleModule | null {
+  return (
+    (builtinRules.get(name) as unknown as PublicRuleModule | undefined) || null
+  )
 }
 /**
  * Get the ESLint Stylistic rule implementation from the rule name.
@@ -270,7 +298,6 @@ function wrapContextToOverrideTokenMethods(
         return getTokensAndComments()
       },
       getNodeByRangeIndex,
-      // @ts-expect-error -- The SourceCode wrapper provides this method at runtime.
       getDeclaredVariables
     },
     tokenStore
@@ -417,7 +444,10 @@ export type WrapRuleOptions = {
 /**
  * Wrap a given core rule to apply it to Vue.js template.
  */
-export function wrapCoreRule(coreRuleName: string, options?: WrapRuleOptions) {
+export function wrapCoreRule(
+  coreRuleName: string,
+  options?: WrapRuleOptions
+): PublicRuleModule {
   const coreRule = getCoreRule(coreRuleName)
   if (!coreRule) {
     return {
@@ -439,7 +469,7 @@ export function wrapCoreRule(coreRuleName: string, options?: WrapRuleOptions) {
           }
         })
       }
-    }
+    } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
   }
   const rule = wrapRuleModule(coreRule, coreRuleName, options)
   const meta = {
@@ -455,7 +485,7 @@ export function wrapCoreRule(coreRuleName: string, options?: WrapRuleOptions) {
   return {
     ...rule,
     meta
-  }
+  } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
 }
 
 export type RuleNames = { core: string; stylistic: string; vue: string }
@@ -465,7 +495,7 @@ export type RuleNames = { core: string; stylistic: string; vue: string }
 export function wrapStylisticOrCoreRule(
   ruleNames: RuleNames | string,
   options?: WrapRuleOptions
-) {
+): PublicRuleModule {
   const stylisticRuleName =
     typeof ruleNames === 'string' ? ruleNames : ruleNames.stylistic
   const coreRuleName =
@@ -493,7 +523,7 @@ export function wrapStylisticOrCoreRule(
           }
         })
       }
-    }
+    } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
   }
   const rule = wrapRuleModule(baseRule, vueRuleName, options)
   const description = stylisticRule
@@ -515,7 +545,7 @@ export function wrapStylisticOrCoreRule(
   return {
     ...rule,
     meta
-  }
+  } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
 }
 /**
  * Wrap a given rule to apply it to Vue.js template.
@@ -1838,7 +1868,10 @@ export function isThis(node: ESNode, context: RuleContext) {
     return false
   }
 
-  const variable = findVariable(getScope(context, node), node)
+  const variable = (findVariable as unknown as WithVue<typeof findVariable>)(
+    getScope(context, node),
+    node
+  )
 
   if (variable != null && variable.defs.length === 1) {
     const def = variable.defs[0]
@@ -1974,18 +2007,22 @@ export function findMutatingStep(
  */
 export function* iterateReferencesTraceMap(
   tracker: import('@eslint-community/eslint-utils').ReferenceTracker,
-  map: import('@eslint-community/eslint-utils').TYPES.TraceMap
+  map: import('@eslint-community/eslint-utils').TraceMap<unknown>
 ) {
   const esmTraceMap = createCompositionApiTraceMap({
     ...map,
     [ReferenceTracker.ESM]: true
   })
 
-  for (const ref of tracker.iterateEsmReferences(esmTraceMap)) {
+  for (const ref of tracker.iterateEsmReferences(
+    esmTraceMap
+  ) as unknown as WithVue<ReturnType<typeof tracker.iterateEsmReferences>>) {
     yield ref
   }
 
-  for (const ref of tracker.iterateGlobalReferences(map)) {
+  for (const ref of tracker.iterateGlobalReferences(map) as unknown as WithVue<
+    ReturnType<typeof tracker.iterateGlobalReferences>
+  >) {
     yield ref
   }
 }
@@ -2134,7 +2171,10 @@ export function findVariableByIdentifier(
   context: RuleContext,
   node: Identifier
 ) {
-  return findVariable(getScope(context, node), node)
+  return (findVariable as unknown as WithVue<typeof findVariable>)(
+    getScope(context, node),
+    node
+  )
 }
 
 /**
@@ -2195,9 +2235,7 @@ export function isAssignmentProperty(
 /**
  * Checks whether the given node is VElement.
  */
-export function isVElement(
-  node: VElement | VExpressionContainer | VText | VDocumentFragment
-): node is VElement {
+export function isVElement(node: ASTNode): node is VElement {
   return node.type === 'VElement'
 }
 
@@ -2447,7 +2485,9 @@ function isGlobalOrImportedFromVue(callee: Identifier, context: RuleContext) {
     return true
   }
 
-  const tracker = new ReferenceTracker(globalScope)
+  const tracker = new ReferenceTracker(
+    globalScope as unknown as ConstructorParameters<typeof ReferenceTracker>[0]
+  )
 
   const globalTraceMap = {
     [callee.name]: {
@@ -2463,9 +2503,15 @@ function isGlobalOrImportedFromVue(callee: Identifier, context: RuleContext) {
   })
 
   function* allReferences() {
-    yield* tracker.iterateGlobalReferences(globalTraceMap)
-    yield* tracker.iterateEsmReferences(esmTraceMap)
-    yield* tracker.iterateCjsReferences(cjsTraceMap)
+    yield* tracker.iterateGlobalReferences(
+      globalTraceMap
+    ) as unknown as WithVue<ReturnType<typeof tracker.iterateGlobalReferences>>
+    yield* tracker.iterateEsmReferences(esmTraceMap) as unknown as WithVue<
+      ReturnType<typeof tracker.iterateEsmReferences>
+    >
+    yield* tracker.iterateCjsReferences(cjsTraceMap) as unknown as WithVue<
+      ReturnType<typeof tracker.iterateCjsReferences>
+    >
   }
 
   for (const { node } of allReferences()) {
@@ -2478,7 +2524,10 @@ function isGlobalOrImportedFromVue(callee: Identifier, context: RuleContext) {
   // The callee is either from a different source, or it is injected
   // (e.g., <script>defineComponent({})</script>).
 
-  const variable = findVariable(getScope(context, callee), callee)
+  const variable = (findVariable as unknown as WithVue<typeof findVariable>)(
+    getScope(context, callee),
+    callee
+  )
 
   if (variable !== null && variable.defs.length === 1) {
     const def = variable.defs[0]
@@ -2725,11 +2774,15 @@ export function isSFCObject(context: RuleContext, node: ObjectExpression) {
         ) {
           return false
         }
-        const variable = findVariable(getScope(context, node), parent.id)
+        const variable = (
+          findVariable as unknown as WithVue<typeof findVariable>
+        )(getScope(context, node), parent.id)
         if (!variable) {
           return false
         }
-        return variable.references.some((ref) => isSFC(ref.identifier))
+        return variable.references.some(
+          (ref) => ref.identifier.type === 'Identifier' && isSFC(ref.identifier)
+        )
       }
       // No default
     }
@@ -2780,7 +2833,7 @@ export function* iterateWatchHandlerValues(
  * Wraps composition API trace map in 'vue' and '#imports' from unimport
  */
 export function createCompositionApiTraceMap(
-  map: import('@eslint-community/eslint-utils').TYPES.TraceMap
+  map: import('@eslint-community/eslint-utils').TraceMap<unknown>
 ) {
   return {
     vue: map,
@@ -3062,8 +3115,7 @@ function getComponentPropsFromDefineProps(
       }
     ]
   }
-  const typeArguments =
-    'typeArguments' in node ? node.typeArguments : node.typeParameters
+  const typeArguments = node.typeArguments
   if (typeArguments && typeArguments.params.length > 0) {
     return getComponentPropsFromTypeDefine(context, typeArguments.params[0])
   }
@@ -3096,8 +3148,7 @@ function getComponentEmitsFromDefineEmits(
       }
     ]
   }
-  const typeArguments =
-    'typeArguments' in node ? node.typeArguments : node.typeParameters
+  const typeArguments = node.typeArguments
   if (typeArguments && typeArguments.params.length > 0) {
     return getComponentEmitsFromTypeDefine(
       context,
@@ -3120,8 +3171,7 @@ function getComponentSlotsFromDefineSlots(
   context: RuleContext,
   node: CallExpression
 ) {
-  const typeArguments =
-    'typeArguments' in node ? node.typeArguments : node.typeParameters
+  const typeArguments = node.typeArguments
   if (typeArguments && typeArguments.params.length > 0) {
     return getComponentSlotsFromTypeDefine(context, typeArguments.params[0])
   }
@@ -3160,8 +3210,7 @@ function getComponentModelFromDefineModel(
     }
   }
 
-  const typeArguments =
-    'typeArguments' in node ? node.typeArguments : node.typeParameters
+  const typeArguments = node.typeArguments
   if (typeArguments && typeArguments.params.length > 0) {
     return {
       name,
@@ -3302,7 +3351,10 @@ function getObjectOrArray(context: RuleContext, node: ESNode) {
     return node
   }
   if (node.type === 'Identifier') {
-    const variable = findVariable(getScope(context, node), node)
+    const variable = (findVariable as unknown as WithVue<typeof findVariable>)(
+      getScope(context, node),
+      node
+    )
 
     if (variable != null && variable.defs.length === 1) {
       const def = variable.defs[0]

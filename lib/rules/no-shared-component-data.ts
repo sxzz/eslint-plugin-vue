@@ -2,6 +2,13 @@
  * @fileoverview Enforces component's data property to be a function.
  * @author Armano
  */
+import type {
+  Expression,
+  RuleContext,
+  SourceCode,
+  Token
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { executeOnVueComponent, findProperty } from '../utils/index.ts'
 
@@ -30,7 +37,7 @@ function getFirstAndLastTokens(node: Expression, sourceCode: SourceCode) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -74,4 +81,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

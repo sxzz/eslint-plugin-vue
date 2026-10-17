@@ -2,6 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective } from '../../types/index.ts'
 export default {
   deprecated: '3.1.0',
   supported: '>=3.0.0',

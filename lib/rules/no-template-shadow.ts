@@ -2,6 +2,8 @@
  * @fileoverview Disallow variable declarations from shadowing variables declared in the outer scope.
  * @author Armano
  */
+import type { Identifier, RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -30,7 +32,7 @@ function isAllowedVarName(context: RuleContext, variableName: string) {
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -39,7 +41,6 @@ export default {
       categories: ['vue3-strongly-recommended'],
       url: 'https://eslint.vuejs.org/rules/no-template-shadow.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -149,4 +150,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

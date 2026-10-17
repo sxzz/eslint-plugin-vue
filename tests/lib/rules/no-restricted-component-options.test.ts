@@ -13,7 +13,7 @@ const tester = new RuleTester({
   }
 })
 
-tester.run('no-restricted-component-options', rule as RuleModule, {
+tester.run('no-restricted-component-options', rule, {
   valid: [
     {
       filename: 'test.vue',

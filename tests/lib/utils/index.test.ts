@@ -1,3 +1,12 @@
+import type {
+  ESNode,
+  Expression,
+  Literal,
+  ObjectExpression,
+  Property,
+  TemplateLiteral,
+  VariableDeclaration
+} from '../../../lib/types/index.ts'
 import { parse as espreeParse } from 'espree'
 import {
   editDistance,

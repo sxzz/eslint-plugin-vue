@@ -2,6 +2,15 @@
  * @fileoverview Enforce new lines between multi-line properties in Vue components.
  * @author IWANABETHATGUY
  */
+import type {
+  ASTNode,
+  CallExpression,
+  ObjectExpression,
+  RuleContext,
+  SourceCode,
+  Token
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineVueVisitor } from '../utils/index.ts'
 
@@ -38,7 +47,7 @@ function hasEmptyLine(sourceCode: SourceCode, pre: ASTNode, cur: ASTNode) {
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -136,4 +145,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

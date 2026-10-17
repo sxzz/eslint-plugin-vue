@@ -2,6 +2,8 @@
  * @author Wayne Zhang
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 import htmlElements from '../utils/html-elements.json' with { type: 'json' }
@@ -16,7 +18,7 @@ const reservedNames = new Set([
   ...vue3BuiltinComponents
 ])
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -24,7 +26,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/restricted-component-names.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -68,4 +69,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

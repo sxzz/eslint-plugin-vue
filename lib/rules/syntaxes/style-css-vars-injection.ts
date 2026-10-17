@@ -2,6 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, TemplateListener } from '../../types/index.ts'
 import { getStyleVariablesContext } from '../../utils/style-variables/index.ts'
 
 export default {

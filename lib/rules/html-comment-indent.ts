@@ -2,6 +2,8 @@
  * @author Yosuke ota
  * See LICENSE file in root directory for full license.
  */
+import type { Fix, RuleContext, RuleFixer } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineVisitor } from '../utils/html-comments.ts'
 
 function parseOptions(type: number | 'tab' | undefined): {
@@ -48,7 +50,7 @@ function toUnit(char: string) {
   return JSON.stringify(char)
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
 
@@ -235,4 +237,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

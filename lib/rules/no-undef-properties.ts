@@ -2,6 +2,20 @@
  * @fileoverview Disallow undefined properties.
  * @author Yosuke Ota
  */
+import type {
+  ASTNode,
+  ArrowFunctionExpression,
+  ESNode,
+  Expression,
+  FunctionExpression,
+  Identifier,
+  ObjectExpression,
+  Property,
+  RuleContext,
+  ThisExpression,
+  VExpressionContainer
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import type { IPropertyReferences } from '../utils/property-references.ts'
 import * as utils from '../utils/index.ts'
 import reserved from '../utils/vue-reserved.json' with { type: 'json' }
@@ -64,7 +78,7 @@ function getPropertyDataFromObjectProperty(
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -72,7 +86,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-undef-properties.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -112,7 +125,10 @@ export default {
         return reactiveApiNodes
       }
       const tracker = new ReferenceTracker(
-        context.sourceCode.scopeManager.scopes[0]
+        context.sourceCode.scopeManager
+          .scopes[0] as unknown as ConstructorParameters<
+          typeof ReferenceTracker
+        >[0]
       )
       const reactive = new Set<ESNode>()
       const toRefs = new Set<ESNode>()
@@ -350,7 +366,7 @@ export default {
       return exported && vueComponentContextMap.get(exported)
     }
 
-    function getParentProperty(node: Expression): Property | null {
+    function getParentProperty(node: ASTNode): Property | null {
       if (
         !node.parent ||
         node.parent.type !== 'Property' ||
@@ -677,4 +693,6 @@ export default {
       scriptVisitor
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

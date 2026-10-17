@@ -2,6 +2,13 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VAttribute,
+  VDirective,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -32,7 +39,7 @@ function getKeyName(attr: VAttribute | VDirective) {
   return attr.key.name
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -40,7 +47,6 @@ export default {
       categories: ['vue3-recommended'],
       url: 'https://eslint.vuejs.org/rules/no-lone-template.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -97,4 +103,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

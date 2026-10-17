@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirectiveKey } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
@@ -85,7 +87,7 @@ function defaultMessage(key: VDirectiveKey, option: ParsedOption) {
   return `Using \`${vbind + arg + mod}\`${on} is not allowed.`
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -93,7 +95,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-v-bind.html'
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -124,7 +125,6 @@ export default {
     },
 
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       restrictedVBind: '{{message}}'
     }
   },
@@ -151,4 +151,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

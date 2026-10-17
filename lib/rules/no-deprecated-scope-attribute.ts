@@ -2,10 +2,12 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 import scopeAttribute from './syntaxes/scope-attribute.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -13,7 +15,7 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-scope-attribute.html'
     },
-    // eslint-disable-next-line eslint-plugin/require-meta-fixable -- fixer is not recognized
+
     fixable: 'code',
     schema: [],
     messages: {
@@ -25,4 +27,6 @@ export default {
       scopeAttribute.createTemplateBodyVisitor(context)
     return utils.defineTemplateBodyVisitor(context, templateBodyVisitor)
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

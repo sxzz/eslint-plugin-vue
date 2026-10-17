@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * issue https://github.com/vuejs/eslint-plugin-vue/issues/250
  */
+import type { RuleContext, VElement, Variable } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   isScriptSetup,
   isHtmlElementNode,
@@ -41,7 +43,7 @@ function isTypeOnlyImport(variable: Variable): boolean {
   })
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -210,4 +212,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

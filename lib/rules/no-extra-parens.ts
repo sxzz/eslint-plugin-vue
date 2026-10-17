@@ -1,11 +1,23 @@
 /**
  * @author Yosuke Ota
  */
+import type { WithVue } from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  Expression,
+  FunctionExpression,
+  RuleContext,
+  TemplateListener,
+  Token,
+  VExpressionContainer,
+  VFilterSequenceExpression
+} from '../types/index.ts'
+
 import { isParenthesized } from '@eslint-community/eslint-utils'
 import { wrapStylisticOrCoreRule } from '../utils/index.ts'
 import { getStyleVariablesContext } from '../utils/style-variables/index.ts'
 
-// eslint-disable-next-line internal/no-invalid-meta
 export default wrapStylisticOrCoreRule('no-extra-parens', {
   skipDynamicArguments: true,
   applyDocument: true,
@@ -131,14 +143,28 @@ function createForVueSyntax(context: RuleContext): TemplateListener {
         ? node.expression.expression
         : node.expression
 
-    if (!isParenthesized(expression, tokenStore)) {
+    if (
+      !(isParenthesized as unknown as WithVue<typeof isParenthesized>)(
+        expression,
+        tokenStore
+      )
+    ) {
       return
     }
 
-    if (!isParenthesized(2, expression, tokenStore)) {
+    if (
+      !(isParenthesized as unknown as WithVue<typeof isParenthesized>)(
+        2,
+        expression,
+        tokenStore
+      )
+    ) {
       if (
         isIIFE(expression) &&
-        !isParenthesized(expression.callee, tokenStore)
+        !(isParenthesized as unknown as WithVue<typeof isParenthesized>)(
+          expression.callee,
+          tokenStore
+        )
       ) {
         return
       }

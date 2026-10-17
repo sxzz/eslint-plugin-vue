@@ -2,6 +2,13 @@
  * @author Przemysław Jan Beigert
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ArrayExpression,
+  Identifier,
+  ObjectExpression,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isVueFile,
@@ -116,7 +123,7 @@ const checkProp = (
 // Rule Definition
 //------------------------------------------------------------------------------
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -124,7 +131,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-typed-object-prop.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [],
     messages: {
@@ -172,4 +178,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

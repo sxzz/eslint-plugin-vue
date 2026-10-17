@@ -2,10 +2,12 @@
  * @fileoverview disallow using deprecated number (keycode) modifiers
  * @author yoyo930021
  */
+import type { RuleContext, VDirectiveKey } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { keyCodeToKey } from '../utils/keycode-to-key.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -47,4 +49,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

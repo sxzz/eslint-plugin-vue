@@ -2,6 +2,8 @@
  * @author Yosuke Ota <https://github.com/ota-meshi>
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -145,7 +147,7 @@ function buildOptionPhrase(name: string) {
     : `\`${name}\` option`
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -153,7 +155,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/component-api-style.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'array',
@@ -245,4 +246,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

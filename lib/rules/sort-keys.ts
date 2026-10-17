@@ -3,6 +3,8 @@
  * @author Loren Klingman
  * Original ESLint sort-keys by Toru Nagashima
  */
+import type { Property, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import naturalCompare from 'natural-compare'
 import {
@@ -62,7 +64,7 @@ const orderComparators = {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -71,7 +73,6 @@ export default {
       categories: null,
       url: 'https://eslint.vuejs.org/rules/sort-keys.html'
     },
-    fixable: null,
     schema: [
       {
         enum: ['asc', 'desc']
@@ -289,4 +290,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

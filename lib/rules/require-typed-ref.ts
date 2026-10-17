@@ -2,6 +2,25 @@
  * @author Ivan Demchuk <https://github.com/Demivan>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ArrowFunctionExpression,
+  CallExpression,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  Pattern,
+  RuleContext,
+  SpreadElement,
+  VElement
+} from '../types/index.ts'
+
 import { findVariable } from '@eslint-community/eslint-utils'
 import { iterateDefineRefs } from '../utils/ref-object-references.ts'
 import {
@@ -39,7 +58,10 @@ function hasTypeAnnotation(node: Pattern): boolean {
  * Resolves the single definition of the given identifier reference.
  */
 function findDefinition(context: RuleContext, node: Identifier) {
-  const variable = findVariable(getScope(context, node), node)
+  const variable = (findVariable as unknown as WithVue<typeof findVariable>)(
+    getScope(context, node),
+    node
+  )
   return variable?.defs.length === 1 ? variable.defs[0] : null
 }
 
@@ -64,7 +86,11 @@ function findFunction(
   node: Identifier
 ): FunctionNode | null {
   const def = findDefinition(context, node)
-  if (def?.type === 'FunctionName') {
+  if (
+    def?.type === 'FunctionName' &&
+    (def.node.type === 'FunctionDeclaration' ||
+      def.node.type === 'FunctionExpression')
+  ) {
     return def.node
   }
   const init = def?.type === 'Variable' ? def.node.init : null
@@ -130,7 +156,7 @@ function isInTypedPosition(context: RuleContext, node: Expression): boolean {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -139,7 +165,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-typed-ref.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       noType:
@@ -197,10 +222,7 @@ export default {
             continue
           }
 
-          const typeArguments =
-            'typeArguments' in ref.node
-              ? ref.node.typeArguments
-              : ref.node.typeParameters
+          const typeArguments = ref.node.typeArguments
           if (typeArguments != null) {
             continue
           }
@@ -212,4 +234,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

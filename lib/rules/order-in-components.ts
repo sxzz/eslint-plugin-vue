@@ -2,6 +2,15 @@
  * @fileoverview Keep order of properties in components
  * @author Michał Sajnóg
  */
+import type {
+  ASTNode,
+  Property,
+  RuleContext,
+  RuleFixer,
+  SpreadElement,
+  Token
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isProperty,
@@ -10,9 +19,7 @@ import {
   executeOnVue,
   defineScriptSetupVisitor
 } from '../utils/index.ts'
-import vueEslintParser from 'vue-eslint-parser'
-
-const { traverseNodes } = vueEslintParser.AST
+import { traverseNodes } from '../utils/ast.ts'
 
 export type VisitorKeys = import('eslint-visitor-keys').VisitorKeys
 
@@ -206,7 +213,7 @@ function isNotSideEffectsNode(node: ASTNode, visitorKeys: VisitorKeys) {
   return isValidOrder
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -366,4 +373,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

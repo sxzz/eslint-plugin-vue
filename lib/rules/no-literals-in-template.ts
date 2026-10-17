@@ -2,6 +2,13 @@
  * @author rzzf
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VDirective,
+  VElement,
+  VExpressionContainer
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 
@@ -17,7 +24,7 @@ const EXPRESSION_TYPES: Partial<
   ArrowFunctionExpression: 'arrow function'
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -25,7 +32,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-literals-in-template.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -101,4 +107,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

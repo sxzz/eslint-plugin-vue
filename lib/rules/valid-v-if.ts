@@ -3,6 +3,8 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -10,7 +12,7 @@ import {
   isEmptyValueDirective
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -18,7 +20,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-if.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       withVElse:
@@ -74,4 +75,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

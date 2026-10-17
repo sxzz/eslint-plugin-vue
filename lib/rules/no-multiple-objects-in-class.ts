@@ -2,6 +2,13 @@
  * @author tyankatsu <https://github.com/tyankatsu0105>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ArrayExpression,
+  RuleContext,
+  VDirective,
+  VExpressionContainer
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -18,7 +25,7 @@ function countObjectExpression(
   ).length
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -26,7 +33,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-multiple-objects-in-class.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected: 'Unexpected multiple objects. Merge objects.'
@@ -50,4 +56,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

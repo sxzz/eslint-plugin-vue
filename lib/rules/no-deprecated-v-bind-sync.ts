@@ -2,9 +2,11 @@
  * @author Przemyslaw Falowski (@przemkow)
  * @fileoverview Disallow use of deprecated `.sync` modifier on `v-bind` directive (in Vue.js 3.0.0+)
  */
+import type { RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -46,4 +48,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

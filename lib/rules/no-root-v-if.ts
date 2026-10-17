@@ -3,10 +3,12 @@
  * @copyright 2023 Perry Song. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { Program, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { isVElement, hasDirective } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -14,7 +16,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-root-v-if.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       noRootVIf: '`v-if` should not be used on root element without `v-else`.'
@@ -40,4 +41,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

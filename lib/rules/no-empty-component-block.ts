@@ -2,6 +2,8 @@
  * @author tyankatsu <https://github.com/tyankatsu0105>
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { isVElement } from '../utils/index.ts'
 
@@ -33,7 +35,7 @@ function isValueOnlyWhiteSpacesOrLineBreaks(componentBlock: VElement) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -94,4 +96,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

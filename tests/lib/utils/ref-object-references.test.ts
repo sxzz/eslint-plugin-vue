@@ -1,4 +1,14 @@
 import type {
+  ESNode,
+  Identifier,
+  RuleContext,
+  RuleListener
+} from '../../../lib/types/index.ts'
+import type {
+  RuleDefinition,
+  PublicRuleModule
+} from '../../../lib/types/rule.ts'
+import type {
   RefObjectReferences,
   RefObjectReference,
   ReactiveVariableReferences,
@@ -97,7 +107,7 @@ function extractRefs(
                 }
               }
             }
-          } as RuleModule
+          } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
         }
       }
     },

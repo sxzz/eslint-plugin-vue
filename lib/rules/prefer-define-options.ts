@@ -2,6 +2,15 @@
  * @author Yosuke Ota <https://github.com/ota-meshi>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  CallExpression,
+  ExportDefaultDeclaration,
+  ImportDeclaration,
+  RuleContext,
+  VElement,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getScriptSetupElement,
@@ -11,7 +20,7 @@ import {
   hasAttribute
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -74,14 +83,15 @@ export default {
 
         let removeRange = [...node.range]
 
-        const script = scriptSetup.parent.children
-          .filter(isVElement)
-          .find(
-            (node: any) =>
-              node.name === 'script' && !hasAttribute(node, 'setup')
-          )
+        const script = scriptSetup.parent.children.find(
+          (node): node is VElement =>
+            isVElement(node) &&
+            node.name === 'script' &&
+            !hasAttribute(node, 'setup')
+        )
         if (
           script &&
+          isVElement(script) &&
           script.endTag &&
           sourceCode
             .getTokensBetween(script.startTag, script.endTag, {
@@ -123,4 +133,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,6 +2,12 @@
  * @fileoverview Prevents boolean defaults from being set
  * @author Hiroki Osame
  */
+import type {
+  Expression,
+  ObjectExpression,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import * as utils from '../utils/index.ts'
 
@@ -28,7 +34,7 @@ function getDefaultNode(propDefValue: ObjectExpression) {
   return utils.findProperty(propDefValue, 'default')
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -36,7 +42,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-boolean-default.html'
     },
-    fixable: null,
     schema: [
       {
         enum: ['default-false', 'no-default']
@@ -131,4 +136,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

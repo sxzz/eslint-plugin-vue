@@ -1,6 +1,7 @@
 /**
  * @author Toru Nagashima <https://github.com/mysticatea>
  */
+import type { Position } from './types/index.ts'
 import type { Linter } from 'eslint'
 import { meta } from './meta.ts'
 

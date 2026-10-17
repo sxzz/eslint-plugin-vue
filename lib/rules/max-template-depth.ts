@@ -2,8 +2,10 @@
  * @author kevsommer Kevin Sommer
  * See LICENSE file in root directory for full license.
  */
+import type { Program, RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -11,7 +13,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/max-template-depth.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -73,4 +74,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

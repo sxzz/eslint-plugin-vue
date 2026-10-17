@@ -1,4 +1,8 @@
 import type {
+  RuleDefinition,
+  PublicRuleModule
+} from '../../../lib/types/rule.ts'
+import type {
   CommentParserConfig,
   ParsedHTMLComment
 } from '../../../lib/utils/html-comments'
@@ -47,7 +51,7 @@ function tokenize(code: string, option: CommentParserConfig) {
               defineVisitor(content, option, (commentTokens) => {
                 result.push(commentTokens)
               })
-          } as RuleModule
+          } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
         }
       }
     },

@@ -1,7 +1,13 @@
 /**
  * @author Toru Nagashima <https://github.com/mysticatea>
  */
-/* eslint-disable eslint-plugin/report-message-format */
+import type {
+  Position,
+  RuleContext,
+  Token,
+  VDocumentFragment
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { isVElement } from '../utils/index.ts'
 
@@ -253,11 +259,11 @@ function extractTopLevelDocumentFragmentComments(
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'support comment-directives in `<template>`', // eslint-disable-line eslint-plugin/require-meta-docs-description
+      description: 'support comment-directives in `<template>`',
       categories: ['base'],
       url: 'https://eslint.vuejs.org/rules/comment-directive.html'
     },
@@ -333,4 +339,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

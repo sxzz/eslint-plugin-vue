@@ -2,6 +2,8 @@
  * @fileoverview Requires specific casing for the Prop name in Vue components
  * @author Yu Kimura
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import type { ComponentProp } from '../utils/index.ts'
 import {
   compositingVisitors,
@@ -50,7 +52,7 @@ function create(context: RuleContext) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -59,7 +61,6 @@ export default {
       categories: ['vue3-strongly-recommended'],
       url: 'https://eslint.vuejs.org/rules/prop-name-casing.html'
     },
-    fixable: null, // null or "code" or "whitespace"
     schema: [
       {
         enum: allowedCaseOptions
@@ -81,4 +82,6 @@ export default {
     }
   },
   create
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

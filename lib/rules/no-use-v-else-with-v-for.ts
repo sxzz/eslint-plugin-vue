@@ -1,6 +1,8 @@
+import type { RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor, hasDirective } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -9,7 +11,6 @@ export default {
       categories: null,
       url: 'https://eslint.vuejs.org/rules/no-use-v-else-with-v-for.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpectedDirectiveWithVFor:
@@ -38,4 +39,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

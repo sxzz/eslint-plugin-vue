@@ -1,12 +1,16 @@
 /**
  * @author Armano
  */
+import type {
+  RuleDefinition,
+  PublicRuleModule
+} from '../../../lib/types/rule.ts'
 import type { Linter } from 'eslint'
 import { executeOnVueComponent } from '../../../lib/utils/index'
 import { RuleTester } from 'eslint'
 import tsEslintParser from '@typescript-eslint/parser'
 
-const rule: RuleModule = {
+const rule = {
   create(context) {
     return executeOnVueComponent(context, (obj) => {
       context.report({
@@ -17,10 +21,9 @@ const rule: RuleModule = {
   },
   meta: {
     docs: {},
-    fixable: null,
     schema: []
   }
-}
+} satisfies RuleDefinition as RuleDefinition as PublicRuleModule
 
 const languageOptions: Linter.LanguageOptions = {
   ecmaVersion: 6,

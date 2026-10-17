@@ -3,6 +3,8 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 // https://html.spec.whatwg.org/multipage/parsing.html#parse-errors
 const DEFAULT_OPTIONS = Object.freeze(
@@ -46,7 +48,7 @@ const DEFAULT_OPTIONS = Object.freeze(
   })
 )
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -54,7 +56,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-parsing-error.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -101,4 +102,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

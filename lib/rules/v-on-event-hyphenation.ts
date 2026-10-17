@@ -1,8 +1,10 @@
+import type { RuleContext, VDirective, VIdentifier } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.ts'
 import { getConverter } from '../utils/casing.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -44,9 +46,8 @@ export default {
       }
     ],
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       mustBeHyphenated: "v-on event '{{text}}' must be hyphenated.",
-      // eslint-disable-next-line eslint-plugin/report-message-format
+
       cannotBeHyphenated: "v-on event '{{text}}' can't be hyphenated."
     }
   },
@@ -118,4 +119,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,6 +2,19 @@
  * @author Yosuke Ota
  * @fileoverview Rule to disalow whitespace that is not a tab or space, whitespace inside strings and comments are allowed
  */
+import type {
+  ASTNode,
+  Comment,
+  HTMLBogusComment,
+  HTMLComment,
+  Literal,
+  RuleContext,
+  TemplateElement,
+  Token,
+  VLiteral,
+  VText
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -11,7 +24,7 @@ const IRREGULAR_WHITESPACE =
   /[\f\v\u{85}\u{FEFF}\u{A0}\u{1680}\u{180E}\u{2000}\u{2001}\u{2002}\u{2003}\u{2004}\u{2005}\u{2006}\u{2007}\u{2008}\u{2009}\u{200A}\u{200B}\u{202F}\u{205F}\u{3000}]+/gmu
 const IRREGULAR_LINE_TERMINATORS = /[\u{2028}\u{2029}]/gmu
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
 
@@ -215,4 +228,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

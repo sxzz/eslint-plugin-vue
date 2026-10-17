@@ -2,6 +2,8 @@
  * @author @neferqiqi
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 
 export type ComponentTypeProp = import('../utils').ComponentTypeProp
@@ -10,7 +12,7 @@ export type ComponentObjectProp = import('../utils').ComponentObjectProp
 export type ComponentUnknownProp = import('../utils').ComponentUnknownProp
 export type ComponentProp = import('../utils').ComponentProp
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -147,4 +149,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

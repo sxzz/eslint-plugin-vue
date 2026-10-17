@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * issue https://github.com/vuejs/eslint-plugin-vue/issues/140
  */
+import type { RuleContext, RuleListener, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import type { VElementSelector } from '../utils/selector.ts'
 import { isVElement, hasInvalidEOF } from '../utils/index.ts'
 import { parseSelector } from '../utils/selector.ts'
@@ -24,7 +26,7 @@ function getAttributeString(element: VElement): string {
     .join(' ')
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -163,4 +165,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

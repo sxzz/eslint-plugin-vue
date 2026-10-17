@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { ImportDeclaration, Literal, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import vue3ExportNamesList from '../utils/vue3-export-names.json' with { type: 'json' }
 
 const vue3ExportNames = new Set(vue3ExportNamesList)
@@ -26,7 +28,9 @@ function* extractSpecifierNames(
       break
     }
     case 'ImportSpecifier': {
-      yield specifier.imported.name
+      yield specifier.imported.type === 'Identifier'
+        ? specifier.imported.name
+        : specifier.imported.value
       break
     }
   }
@@ -38,7 +42,7 @@ function* extractImportNames(node: ImportDeclaration) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -141,4 +145,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -14,7 +14,7 @@ const tester = new RuleTester({
   }
 })
 
-tester.run('no-restricted-call-after-await', rule as RuleModule, {
+tester.run('no-restricted-call-after-await', rule, {
   valid: [
     {
       filename: 'test.vue',

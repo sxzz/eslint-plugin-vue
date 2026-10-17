@@ -2,6 +2,14 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ExportAllDeclaration,
+  ExportDefaultDeclaration,
+  ExportNamedDeclaration,
+  RuleContext,
+  SourceLocation
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineScriptSetupVisitor } from '../utils/index.ts'
 
@@ -12,7 +20,7 @@ export type TSESTreeExportDefaultDeclaration =
 export type TSESTreeExportNamedDeclaration =
   import('@typescript-eslint/types').TSESTree.ExportNamedDeclaration
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -20,7 +28,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-export-in-script-setup.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       forbidden: '`<script setup>` cannot contain ES module exports.'
@@ -68,4 +75,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -3,6 +3,16 @@
  * @author Yizack Rangel
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Expression,
+  Literal,
+  RuleContext,
+  TemplateElement,
+  VAttribute,
+  VDirective,
+  VLiteral
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -183,7 +193,7 @@ function getRawValue(node: VLiteral | Literal | TemplateElement | null) {
     : node.value
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -374,4 +384,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

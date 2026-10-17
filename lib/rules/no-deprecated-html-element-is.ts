@@ -2,9 +2,16 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VAttribute,
+  VDirective,
+  VElement
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -13,7 +20,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-html-element-is.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected: 'The `is` attribute on HTML element are deprecated.'
@@ -56,4 +62,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

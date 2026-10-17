@@ -2,6 +2,17 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  ParserServices,
+  SourceCode,
+  VAttribute,
+  VDirective,
+  VElement,
+  VExpressionContainer,
+  VForExpression,
+  VVariable
+} from '../../../types/index.ts'
 
 import {
   isCustomComponent,

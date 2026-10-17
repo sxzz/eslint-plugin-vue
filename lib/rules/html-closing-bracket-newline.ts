@@ -3,6 +3,8 @@
  * @copyright 2016 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VEndTag, VStartTag } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineDocumentVisitor } from '../utils/index.ts'
 
@@ -50,7 +52,7 @@ function getExpectedLineBreaks(
   return options[type] === 'always' ? 1 : 0
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -142,4 +144,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

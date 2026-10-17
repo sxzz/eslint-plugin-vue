@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { Program, RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { isVElement, hasInvalidEOF } from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
@@ -28,7 +30,7 @@ function defaultMessage(block: VElement) {
   return `Using \`<${block.rawName}>\` is not allowed.`
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -36,7 +38,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-block.html'
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -58,7 +59,6 @@ export default {
     },
 
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       restrictedBlock: '{{message}}'
     }
   },
@@ -96,4 +96,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

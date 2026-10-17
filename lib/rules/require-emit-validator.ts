@@ -2,6 +2,8 @@
  * @fileoverview Emit definitions should be detailed
  * @author Pig Fang
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -12,7 +14,7 @@ import {
 
 export type ComponentEmit = import('../utils').ComponentEmit
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -20,7 +22,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-emit-validator.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [],
     messages: {
@@ -94,4 +95,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -3,13 +3,15 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
   isEmptyValueDirective
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -17,7 +19,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-text.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpectedArgument: "'v-text' directives require no argument.",
@@ -55,4 +56,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

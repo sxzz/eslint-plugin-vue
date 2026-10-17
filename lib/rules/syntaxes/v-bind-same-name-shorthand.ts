@@ -2,6 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective } from '../../types/index.ts'
 
 import { isVBindSameNameShorthand } from '../../utils/index.ts'
 

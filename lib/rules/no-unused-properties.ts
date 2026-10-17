@@ -2,6 +2,25 @@
  * @fileoverview Disallow unused properties, data and computed properties.
  * @author Learning Equality
  */
+import type {
+  ASTNode,
+  ArrowFunctionExpression,
+  CallExpression,
+  Comment,
+  Expression,
+  FunctionExpression,
+  Identifier,
+  Pattern,
+  Program,
+  Property,
+  RuleContext,
+  SourceCode,
+  ThisExpression,
+  Token,
+  VAttribute,
+  VExpressionContainer
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import type { ComponentProp, GroupName, VueObjectData } from '../utils/index.ts'
 import type { IPropertyReferences } from '../utils/property-references.js'
 import {
@@ -113,7 +132,7 @@ function findExpression(context: RuleContext, id: Identifier): Expression {
   return id
 }
 
-function getParentProperty(node: Expression): Property | null {
+function getParentProperty(node: ASTNode): Property | null {
   if (
     !node.parent ||
     node.parent.type !== 'Property' ||
@@ -188,7 +207,10 @@ function findJSDocComment(
     tokenBefore = sourceCode.getTokenBefore(currentNode, {
       includeComments: true
     })
-    if (!tokenBefore || !isCommentToken(tokenBefore)) {
+    if (
+      !tokenBefore ||
+      !isCommentToken(tokenBefore as Parameters<typeof isCommentToken>[0])
+    ) {
       return null
     }
     if (tokenBefore.type === 'Line') {
@@ -205,7 +227,7 @@ function findJSDocComment(
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -213,7 +235,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-unused-properties.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -738,4 +759,6 @@ export default {
 
     return defineTemplateBodyVisitor(context, templateVisitor, scriptVisitor)
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

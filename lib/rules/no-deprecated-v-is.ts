@@ -2,10 +2,12 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 import vIs from './syntaxes/v-is.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -13,7 +15,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-v-is.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       forbiddenVIs: '`v-is` directive is deprecated.'
@@ -23,4 +24,6 @@ export default {
     const templateBodyVisitor = vIs.createTemplateBodyVisitor(context)
     return utils.defineTemplateBodyVisitor(context, templateBodyVisitor)
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

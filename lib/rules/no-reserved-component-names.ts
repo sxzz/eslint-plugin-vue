@@ -2,6 +2,15 @@
  * @fileoverview disallow the use of reserved names in component definitions
  * @author Jake Hassel <https://github.com/shadskii>
  */
+import type {
+  ESNode,
+  Expression,
+  Literal,
+  RuleContext,
+  SpreadElement,
+  TemplateLiteral
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 import { capitalize, pascalCase } from '../utils/casing.ts'
 import htmlElements from '../utils/html-elements.json' with { type: 'json' }
@@ -49,7 +58,7 @@ const CAPITALIZED_RESERVED_NAMES_IN_OTHERS = new Set<string>([
   ...svgElements.filter(isLowercase).map(capitalize)
 ])
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -58,7 +67,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-reserved-component-names.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -108,7 +116,7 @@ export default {
       let name
       if (node.type === 'TemplateLiteral') {
         const quasis = node.quasis[0]
-        name = quasis.value.cooked
+        name = quasis.value.cooked ?? quasis.value.raw
       } else {
         name = String(node.value)
       }
@@ -166,4 +174,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

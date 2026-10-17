@@ -3,8 +3,29 @@
  * @copyright 2022 Yosuke Ota. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { WithVue, Scope } from '../types/rule.ts'
 
-import type { Scope } from 'eslint'
+import type {
+  ASTNode,
+  ArrayExpression,
+  AssignmentProperty,
+  CallExpression,
+  Expression,
+  Identifier,
+  MemberExpression,
+  ObjectExpression,
+  ObjectPattern,
+  Pattern,
+  Program,
+  Property,
+  Reference,
+  RuleContext,
+  SpreadElement,
+  Super,
+  VariableDeclaration,
+  VariableDeclarator
+} from '../types/index.ts'
+
 import { iterateReferencesTraceMap, isDef } from './index.ts'
 import { findVariable, ReferenceTracker } from '@eslint-community/eslint-utils'
 import { definePropertyReferenceExtractor } from './property-references.ts'
@@ -89,7 +110,9 @@ const cacheForReactiveVariableReferences = new WeakMap<
 export function* iterateDefineRefs(
   globalScope: Scope.Scope
 ): Iterable<{ node: CallExpression; name: string }> {
-  const tracker = new ReferenceTracker(globalScope)
+  const tracker = new ReferenceTracker(
+    globalScope as unknown as ConstructorParameters<typeof ReferenceTracker>[0]
+  )
   const reactiveReferences = iterateReferencesTraceMap(tracker, {
     ref: {
       [ReferenceTracker.CALL]: true
@@ -268,14 +291,18 @@ function* extractIdentifier(node: Pattern): Iterable<Identifier> {
 function* iterateIdentifierReferences(
   id: Identifier,
   globalScope: Scope.Scope
-): Iterable<Scope.Reference> {
-  const variable = findVariable(globalScope, id)
+): Iterable<Scope.Reference & { identifier: Identifier }> {
+  const variable = (findVariable as unknown as WithVue<typeof findVariable>)(
+    globalScope,
+    id
+  )
   if (!variable) {
     return
   }
 
   for (const reference of variable.references) {
-    yield reference
+    if (reference.identifier.type !== 'Identifier') continue
+    yield reference as typeof reference & { identifier: Identifier }
   }
 }
 

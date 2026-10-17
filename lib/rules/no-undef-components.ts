@@ -2,6 +2,15 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  RuleContext,
+  RuleListener,
+  TemplateListener,
+  VAttribute,
+  VDirective
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import path from 'node:path'
 import {
   isHtmlWellKnownElementName,
@@ -97,7 +106,7 @@ class DefinedInOptionComponents {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -105,7 +114,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-undef-components.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -317,4 +325,6 @@ export default {
       scriptVisitor
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

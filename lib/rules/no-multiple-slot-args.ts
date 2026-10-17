@@ -2,6 +2,17 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  Identifier,
+  MemberExpression,
+  RuleContext
+} from '../types/index.ts'
 
 import {
   getScope,
@@ -12,7 +23,7 @@ import {
 } from '../utils/index.ts'
 import { findVariable } from '@eslint-community/eslint-utils'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -20,7 +31,6 @@ export default {
       categories: ['vue3-recommended'],
       url: 'https://eslint.vuejs.org/rules/no-multiple-slot-args.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected: 'Unexpected multiple arguments.',
@@ -78,11 +88,14 @@ export default {
      * Verify the references of the given node.
      */
     function verifyReferences(node: Identifier) {
-      const variable = findVariable(getScope(context, node), node)
+      const variable = (
+        findVariable as unknown as WithVue<typeof findVariable>
+      )(getScope(context, node), node)
       if (!variable) {
         return
       }
       for (const reference of variable.references) {
+        if (reference.identifier.type !== 'Identifier') continue
         if (!reference.isRead()) {
           continue
         }
@@ -109,4 +122,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

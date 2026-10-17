@@ -2,6 +2,8 @@
  * @author kevsommer Kevin Sommer
  * See LICENSE file in root directory for full license.
  */
+import type { CallExpression, Property, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   compositingVisitors,
   executeOnVue,
@@ -10,7 +12,7 @@ import {
   defineScriptSetupVisitor
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -18,7 +20,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/max-props.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -77,4 +78,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

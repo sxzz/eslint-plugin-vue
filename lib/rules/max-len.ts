@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * @fileoverview Rule to check for max length on a line of Vue file.
  */
+import type { Program, RuleContext, Token, VLiteral } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -155,7 +157,7 @@ function groupByLineNumber(nodes: Token[]) {
   return grouped
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
 
@@ -196,7 +198,7 @@ export default {
 
     const tokens: Token[] = []
 
-    const comments: (HTMLComment | HTMLBogusComment | Comment)[] = []
+    const comments: Token[] = []
 
     const htmlAttributeValues: VLiteral[] = []
 
@@ -245,7 +247,7 @@ export default {
         (token) =>
           token.type === 'String' ||
           (token.type === 'JSXText' &&
-            sourceCode.getNodeByRangeIndex(token.range[0] - 1).type ===
+            sourceCode.getNodeByRangeIndex(token.range[0] - 1)?.type ===
               'JSXAttribute')
       )
     }
@@ -492,4 +494,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

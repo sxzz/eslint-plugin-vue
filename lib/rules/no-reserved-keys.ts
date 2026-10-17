@@ -2,6 +2,8 @@
  * @fileoverview Prevent overwrite reserved keys
  * @author Armano
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -22,7 +24,7 @@ const GROUP_NAMES = [
   'setup'
 ]
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -30,7 +32,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-reserved-keys.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -108,4 +109,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

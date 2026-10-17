@@ -2,6 +2,16 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ArrowFunctionExpression,
+  AwaitExpression,
+  CallExpression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { ReferenceTracker } from '@eslint-community/eslint-utils'
 import {
   compositingVisitors,
@@ -11,7 +21,8 @@ import {
   inRange
 } from '../utils/index.ts'
 
-export type TraceMap = import('@eslint-community/eslint-utils').TYPES.TraceMap
+export type TraceMap =
+  import('@eslint-community/eslint-utils').TraceMap<unknown>
 
 const LIFECYCLE_HOOKS = [
   'onBeforeMount',
@@ -27,7 +38,7 @@ const LIFECYCLE_HOOKS = [
   'onDeactivated'
 ]
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -35,7 +46,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-lifecycle-after-await.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       forbidden: 'Lifecycle hooks are forbidden after an `await` expression.'
@@ -58,7 +68,11 @@ export default {
     return compositingVisitors(
       {
         Program(program: Program) {
-          const tracker = new ReferenceTracker(getScope(context, program))
+          const tracker = new ReferenceTracker(
+            getScope(context, program) as unknown as ConstructorParameters<
+              typeof ReferenceTracker
+            >[0]
+          )
 
           const traceMap: Record<string, Record<symbol, boolean>> = {}
           for (const lifecycleHook of LIFECYCLE_HOOKS) {
@@ -134,4 +148,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

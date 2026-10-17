@@ -2,6 +2,8 @@
  * @fileoverview Define the number of attributes allows per line
  * @author Filipa Lacerda
  */
+import type { RuleContext, VAttribute, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor, isSingleLine } from '../utils/index.ts'
 
@@ -54,7 +56,7 @@ function groupAttrsByLine(attributes: (VDirective | VAttribute)[]) {
   return propsPerLine
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -166,4 +168,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

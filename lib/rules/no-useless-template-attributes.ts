@@ -2,6 +2,13 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VAttribute,
+  VDirective,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -42,7 +49,7 @@ function isFragmentTemplateAttribute(attr: VAttribute | VDirective) {
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -50,7 +57,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-useless-template-attributes.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpectedAttr: 'Unexpected useless attribute on `<template>`.',
@@ -83,4 +89,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

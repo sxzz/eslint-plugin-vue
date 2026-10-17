@@ -2,10 +2,12 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { isCustomComponent, defineTemplateBodyVisitor } from '../utils/index.ts'
 import { pascalCase, kebabCase } from '../utils/casing.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -13,7 +15,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-v-text-v-html-on-component.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -81,4 +82,6 @@ export default {
       "VAttribute[directive=true][key.name.name='html']": verify
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

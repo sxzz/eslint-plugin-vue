@@ -2,6 +2,14 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Fix,
+  RuleContext,
+  RuleFixer,
+  TemplateListener,
+  VAttribute,
+  VDirective
+} from '../../types/index.ts'
 import canConvertToVSlot from './utils/can-convert-to-v-slot.ts'
 import { toRegExpGroupMatcher } from '../../utils/regexp.ts'
 import { pascalCase, kebabCase } from '../../utils/casing.ts'

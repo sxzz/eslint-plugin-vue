@@ -1,3 +1,4 @@
+import type { ASTNode, ESNode, RuleContext } from '../types/index.ts'
 /**
  * Gets the scope for the current node
  */

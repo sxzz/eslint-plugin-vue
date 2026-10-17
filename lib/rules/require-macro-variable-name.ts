@@ -2,6 +2,8 @@
  * @author ItMaga
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineScriptSetupVisitor } from '../utils/index.ts'
 
@@ -13,7 +15,7 @@ const DEFAULT_OPTIONS = {
   useAttrs: 'attrs'
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -21,7 +23,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-macro-variable-name.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [
       {
@@ -94,4 +95,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

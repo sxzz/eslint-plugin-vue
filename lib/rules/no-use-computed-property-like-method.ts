@@ -2,6 +2,25 @@
  * @author tyankatsu <https://github.com/tyankatsu0105>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ArrowFunctionExpression,
+  CallExpression,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  ObjectExpression,
+  ReturnStatement,
+  RuleContext,
+  ThisExpression,
+  VExpressionContainer
+} from '../types/index.ts'
 
 import { getStaticValue } from '@eslint-community/eslint-utils'
 import {
@@ -17,7 +36,7 @@ import {
   defineTemplateBodyVisitor
 } from '../utils/index.ts'
 
-export type Scope = import('eslint').Scope.Scope
+export type Scope = import('../types/rule.ts').Scope.Scope
 export type ComponentObjectPropertyData =
   import('../utils').ComponentObjectPropertyData
 export type GroupName = import('../utils').GroupName
@@ -64,6 +83,7 @@ function resolvedExpressions(context: RuleContext, node: Expression) {
         const variable = findVariableByIdentifier(context, node)
         if (variable) {
           for (const ref of variable.references) {
+            if (ref.identifier.type !== 'Identifier') continue
             const id = ref.identifier
             if (id.parent.type === 'VariableDeclarator') {
               if (id.parent.id === id && id.parent.init) {
@@ -192,7 +212,9 @@ function maybeFunction(context: RuleContext, node: Expression) {
     ) {
       continue
     }
-    const evaluated = getStaticValue(expr, getScope(context, expr))
+    const evaluated = (
+      getStaticValue as unknown as WithVue<typeof getStaticValue>
+    )(expr, getScope(context, expr))
     if (!evaluated) {
       // It could be a function because we don't know what it is.
       return true
@@ -479,7 +501,7 @@ class ComponentStack {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -487,7 +509,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-use-computed-property-like-method.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected: 'Use {{ likeProperty }} instead of {{ likeMethod }}.'
@@ -588,4 +609,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

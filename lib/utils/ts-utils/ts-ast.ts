@@ -1,18 +1,34 @@
+import type { WithVue } from '../../types/rule.ts'
+
+import type { Normalize } from '../../types/ast.ts'
+import type {
+  ASTNode,
+  ESNode,
+  RuleContext,
+  TypeNode
+} from '../../types/index.ts'
 import { getScope } from '../scope.ts'
 import { findVariable } from '@eslint-community/eslint-utils'
 import { inferRuntimeTypeFromTypeNode } from './ts-types.ts'
 
-export type TSESTreeTypeNode =
+export type TSESTreeTypeNode = Normalize<
   import('@typescript-eslint/types').TSESTree.TypeNode
-export type TSESTreeTSInterfaceBody =
+>
+export type TSESTreeTSInterfaceBody = Normalize<
   import('@typescript-eslint/types').TSESTree.TSInterfaceBody
-export type TSESTreeTSTypeLiteral =
+>
+export type TSESTreeTSTypeLiteral = Normalize<
   import('@typescript-eslint/types').TSESTree.TSTypeLiteral
-export type TSESTreeTSFunctionType =
+>
+export type TSESTreeTSFunctionType = Normalize<
   import('@typescript-eslint/types').TSESTree.TSFunctionType
-export type TSESTreeParameter =
+>
+export type TSESTreeParameter = Normalize<
   import('@typescript-eslint/types').TSESTree.Parameter
-export type TSESTreeNode = import('@typescript-eslint/types').TSESTree.Node
+>
+export type TSESTreeNode = Normalize<
+  import('@typescript-eslint/types').TSESTree.Node
+>
 
 export type ComponentTypeProp = import('../index').ComponentTypeProp
 export type ComponentUnknownProp = import('../index').ComponentUnknownProp
@@ -26,7 +42,7 @@ export type ComponentUnknownSlot = import('../index').ComponentUnknownSlot
  * list stays exhaustive: adding or removing a member of `TypeNode['type']`
  * becomes a compile-time error here.
  */
-const TYPE_NODE_TYPES: Partial<Record<ASTNode['type'], boolean>> = {
+const TYPE_NODE_TYPES: Partial<Record<string, boolean>> = {
   TSAbstractKeyword: true,
   TSAnyKeyword: true,
   TSAsyncKeyword: true,
@@ -219,7 +235,9 @@ export function* extractRuntimeSlots(
 function* extractEventNames(
   eventName: TSESTreeParameter,
   member:
-    | import('@typescript-eslint/types').TSESTree.TSCallSignatureDeclaration
+    | Normalize<
+        import('@typescript-eslint/types').TSESTree.TSCallSignatureDeclaration
+      >
     | TSESTreeTSFunctionType
 ) {
   if (
@@ -279,10 +297,9 @@ export function flattenTypeNodes(context: RuleContext, node: TypeNode) {
       node.typeName.type === 'Identifier'
     ) {
       const refName = node.typeName.name
-      const variable = findVariable(
-        getScope(context, node as unknown as ESNode),
-        refName
-      )
+      const variable = (
+        findVariable as unknown as WithVue<typeof findVariable>
+      )(getScope(context, node as unknown as ESNode), refName)
       if (variable && variable.defs.length === 1) {
         const defNode = variable.defs[0].node
         if (defNode.type === 'TSInterfaceDeclaration') {
@@ -368,10 +385,9 @@ export function inferRuntimeType(
     }
     case 'TSTypeReference': {
       if (node.typeName.type === 'Identifier') {
-        const variable = findVariable(
-          getScope(context, node as unknown as ESNode),
-          node.typeName.name
-        )
+        const variable = (
+          findVariable as unknown as WithVue<typeof findVariable>
+        )(getScope(context, node as unknown as ESNode), node.typeName.name)
         if (variable && variable.defs.length === 1) {
           const defNode = variable.defs[0].node
           if (defNode.type === 'TSInterfaceDeclaration') {
@@ -470,8 +486,10 @@ export function inferRuntimeType(
 
   function inferUnionType(
     node:
-      | import('@typescript-eslint/types').TSESTree.TSUnionType
-      | import('@typescript-eslint/types').TSESTree.TSIntersectionType
+      | Normalize<import('@typescript-eslint/types').TSESTree.TSUnionType>
+      | Normalize<
+          import('@typescript-eslint/types').TSESTree.TSIntersectionType
+        >
   ): string[] {
     const types = new Set<string>()
     for (const t of node.types) {
@@ -484,7 +502,7 @@ export function inferRuntimeType(
 }
 
 function inferTypeLiteralType(
-  node: import('@typescript-eslint/types').TSESTree.TSTypeLiteral
+  node: Normalize<import('@typescript-eslint/types').TSESTree.TSTypeLiteral>
 ) {
   const types = new Set<string>()
   for (const m of node.members) {
@@ -524,7 +542,7 @@ function inferLiteralValueType(
 
 function inferEnumType(
   context: RuleContext,
-  node: import('@typescript-eslint/types').TSESTree.TSEnumDeclaration
+  node: Normalize<import('@typescript-eslint/types').TSESTree.TSEnumDeclaration>
 ) {
   const types = new Set<string>()
   for (const m of node.members) {

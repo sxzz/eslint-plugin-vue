@@ -2,6 +2,11 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VDirectiveKey,
+  VIdentifier
+} from '../../types/index.ts'
 
 export default {
   supported: '>=3.2.0',

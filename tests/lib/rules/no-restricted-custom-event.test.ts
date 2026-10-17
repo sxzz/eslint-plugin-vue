@@ -13,7 +13,7 @@ const tester = new RuleTester({
   }
 })
 
-tester.run('no-restricted-custom-event', rule as RuleModule, {
+tester.run('no-restricted-custom-event', rule, {
   valid: [
     {
       filename: 'test.vue',

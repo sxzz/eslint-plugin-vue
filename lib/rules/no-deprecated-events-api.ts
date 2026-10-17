@@ -2,6 +2,13 @@
  * @fileoverview disallow using deprecated events api
  * @author yoyo930021
  */
+import type {
+  CallExpression,
+  ChainExpression,
+  MemberExpression,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineVueVisitor,
@@ -10,7 +17,7 @@ import {
   isThis
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -18,7 +25,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-events-api.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       noDeprecatedEventsApi:
@@ -64,4 +70,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

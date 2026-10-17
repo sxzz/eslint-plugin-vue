@@ -2,6 +2,12 @@
  * @fileoverview Require default value for props
  * @author Michał Sajnóg <msajnog93@gmail.com> (https://github.com/michalsnik)
  */
+import type {
+  Expression,
+  ObjectExpression,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 export type ComponentProp = import('../utils').ComponentProp
 export type ComponentObjectProp = import('../utils').ComponentObjectProp
@@ -40,7 +46,7 @@ function isValueNodeOfBooleanType(value: Expression) {
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -48,7 +54,6 @@ export default {
       categories: ['vue3-strongly-recommended'],
       url: 'https://eslint.vuejs.org/rules/require-default-prop.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       missingDefault: `Prop '{{propName}}' requires default value to be set.`
@@ -211,4 +216,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

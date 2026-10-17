@@ -1,3 +1,9 @@
+import type {
+  RuleContext,
+  VElement,
+  VExpressionContainer,
+  VReference
+} from '../../types/index.ts'
 import { isVElement } from '../index.ts'
 
 export class StyleVariablesContext {

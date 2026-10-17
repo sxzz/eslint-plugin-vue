@@ -2,6 +2,16 @@
  * @author Eduard Deisling
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  CallExpression,
+  Program,
+  RuleContext,
+  RuleFixer,
+  Token,
+  VElement
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getScriptSetupElement,
@@ -331,7 +341,7 @@ function create(context: RuleContext) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -372,4 +382,6 @@ export default {
     }
   },
   create
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

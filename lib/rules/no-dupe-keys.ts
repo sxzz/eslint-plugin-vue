@@ -2,12 +2,27 @@
  * @fileoverview Prevents duplication of field names.
  * @author Armano
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  ESNode,
+  Expression,
+  Identifier,
+  Pattern,
+  RuleContext,
+  VariableDeclarator
+} from '../types/index.ts'
 
 import { findVariable } from '@eslint-community/eslint-utils'
 import * as utils from '../utils/index.ts'
 
 export type GroupName = import('../utils').GroupName
-export type Variable = import('eslint').Scope.Variable
+export type Variable = import('../types/rule.ts').Scope.Variable
 export type ComponentProp = import('../utils').ComponentProp
 
 const GROUP_NAMES = ['props', 'computed', 'data', 'methods', 'setup']
@@ -157,7 +172,7 @@ function collectRenamedProps(pattern: Pattern | null) {
   return renamedProps
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -165,7 +180,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-dupe-keys.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -225,10 +239,9 @@ export default {
               continue
             }
 
-            const variable = findVariable(
-              utils.getScope(context, node),
-              propName
-            )
+            const variable = (
+              findVariable as unknown as WithVue<typeof findVariable>
+            )(utils.getScope(context, node), propName)
             if (!variable || variable.defs.length === 0) continue
 
             if (
@@ -262,11 +275,15 @@ export default {
      */
     function extractReferences(node: Pattern): Identifier[] {
       if (node.type === 'Identifier') {
-        const variable = findVariable(utils.getScope(context, node), node)
+        const variable = (
+          findVariable as unknown as WithVue<typeof findVariable>
+        )(utils.getScope(context, node), node)
         if (!variable) {
           return []
         }
-        return variable.references.map((ref) => ref.identifier)
+        return variable.references
+          .map((ref) => ref.identifier)
+          .filter((node): node is Identifier => node.type === 'Identifier')
       }
       if (node.type === 'ObjectPattern') {
         return node.properties.flatMap((prop: any) =>
@@ -282,4 +299,6 @@ export default {
       return []
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

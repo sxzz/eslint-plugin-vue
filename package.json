@@ -91,6 +91,7 @@
     "@types/xml-name-validator": "^4.0.3",
     "@typescript-eslint/eslint-plugin": "^8.62.1",
     "@typescript-eslint/parser": "^8.62.1",
+    "@typescript-eslint/scope-manager": "^8.71.2",
     "@typescript-eslint/types": "^8.62.1",
     "@vitest/coverage-v8": "^4.1.9",
     "assert": "^2.1.0",

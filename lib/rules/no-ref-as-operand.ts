@@ -2,6 +2,22 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  AssignmentExpression,
+  CallExpression,
+  ConditionalExpression,
+  Identifier,
+  LogicalExpression,
+  MemberExpression,
+  RuleContext
+} from '../types/index.ts'
+
 import type { VueObjectData } from '../utils/index.ts'
 import type {
   RefObjectReferences,
@@ -66,7 +82,7 @@ function getCalleeMemberNode(node: CallExpression) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -93,11 +109,14 @@ export default {
       node: Identifier,
       referenceIds: Set<Identifier>
     ) {
-      const variable = findVariable(getScope(context, node), node)
+      const variable = (
+        findVariable as unknown as WithVue<typeof findVariable>
+      )(getScope(context, node), node)
       if (!variable) {
         return
       }
       for (const reference of variable.references) {
+        if (reference.identifier.type !== 'Identifier') continue
         referenceIds.add(reference.identifier)
       }
     }
@@ -318,4 +337,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

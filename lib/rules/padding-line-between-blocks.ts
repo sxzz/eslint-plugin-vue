@@ -2,6 +2,14 @@
  * @fileoverview Require or disallow padding lines between blocks
  * @author Yosuke Ota
  */
+import type {
+  ASTNode,
+  Program,
+  RuleContext,
+  Token,
+  VElement
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   isVElement,
   defineTemplateBodyVisitor,
@@ -109,7 +117,7 @@ const PaddingTypes = {
   always: { verify: verifyForAlways }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -117,7 +125,7 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/padding-line-between-blocks.html'
     },
-    // eslint-disable-next-line eslint-plugin/require-meta-fixable -- fixer is not recognized
+
     fixable: 'whitespace',
     schema: [
       {
@@ -201,4 +209,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

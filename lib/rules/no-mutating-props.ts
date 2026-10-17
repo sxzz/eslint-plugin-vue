@@ -2,6 +2,24 @@
  * @fileoverview disallow mutation component props
  * @author 2018 Armano
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ASTNode,
+  AssignmentProperty,
+  CallExpression,
+  ESNode,
+  Identifier,
+  MemberExpression,
+  ObjectExpression,
+  Pattern,
+  RuleContext,
+  ThisExpression
+} from '../types/index.ts'
 
 export type PropsInfo = { name?: string; set: Set<string> }
 
@@ -99,7 +117,7 @@ function parseOptions(options: any) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -107,7 +125,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-mutating-props.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -211,12 +228,15 @@ export default {
     }
 
     function verifyPropVariable(prop: Identifier, path: string[]) {
-      const variable = findVariable(getScope(context, prop), prop)
+      const variable = (
+        findVariable as unknown as WithVue<typeof findVariable>
+      )(getScope(context, prop), prop)
       if (!variable) {
         return
       }
 
       for (const reference of variable.references) {
+        if (reference.identifier.type !== 'Identifier') continue
         if (!reference.isRead()) {
           continue
         }
@@ -492,4 +512,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

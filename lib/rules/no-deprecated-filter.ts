@@ -2,9 +2,11 @@
  * @author Przemyslaw Falowski (@przemkow)
  * @fileoverview disallow using deprecated filters syntax
  */
+import type { RuleContext, VFilterSequenceExpression } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -13,7 +15,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-filter.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       noDeprecatedFilter: 'Filters are deprecated.'
@@ -30,4 +31,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,6 +2,28 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ArrowFunctionExpression,
+  AssignmentExpression,
+  CallExpression,
+  ESNode,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  Pattern,
+  Program,
+  RuleContext,
+  Super,
+  VariableDeclarator
+} from '../types/index.ts'
+
 import { findVariable } from '@eslint-community/eslint-utils'
 import {
   skipChainExpression,
@@ -90,7 +112,7 @@ function isPropsMemberAccessed(
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -99,7 +121,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-setup-props-reactivity-loss.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       destructuring:
@@ -212,7 +233,7 @@ export default {
         | FunctionExpression
         | ArrowFunctionExpression
         | Program,
-      currentScope: import('eslint').Scope.Scope,
+      currentScope: import('../types/rule.ts').Scope.Scope,
       scopeName: string
     ) {
       if (
@@ -229,7 +250,9 @@ export default {
         return
       }
 
-      const variable = findVariable(currentScope, node)
+      const variable = (
+        findVariable as unknown as WithVue<typeof findVariable>
+      )(currentScope, node)
       if (!variable) {
         return
       }
@@ -247,6 +270,7 @@ export default {
       }
       const propsReferenceIds = scopePropsReferences.refs[kind]
       for (const reference of variable.references) {
+        if (reference.identifier.type !== 'Identifier') continue
         // If reference is in another scope, we can't check it.
         if (reference.from !== currentScope) {
           continue
@@ -380,4 +404,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

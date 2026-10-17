@@ -2,6 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VAttribute } from '../../types/index.ts'
 export default {
   supported: '>=3.1.0',
 

@@ -36,8 +36,10 @@ const logger = console
  * See LICENSE file in root directory for full license.
  */
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
+import type { RuleContext } from '../types/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -45,7 +47,6 @@ export default {
       categories: undefined,
       url: ''
     },
-    fixable: null,
     schema: [],
     messages: {
       // ...
@@ -58,7 +59,9 @@ export default {
       // ...
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule
 `
   )
   fs.writeFileSync(

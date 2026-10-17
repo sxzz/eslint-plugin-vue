@@ -2,6 +2,25 @@
  * @fileoverview Don't introduce side effects in computed properties
  * @author Michał Sajnóg
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ArrowFunctionExpression,
+  BlockStatement,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  MemberExpression,
+  Program,
+  RuleContext,
+  ThisExpression
+} from '../types/index.ts'
+
 import { ReferenceTracker, findVariable } from '@eslint-community/eslint-utils'
 import {
   isThis as utilsIsThis,
@@ -21,7 +40,7 @@ export type VueVisitor = import('../utils').VueVisitor
 export type ComponentComputedProperty =
   import('../utils').ComponentComputedProperty
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -29,7 +48,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-side-effects-in-computed-properties.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpectedSideEffectInFunction:
@@ -138,7 +156,9 @@ export default {
           return
         }
 
-        const variable = findVariable(getScope(context, node), node)
+        const variable = (
+          findVariable as unknown as WithVue<typeof findVariable>
+        )(getScope(context, node), node)
         if (!variable || variable.defs.length !== 1) {
           return
         }
@@ -182,7 +202,11 @@ export default {
     return compositingVisitors(
       {
         Program(program: Program) {
-          const tracker = new ReferenceTracker(getScope(context, program))
+          const tracker = new ReferenceTracker(
+            getScope(context, program) as unknown as ConstructorParameters<
+              typeof ReferenceTracker
+            >[0]
+          )
 
           const computedRefs = iterateReferencesTraceMap(tracker, {
             computed: {
@@ -214,4 +238,6 @@ export default {
           })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

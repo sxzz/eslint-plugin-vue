@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VExpressionContainer } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   equalTokens,
@@ -58,7 +60,7 @@ function buildOrOperands(node: VExpression) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -67,7 +69,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-dupe-v-else-if.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected:
@@ -164,4 +165,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

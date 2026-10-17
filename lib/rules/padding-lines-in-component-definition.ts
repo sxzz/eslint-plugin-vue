@@ -2,6 +2,14 @@
  * @author ItMaga <https://github.com/ItMaga>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Property,
+  RuleContext,
+  RuleFixer,
+  SpreadElement,
+  Token
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 export type ComponentProp = import('../utils').ComponentProp
 export type ComponentEmit = import('../utils').ComponentEmit
@@ -81,7 +89,7 @@ function needGroupSingleLineProperties(
   return isSingleCurrentProperty && isSingleNextProperty && shouldGroup
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -208,7 +216,9 @@ export default {
           const tokenBeforeNext = sourceCode.getTokenBefore(nextProperty, {
             includeComments: true
           })
-          const isCommentBefore = isCommentToken(tokenBeforeNext)
+          const isCommentBefore = isCommentToken(
+            tokenBeforeNext as Parameters<typeof isCommentToken>[0]
+          )
           const reportNode = isCommentBefore ? tokenBeforeNext : nextProperty
 
           const betweenLinesRange =
@@ -344,4 +354,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

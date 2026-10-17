@@ -2,10 +2,12 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import slotAttribute from './syntaxes/slot-attribute.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -13,7 +15,7 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-slot-attribute.html'
     },
-    // eslint-disable-next-line eslint-plugin/require-meta-fixable -- fixer is not recognized
+
     fixable: 'code',
     schema: [
       {
@@ -41,4 +43,6 @@ export default {
     const templateBodyVisitor = slotAttribute.createTemplateBodyVisitor(context)
     return defineTemplateBodyVisitor(context, templateBodyVisitor)
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

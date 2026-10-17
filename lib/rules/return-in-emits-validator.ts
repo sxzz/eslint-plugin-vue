@@ -2,6 +2,16 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ArrowFunctionExpression,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  ObjectExpression,
+  ReturnStatement,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -31,7 +41,7 @@ function isFalsy(node: Expression) {
     (node.name === 'undefined' || node.name === 'NaN')
   )
 }
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -40,7 +50,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/return-in-emits-validator.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       expectedTrue:
@@ -146,4 +155,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

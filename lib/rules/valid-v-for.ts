@@ -3,6 +3,13 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Pattern,
+  RuleContext,
+  VDirective,
+  VElement
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getDirective,
@@ -86,7 +93,7 @@ function checkKey(context: RuleContext, vFor: VDirective, element: VElement) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -94,7 +101,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-for.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -205,4 +211,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

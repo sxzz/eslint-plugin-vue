@@ -2,6 +2,14 @@
  * @fileoverview Disable inheritAttrs when using v-bind="$attrs"
  * @author Hiroki Osame
  */
+import type {
+  ObjectExpression,
+  RuleContext,
+  VElement,
+  VExpressionContainer,
+  VReference
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   hasDirective,
@@ -35,7 +43,7 @@ function isMultiRootNodes(elements: VElement[]) {
   return elements.length > 1 && !isConditionalGroup(elements)
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -44,7 +52,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-duplicate-attr-inheritance.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -131,4 +138,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

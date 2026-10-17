@@ -2,6 +2,8 @@
  * @author Doug Wade <douglas.b.wade@gmail.com>
  * See LICENSE file in root directory for full license.
  */
+import type { Identifier, RuleContext, RuleListener } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   executeOnVueComponent,
   findProperty,
@@ -13,7 +15,7 @@ function getExpectedNames(identifier: Identifier): string[] {
   return [pascalCase(identifier.name), kebabCase(identifier.name)]
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -22,7 +24,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/match-component-import-name.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected:
@@ -64,4 +65,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

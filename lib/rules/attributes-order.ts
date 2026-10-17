@@ -2,6 +2,16 @@
  * @fileoverview enforce ordering of attributes
  * @author Erin Depew
  */
+import type {
+  RuleContext,
+  SourceCode,
+  VAttribute,
+  VDirective,
+  VDirectiveKey,
+  VIdentifier,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
 export type VBindDirective = VDirective & {
@@ -411,7 +421,7 @@ function create(context: RuleContext) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -454,4 +464,6 @@ export default {
     }
   },
   create
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

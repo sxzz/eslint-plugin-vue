@@ -2,10 +2,10 @@
  * @author ItMaga <https://github.com/ItMaga>
  * See LICENSE file in root directory for full license.
  */
+import type { MemberExpression } from '../types/index.ts'
 
 import { wrapCoreRule, getStaticPropertyName } from '../utils/index.ts'
 
-// eslint-disable-next-line internal/no-invalid-meta
 export default wrapCoreRule('no-console', {
   skipBaseHandlers: true,
   create(context: any) {

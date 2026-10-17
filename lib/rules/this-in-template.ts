@@ -2,6 +2,15 @@
  * @fileoverview disallow usage of `this` in template.
  * @author Armano
  */
+import type {
+  Identifier,
+  MemberExpression,
+  RuleContext,
+  ThisExpression,
+  VElement,
+  VExpressionContainer
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -11,7 +20,7 @@ import reservedNames from '../utils/js-reserved.json' with { type: 'json' }
 
 const RESERVED_NAMES = new Set(reservedNames)
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -127,4 +136,6 @@ export default {
           })
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

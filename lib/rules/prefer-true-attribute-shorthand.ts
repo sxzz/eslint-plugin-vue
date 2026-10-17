@@ -2,6 +2,8 @@
  * @author Pig Fang
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VAttribute, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
 import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.ts'
 
@@ -49,7 +51,7 @@ function shouldConvertToShortForm(
   return isLiteralTrue && (option === 'always' ? !isExcepted : isExcepted)
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -58,7 +60,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/prefer-true-attribute-shorthand.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [
       { enum: ['always', 'never'] },
@@ -158,4 +159,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

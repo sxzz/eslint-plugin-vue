@@ -2,6 +2,7 @@
  * @fileoverview Internal rule to prevent missing or invalid meta property in core rules.
  * @author Vitor Balocco
  */
+import { findVariable } from '@eslint-community/eslint-utils'
 
 /**
  * Gets the property of the Object node passed in that has the name specified.
@@ -21,6 +22,15 @@ function getPropertyFromObject(propertyName: string, node: any): any {
  * Checks the validity of the meta definition of this rule and reports any errors found.
  */
 function checkMetaValidity(context: any, exportsNode: any) {
+  const callee =
+    exportsNode?.type === 'CallExpression' ? exportsNode.callee : null
+  if (
+    callee &&
+    ['wrapCoreRule', 'wrapStylisticOrCoreRule'].includes(
+      callee.name ?? callee.property?.name
+    )
+  )
+    return
   const metaProperty = getPropertyFromObject('meta', exportsNode)
   if (!metaProperty) {
     context.report({
@@ -98,6 +108,26 @@ export default {
 
       ExportDefaultDeclaration(node: any) {
         exportsNode = node.declaration
+        const visited = new Set()
+        while (exportsNode && !visited.has(exportsNode)) {
+          visited.add(exportsNode)
+          if (
+            exportsNode.type === 'TSAsExpression' ||
+            exportsNode.type === 'TSSatisfiesExpression'
+          ) {
+            exportsNode = exportsNode.expression
+          } else if (exportsNode.type === 'Identifier') {
+            const variable = findVariable(
+              context.sourceCode.getScope(exportsNode),
+              exportsNode.name
+            )
+            const declaration = variable?.defs[0]?.node
+            if (declaration?.type !== 'VariableDeclarator') break
+            exportsNode = declaration.init
+          } else {
+            break
+          }
+        }
       },
 
       'Program:exit'() {

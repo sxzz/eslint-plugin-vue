@@ -3,6 +3,21 @@
  * See LICENSE file in root directory for full license.
  */
 import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  Identifier,
+  ObjectExpression,
+  Program,
+  Rule,
+  RuleContext
+} from '../types/index.ts'
+
+import type {
   ComponentEmit,
   ComponentProp,
   NameWithLoc,
@@ -45,7 +60,7 @@ const FIX_EMITS_AFTER_OPTIONS = new Set([
   'errorCaptured'
 ])
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -53,7 +68,6 @@ export default {
       categories: ['vue3-strongly-recommended'],
       url: 'https://eslint.vuejs.org/rules/require-explicit-emits.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [
       {
@@ -273,15 +287,15 @@ export default {
             }
 
             emitParamName = emitParam.name
-            const variable = findVariable(
-              utils.getScope(context, emitParam),
-              emitParam
-            )
+            const variable = (
+              findVariable as unknown as WithVue<typeof findVariable>
+            )(utils.getScope(context, emitParam), emitParam)
             if (!variable) {
               return
             }
             const emitReferenceIds = new Set<Identifier>()
             for (const reference of variable.references) {
+              if (reference.identifier.type !== 'Identifier') continue
               if (!reference.isRead()) {
                 continue
               }
@@ -354,12 +368,16 @@ export default {
               // `setup(props, {emit})`
               const variable =
                 emitParam.type === 'Identifier'
-                  ? findVariable(utils.getScope(context, emitParam), emitParam)
+                  ? (findVariable as unknown as WithVue<typeof findVariable>)(
+                      utils.getScope(context, emitParam),
+                      emitParam
+                    )
                   : null
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 if (!reference.isRead()) {
                   continue
                 }
@@ -368,14 +386,14 @@ export default {
               }
             } else if (contextParam.type === 'Identifier') {
               // `setup(props, context)`
-              const variable = findVariable(
-                utils.getScope(context, contextParam),
-                contextParam
-              )
+              const variable = (
+                findVariable as unknown as WithVue<typeof findVariable>
+              )(utils.getScope(context, contextParam), contextParam)
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 if (!reference.isRead()) {
                   continue
                 }
@@ -414,7 +432,7 @@ export default {
       )
     )
   }
-}
+} satisfies RuleDefinition as RuleDefinition as PublicRuleModule
 
 function buildSuggest(
   define: ObjectExpression | Program,
@@ -478,7 +496,9 @@ function buildSuggest(
     if (emitsOptionValue.type === 'ArrayExpression') {
       const leftBracket = sourceCode.getFirstToken(
         emitsOptionValue,
-        isOpeningBracketToken
+        isOpeningBracketToken as unknown as WithVue<
+          typeof isOpeningBracketToken
+        >
       )!
       return [
         {
@@ -498,7 +518,7 @@ function buildSuggest(
     if (emitsOptionValue.type === 'ObjectExpression') {
       const leftBrace = sourceCode.getFirstToken(
         emitsOptionValue,
-        isOpeningBraceToken
+        isOpeningBraceToken as unknown as WithVue<typeof isOpeningBraceToken>
       )!
       return [
         {
@@ -543,11 +563,11 @@ function buildSuggest(
         }
         const objectLeftBrace = sourceCode.getFirstToken(
           object,
-          isOpeningBraceToken
+          isOpeningBraceToken as unknown as WithVue<typeof isOpeningBraceToken>
         )!
         const objectRightBrace = sourceCode.getLastToken(
           object,
-          isClosingBraceToken
+          isClosingBraceToken as unknown as WithVue<typeof isClosingBraceToken>
         )!
         return fixer.insertTextAfter(
           objectLeftBrace,
@@ -580,11 +600,11 @@ function buildSuggest(
         }
         const objectLeftBrace = sourceCode.getFirstToken(
           object,
-          isOpeningBraceToken
+          isOpeningBraceToken as unknown as WithVue<typeof isOpeningBraceToken>
         )!
         const objectRightBrace = sourceCode.getLastToken(
           object,
-          isClosingBraceToken
+          isClosingBraceToken as unknown as WithVue<typeof isClosingBraceToken>
         )!
         return fixer.insertTextAfter(
           objectLeftBrace,
@@ -598,3 +618,5 @@ function buildSuggest(
     }
   ]
 }
+
+export default rule as typeof rule & PublicRuleModule

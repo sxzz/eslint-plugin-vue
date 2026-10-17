@@ -2,6 +2,8 @@
  * @author lsdsjy
  * @fileoverview Rule for checking the maximum number of lines in Vue SFC blocks.
  */
+import type { Program, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { SourceCode } from 'eslint'
 import { isVElement, hasInvalidEOF } from '../utils/index.ts'
@@ -10,7 +12,7 @@ function isEmptyLine(text: string) {
   return !text.trim()
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -18,7 +20,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/max-lines-per-block.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -102,4 +103,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

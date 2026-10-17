@@ -2,6 +2,22 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ArrowFunctionExpression,
+  AwaitExpression,
+  CallExpression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+
 import fs from 'node:fs'
 import path from 'node:path'
 import { ReferenceTracker } from '@eslint-community/eslint-utils'
@@ -14,8 +30,10 @@ import {
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 
-export type TraceMap = import('@eslint-community/eslint-utils').TYPES.TraceMap
-export type TraceKind = import('@eslint-community/eslint-utils').TYPES.TraceKind
+export type TraceMap =
+  import('@eslint-community/eslint-utils').TraceMap<unknown>
+export type TraceKind =
+  import('@eslint-community/eslint-utils').TraceMap<unknown>[string]
 
 function safeRequireResolve(id: string) {
   try {
@@ -28,7 +46,7 @@ function safeRequireResolve(id: string) {
   return id
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -36,7 +54,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-call-after-await.html'
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -63,7 +80,6 @@ export default {
       minItems: 0
     },
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       restricted: '{{message}}'
     }
   },
@@ -118,7 +134,11 @@ export default {
     return compositingVisitors(
       {
         Program(node: Program) {
-          const tracker = new ReferenceTracker(getScope(context, node))
+          const tracker = new ReferenceTracker(
+            getScope(context, node) as unknown as ConstructorParameters<
+              typeof ReferenceTracker
+            >[0]
+          )
 
           for (const option of context.options) {
             const modules = normalizeModules(option.module, node)
@@ -146,7 +166,11 @@ export default {
                   '.'
                 )}\` is forbidden after an \`await\` expression.`
 
-              for (const { node } of tracker.iterateEsmReferences(traceMap)) {
+              for (const { node } of tracker.iterateEsmReferences(
+                traceMap
+              ) as unknown as WithVue<
+                ReturnType<typeof tracker.iterateEsmReferences>
+              >) {
                 restrictedCallNodes.set(node, message)
               }
             }
@@ -213,4 +237,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

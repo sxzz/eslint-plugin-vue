@@ -2,9 +2,11 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { Program, RuleContext, RuleListener } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import * as utils from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -13,7 +15,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-functional-template.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected: 'The `functional` template are deprecated.'
@@ -38,4 +39,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

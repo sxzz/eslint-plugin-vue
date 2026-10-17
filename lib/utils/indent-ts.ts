@@ -2,8 +2,16 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import type { TSNodeListener } from '../../typings/eslint-plugin-vue/util-types/indent-helper.ts'
-import type { HasLocation } from '../../typings/eslint-plugin-vue/util-types/node/index.ts'
+import type { WithVue } from '../types/rule.ts'
+
+import type {
+  ASTNode,
+  ParserServices,
+  SourceCode,
+  Token
+} from '../types/index.ts'
+import type { TSNodeListener } from '../types/indent.ts'
+import type { HasLocation } from '../types/ast.ts'
 import type { TSESTree } from '@typescript-eslint/types'
 import {
   isClosingParenToken,
@@ -199,8 +207,12 @@ export function defineVisitor({
       while (
         leftToken &&
         rightToken &&
-        isOpeningParenToken(leftToken) &&
-        isClosingParenToken(rightToken)
+        isOpeningParenToken(
+          leftToken as Parameters<typeof isOpeningParenToken>[0]
+        ) &&
+        isClosingParenToken(
+          rightToken as Parameters<typeof isClosingParenToken>[0]
+        )
       ) {
         setOffset(firstToken, 1, leftToken)
         setOffset(rightToken, 0, leftToken)
@@ -379,7 +391,7 @@ export function defineVisitor({
       const leftParenToken = currToken
       const rightParenToken = tokenStore.getTokenAfter(
         node.params.at(-1) || leftParenToken,
-        isClosingParenToken
+        isClosingParenToken as unknown as WithVue<typeof isClosingParenToken>
       )!
       processNodeList(node.params, leftParenToken, rightParenToken, 1)
       const arrowToken = tokenStore.getTokenAfter(rightParenToken)
@@ -452,7 +464,9 @@ export function defineVisitor({
       const leftBracketToken = tokenStore.getFirstToken(node)
       const rightBracketToken = tokenStore.getTokenAfter(
         node.parameters.at(-1) || leftBracketToken,
-        isClosingBracketToken
+        isClosingBracketToken as unknown as WithVue<
+          typeof isClosingBracketToken
+        >
       )!
       processNodeList(node.parameters, leftBracketToken, rightBracketToken, 1)
       const keyLast = rightBracketToken
@@ -508,11 +522,15 @@ export function defineVisitor({
       const objectToken = tokenStore.getFirstToken(node)
       const leftBracketToken = tokenStore.getTokenBefore(
         node.indexType,
-        isOpeningBracketToken
+        isOpeningBracketToken as unknown as WithVue<
+          typeof isOpeningBracketToken
+        >
       )
       const rightBracketToken = tokenStore.getTokenAfter(
         node.indexType,
-        isClosingBracketToken
+        isClosingBracketToken as unknown as WithVue<
+          typeof isClosingBracketToken
+        >
       )
       setOffset(leftBracketToken, 1, objectToken)
       processNodeList([node.indexType], leftBracketToken, rightBracketToken, 1)
@@ -677,12 +695,16 @@ export function defineVisitor({
       setOffset(extendsTypeToken, 1, extendsToken)
       const questionToken = tokenStore.getTokenAfter(
         node.extendsType,
-        isNotClosingParenToken
+        isNotClosingParenToken as unknown as WithVue<
+          typeof isNotClosingParenToken
+        >
       )!
       const consequentToken = tokenStore.getTokenAfter(questionToken)
       const colonToken = tokenStore.getTokenAfter(
         node.trueType,
-        isNotClosingParenToken
+        isNotClosingParenToken as unknown as WithVue<
+          typeof isNotClosingParenToken
+        >
       )!
       const alternateToken = tokenStore.getTokenAfter(colonToken)
       let baseNode = node
@@ -819,7 +841,11 @@ export function defineVisitor({
         const bodyFirstToken = tokenStore.getFirstToken(node.body)
         setOffset(
           bodyFirstToken,
-          isOpeningBraceToken(bodyFirstToken) ? 0 : 1,
+          isOpeningBraceToken(
+            bodyFirstToken as Parameters<typeof isOpeningBraceToken>[0]
+          )
+            ? 0
+            : 1,
           firstToken
         )
       }
@@ -838,7 +864,7 @@ export function defineVisitor({
       }
       const leftParenToken = tokenStore.getTokenAfter(
         keyLast,
-        isOpeningParenToken
+        isOpeningParenToken as unknown as WithVue<typeof isOpeningParenToken>
       )!
       setOffset(
         [
@@ -850,7 +876,7 @@ export function defineVisitor({
       )
       const rightParenToken = tokenStore.getTokenAfter(
         node.params.at(-1) || leftParenToken,
-        isClosingParenToken
+        isClosingParenToken as unknown as WithVue<typeof isClosingParenToken>
       )
       processNodeList(node.params, leftParenToken, rightParenToken, 1)
       if (node.returnType) {
@@ -911,7 +937,7 @@ export function defineVisitor({
       const leftParenToken = currToken
       const rightParenToken = tokenStore.getTokenAfter(
         node.params.at(-1) || leftParenToken,
-        isClosingParenToken
+        isClosingParenToken as unknown as WithVue<typeof isClosingParenToken>
       )!
       processNodeList(node.params, leftParenToken, rightParenToken, 1)
       if (node.returnType) {
@@ -959,7 +985,9 @@ export function defineVisitor({
         let nextTokenOffset = 0
         while (
           nextToken &&
-          !isOpeningParenToken(nextToken) &&
+          !isOpeningParenToken(
+            nextToken as Parameters<typeof isOpeningParenToken>[0]
+          ) &&
           nextToken.value !== '<'
         ) {
           if (
@@ -975,12 +1003,17 @@ export function defineVisitor({
         leftParenToken = nextToken
         bodyBaseToken = firstToken
       }
-      if (!isOpeningParenToken(leftParenToken) && node.typeParameters) {
+      if (
+        !isOpeningParenToken(
+          leftParenToken as Parameters<typeof isOpeningParenToken>[0]
+        ) &&
+        node.typeParameters
+      ) {
         leftParenToken = tokenStore.getTokenAfter(node.typeParameters)
       }
       const rightParenToken = tokenStore.getTokenAfter(
         node.params.at(-1) || leftParenToken,
-        isClosingParenToken
+        isClosingParenToken as unknown as WithVue<typeof isClosingParenToken>
       )
       setOffset(leftParenToken, 1, bodyBaseToken)
       processNodeList(node.params, leftParenToken, rightParenToken, 1)
@@ -1030,7 +1063,9 @@ export function defineVisitor({
       const firstToken = tokenStore.getFirstToken(node)
       const opToken = tokenStore.getTokenAfter(
         node.parameterName,
-        isNotClosingParenToken
+        isNotClosingParenToken as unknown as WithVue<
+          typeof isNotClosingParenToken
+        >
       )
       const rightToken =
         node.typeAnnotation &&
@@ -1157,7 +1192,7 @@ export function defineVisitor({
       const firstToken = tokenStore.getFirstToken(node)
       const leftParenToken = tokenStore.getTokenAfter(
         firstToken,
-        isOpeningParenToken
+        isOpeningParenToken as unknown as WithVue<typeof isOpeningParenToken>
       )
       setOffset(leftParenToken, 1, firstToken)
 
@@ -1175,7 +1210,7 @@ export function defineVisitor({
       }
       const rightParenToken = tokenStore.getTokenAfter(
         args.at(-1)!,
-        isClosingParenToken
+        isClosingParenToken as unknown as WithVue<typeof isClosingParenToken>
       )
       processNodeList(args, leftParenToken, rightParenToken, 1)
       if (node.qualifier) {
@@ -1236,7 +1271,7 @@ export function defineVisitor({
       const requireToken = tokenStore.getFirstToken(node)
       const leftParenToken = tokenStore.getTokenAfter(
         requireToken,
-        isOpeningParenToken
+        isOpeningParenToken as unknown as WithVue<typeof isOpeningParenToken>
       )
       const rightParenToken = tokenStore.getLastToken(node)
       setOffset(leftParenToken, 1, requireToken)

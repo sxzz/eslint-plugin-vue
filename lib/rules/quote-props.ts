@@ -2,10 +2,10 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { VExpressionContainer } from '../types/index.ts'
 
 import { wrapStylisticOrCoreRule, flatten } from '../utils/index.ts'
 
-// eslint-disable-next-line internal/no-invalid-meta
 export default wrapStylisticOrCoreRule('quote-props', {
   skipDynamicArguments: true,
   preprocess(

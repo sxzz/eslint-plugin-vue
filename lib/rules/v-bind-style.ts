@@ -3,6 +3,15 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Range,
+  RuleContext,
+  VDirective,
+  VDirectiveKey,
+  VExpressionContainer,
+  VIdentifier
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   isVBindSameNameShorthand,
   defineTemplateBodyVisitor
@@ -38,7 +47,7 @@ function getCutStart(key: VBindDirectiveKey): number {
   return (lastModifier || key.argument).range[1]
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -152,4 +161,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

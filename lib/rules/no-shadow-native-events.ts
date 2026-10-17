@@ -2,6 +2,20 @@
  * @author Jonathan Carle
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  Identifier,
+  ObjectExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+
 import domEvents from '../utils/dom-events.json' with { type: 'json' }
 import { findVariable } from '@eslint-community/eslint-utils'
 import type {
@@ -47,7 +61,7 @@ function isEmitVariableName(
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -180,7 +194,10 @@ export default {
         const emitParam = node.parent.id
         const variable =
           emitParam.type === 'Identifier'
-            ? findVariable(getScope(context, emitParam), emitParam)
+            ? (findVariable as unknown as WithVue<typeof findVariable>)(
+                getScope(context, emitParam),
+                emitParam
+              )
             : null
         if (!variable) {
           return
@@ -188,6 +205,7 @@ export default {
 
         const emitReferenceIds = new Set<Identifier>()
         for (const reference of variable.references) {
+          if (reference.identifier.type !== 'Identifier') continue
           if (!reference.isRead()) {
             continue
           }
@@ -228,12 +246,16 @@ export default {
           // `setup(props, {emit})`
           const variable =
             emitParam.type === 'Identifier'
-              ? findVariable(getScope(context, emitParam), emitParam)
+              ? (findVariable as unknown as WithVue<typeof findVariable>)(
+                  getScope(context, emitParam),
+                  emitParam
+                )
               : null
           if (!variable) {
             return
           }
           for (const reference of variable.references) {
+            if (reference.identifier.type !== 'Identifier') continue
             if (!reference.isRead()) {
               continue
             }
@@ -242,14 +264,14 @@ export default {
           }
         } else if (contextParam.type === 'Identifier') {
           // `setup(props, context)`
-          const variable = findVariable(
-            getScope(context, contextParam),
-            contextParam
-          )
+          const variable = (
+            findVariable as unknown as WithVue<typeof findVariable>
+          )(getScope(context, contextParam), contextParam)
           if (!variable) {
             return
           }
           for (const reference of variable.references) {
+            if (reference.identifier.type !== 'Identifier') continue
             if (!reference.isRead()) {
               continue
             }
@@ -313,4 +335,6 @@ export default {
       )
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

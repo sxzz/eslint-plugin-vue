@@ -1,3 +1,12 @@
+import type {
+  ESNode,
+  Expression,
+  RuleContext,
+  SwitchStatement,
+  TSNode,
+  TypeNode
+} from '../../types/index.ts'
+import type { Normalize } from '../../types/ast.ts'
 import {
   getTypeScript,
   isAny,
@@ -146,8 +155,8 @@ export function inferRuntimeTypeFromTypeNode(
   node:
     | TypeNode
     | Expression
-    | import('@typescript-eslint/types').TSESTree.TypeNode
-    | import('@typescript-eslint/types').TSESTree.Expression
+    | Normalize<import('@typescript-eslint/types').TSESTree.TypeNode>
+    | Normalize<import('@typescript-eslint/types').TSESTree.Expression>
 ) {
   const services = getTSParserServices(context)
   const tsNode = services && services.tsNodeMap.get(node)

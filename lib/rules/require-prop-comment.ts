@@ -2,6 +2,8 @@
  * @author CZB
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, Token } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import type { ComponentProp } from '../utils/index.ts'
 import {
   compositingVisitors,
@@ -11,7 +13,7 @@ import {
 } from '../utils/index.ts'
 import { isBlockComment, isJSDocComment } from '../utils/comments.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -19,7 +21,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-prop-comment.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -45,21 +46,19 @@ export default {
 
     const sourceCode = context.sourceCode
 
-    const verifyBlock = (comment: Comment | undefined) =>
+    const verifyBlock = (comment: Token | undefined) =>
       comment && isBlockComment(comment) ? undefined : 'requireBlockComment'
 
-    const verifyLine = (comment: Comment | undefined) =>
+    const verifyLine = (comment: Token | undefined) =>
       comment && comment.type === 'Line' ? undefined : 'requireLineComment'
 
-    const verifyAny = (comment: Comment | undefined) =>
+    const verifyAny = (comment: Token | undefined) =>
       comment ? undefined : 'requireAnyComment'
 
-    const verifyJSDoc = (comment: Comment | undefined) =>
+    const verifyJSDoc = (comment: Token | undefined) =>
       comment && isJSDocComment(comment) ? undefined : 'requireJSDocComment'
 
-    const verifyComment = (
-      comment: Comment | undefined
-    ): string | undefined => {
+    const verifyComment = (comment: Token | undefined): string | undefined => {
       switch (type) {
         case 'block': {
           return verifyBlock(comment)
@@ -114,4 +113,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

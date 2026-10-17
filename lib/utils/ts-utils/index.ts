@@ -1,3 +1,4 @@
+import type { RuleContext, TypeNode } from '../../types/index.ts'
 import {
   extractRuntimeProps,
   isTSTypeLiteral,

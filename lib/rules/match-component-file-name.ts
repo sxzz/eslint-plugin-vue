@@ -2,6 +2,16 @@
  * @fileoverview Require component name property to match its file name
  * @author Rodrigo Pedra Brum <rodrigo.pedra@gmail.com>
  */
+import type {
+  Expression,
+  Literal,
+  Rule,
+  RuleContext,
+  RuleListener,
+  SpreadElement,
+  TemplateLiteral
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   compositingVisitors,
   executeOnCallVueComponent,
@@ -23,7 +33,7 @@ function canVerify(
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -31,7 +41,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/match-component-file-name.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [
       {
@@ -86,7 +95,7 @@ export default {
       let name
       if (node.type === 'TemplateLiteral') {
         const quasis = node.quasis[0]
-        name = quasis.value.cooked
+        name = quasis.value.cooked ?? quasis.value.raw
       } else {
         name = String(node.value)
       }
@@ -152,4 +161,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

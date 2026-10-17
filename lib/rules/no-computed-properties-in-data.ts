@@ -2,6 +2,14 @@
  * @author  Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ArrowFunctionExpression,
+  FunctionDeclaration,
+  FunctionExpression,
+  MemberExpression,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -14,7 +22,7 @@ import {
 
 export type VueObjectData = import('../utils').VueObjectData
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -22,7 +30,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-computed-properties-in-data.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       cannotBeUsed:
@@ -96,4 +103,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

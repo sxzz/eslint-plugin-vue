@@ -2,6 +2,20 @@
  * @author ItMaga
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  Expression,
+  Identifier,
+  RuleContext,
+  SpreadElement,
+  Super
+} from '../types/index.ts'
 
 import { findVariable } from '@eslint-community/eslint-utils'
 import {
@@ -41,7 +55,7 @@ function hasReferenceId(
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -49,7 +63,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-unused-emit-declarations.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unused: '`{{name}}` is defined as emit but never used.'
@@ -222,21 +235,26 @@ export default {
             // `setup(props, {emit})`
             const variable =
               emitParam.type === 'Identifier'
-                ? findVariable(getScope(context, emitParam), emitParam)
+                ? (findVariable as unknown as WithVue<typeof findVariable>)(
+                    getScope(context, emitParam),
+                    emitParam
+                  )
                 : null
             if (!variable) {
               return
             }
             for (const reference of variable.references) {
+              if (reference.identifier.type !== 'Identifier') continue
               emitReferenceIds.add(reference.identifier)
             }
           } else if (contextParam.type === 'Identifier') {
             // `setup(props, context)`
-            const variable = findVariable(
-              getScope(context, contextParam),
-              contextParam
-            )
+            const variable = (
+              findVariable as unknown as WithVue<typeof findVariable>
+            )(getScope(context, contextParam), contextParam)
+            if (!variable) return
             for (const reference of variable.references) {
+              if (reference.identifier.type !== 'Identifier') continue
               contextReferenceIds.add(reference.identifier)
             }
           }
@@ -269,13 +287,16 @@ export default {
           }
 
           emitParamName = emitParam.name
-          const variable = findVariable(getScope(context, emitParam), emitParam)
+          const variable = (
+            findVariable as unknown as WithVue<typeof findVariable>
+          )(getScope(context, emitParam), emitParam)
           if (!variable) {
             return
           }
 
           const emitReferenceIds = new Set()
           for (const reference of variable.references) {
+            if (reference.identifier.type !== 'Identifier') continue
             emitReferenceIds.add(reference.identifier)
           }
           setupContexts.set(programNode, {
@@ -312,4 +333,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,6 +2,15 @@
  * @fileoverview enforce specific casing for component definition name
  * @author Armano
  */
+import type {
+  Expression,
+  Literal,
+  Range,
+  RuleContext,
+  SpreadElement,
+  TemplateLiteral
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   compositingVisitors,
   executeOnCallVueComponent,
@@ -24,7 +33,7 @@ function canConvert(
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -53,7 +62,7 @@ export default {
       let range: Range
       if (node.type === 'TemplateLiteral') {
         const quasis = node.quasis[0]
-        nodeValue = quasis.value.cooked
+        nodeValue = quasis.value.cooked ?? quasis.value.raw
         range = quasis.range
       } else {
         nodeValue = String(node.value)
@@ -109,4 +118,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

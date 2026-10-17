@@ -1,5 +1,9 @@
+import type {
+  RuleDefinition,
+  PublicRuleModule
+} from '../../../../../lib/types/rule.ts'
 import type { Linter as ESLintLinter } from 'eslint'
-import type { ScriptSetupVisitor } from 'eslint-plugin-vue/util-types/utils'
+import type { ScriptSetupVisitor } from '../../../../../lib/utils/types.ts'
 import assert from 'node:assert'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -40,7 +44,7 @@ export function verifyWithTsParser(
             create(context) {
               return defineScriptSetupVisitor(context, visitor)
             }
-          } as RuleModule
+          } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
         }
       }
     },

@@ -2,6 +2,20 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  Identifier,
+  ObjectExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+
 import type { NameWithLoc, VueObjectData } from '../utils/index.ts'
 import { findVariable } from '@eslint-community/eslint-utils'
 import {
@@ -37,7 +51,7 @@ function getCalleeMemberNode(node: CallExpression) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -45,7 +59,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/custom-event-name-casing.html'
     },
-    fixable: null,
     schema: [
       {
         enum: ALLOWED_CASE_OPTIONS
@@ -175,15 +188,15 @@ export default {
             emitParamName = emitParam.name
 
             // const emit = defineEmits()
-            const variable = findVariable(
-              getScope(context, emitParam),
-              emitParam
-            )
+            const variable = (
+              findVariable as unknown as WithVue<typeof findVariable>
+            )(getScope(context, emitParam), emitParam)
             if (!variable) {
               return
             }
             const emitReferenceIds = new Set<Identifier>()
             for (const reference of variable.references) {
+              if (reference.identifier.type !== 'Identifier') continue
               emitReferenceIds.add(reference.identifier)
             }
             setupContexts.set(programNode, {
@@ -216,27 +229,27 @@ export default {
               }
               const emitParam = emitProperty.value
               // `setup(props, {emit})`
-              const variable = findVariable(
-                getScope(context, emitParam),
-                emitParam
-              )
+              const variable = (
+                findVariable as unknown as WithVue<typeof findVariable>
+              )(getScope(context, emitParam), emitParam)
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 emitReferenceIds.add(reference.identifier)
               }
             } else {
               // `setup(props, context)`
               if (contextParam.type !== 'Identifier') return
-              const variable = findVariable(
-                getScope(context, contextParam),
-                contextParam
-              )
+              const variable = (
+                findVariable as unknown as WithVue<typeof findVariable>
+              )(getScope(context, contextParam), contextParam)
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 contextReferenceIds.add(reference.identifier)
               }
             }
@@ -268,4 +281,6 @@ export default {
       )
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

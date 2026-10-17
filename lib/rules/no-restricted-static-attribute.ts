@@ -2,6 +2,8 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VAttribute } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
@@ -69,7 +71,7 @@ function defaultMessage(node: VAttribute, option: ParsedOption) {
   return `Using \`${key + value}\`${on} is not allowed.`
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -77,7 +79,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-static-attribute.html'
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -101,7 +102,6 @@ export default {
     },
 
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       restrictedAttr: '{{message}}'
     }
   },
@@ -127,4 +127,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

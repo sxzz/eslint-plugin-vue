@@ -1,6 +1,13 @@
 /**
  * @author Toru Nagashima <https://github.com/mysticatea>
  */
+import type {
+  ParserServices,
+  RuleContext,
+  VEndTag,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineDocumentVisitor } from '../utils/index.ts'
 
@@ -44,7 +51,7 @@ function parseOptions(options: Options, tokens: ParserServices.TokenStore) {
   })
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -118,4 +125,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -1,6 +1,8 @@
 /**
  * @author Sosuke Suzuki
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   executeOnVue,
@@ -8,7 +10,7 @@ import {
   iterateWatchHandlerValues
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -16,7 +18,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-arrow-functions-in-watch.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       noArrowFunctionsInWatch:
@@ -50,4 +51,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,6 +2,8 @@
  * @fileoverview detect if there is a potential typo in your component property
  * @author IWANABETHATGUY
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   executeOnVue,
@@ -11,7 +13,7 @@ import {
 } from '../utils/index.ts'
 import vueComponentOptions from '../utils/vue-component-options.json' with { type: 'json' }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -19,7 +21,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-potential-component-option-typo.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [
       {
@@ -128,4 +129,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

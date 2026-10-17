@@ -2,6 +2,8 @@
  * @fileoverview require prop type to be a constructor
  * @author Michał Sajnóg
  */
+import type { ESNode, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getStringLiteralValue,
@@ -29,7 +31,7 @@ function isForbiddenType(node: ESNode) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -103,4 +105,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

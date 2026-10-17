@@ -2,6 +2,14 @@
  * @author ItMaga <https://github.com/ItMaga>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  AssignmentProperty,
+  ObjectExpression,
+  Property,
+  Rule,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   findProperty,
   getStaticPropertyName,
@@ -58,7 +66,7 @@ function createSuggest(
   ]
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -66,7 +74,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-component-names.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: {
       type: 'array',
@@ -89,7 +96,6 @@ export default {
       minItems: 0
     },
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       disallow: '{{message}}',
       suggest: 'Instead, change to `{{suggest}}`.'
     }
@@ -141,4 +147,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

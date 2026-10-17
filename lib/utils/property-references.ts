@@ -3,6 +3,28 @@
  * @copyright 2021 Yosuke Ota. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  ArrayPattern,
+  ArrowFunctionExpression,
+  AssignmentProperty,
+  CallExpression,
+  ChainExpression,
+  ESNode,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  Literal,
+  MemberExpression,
+  ObjectPattern,
+  Pattern,
+  RuleContext,
+  SpreadElement,
+  TemplateLiteral,
+  ThisExpression,
+  VExpressionContainer
+} from '../types/index.ts'
 import type { StyleVariablesContext } from './style-variables/index.ts'
 import {
   findVariableByIdentifier,
@@ -115,7 +137,10 @@ export function definePropertyReferenceExtractor(
       return toRefSet
     }
     const tracker = new ReferenceTracker(
-      context.sourceCode.scopeManager.scopes[0]
+      context.sourceCode.scopeManager
+        .scopes[0] as unknown as ConstructorParameters<
+        typeof ReferenceTracker
+      >[0]
     )
     const toRefNodes = new Set<ESNode>()
     const toRefReferences = iterateReferencesTraceMap(tracker, {
@@ -352,7 +377,8 @@ export function definePropertyReferenceExtractor(
       return NEVER
     }
 
-    function isMaybeExternallyUsed(parentTarget: ASTNode): boolean {
+    function isMaybeExternallyUsed(parentTarget: ASTNode | null): boolean {
+      if (!parentTarget) return false
       if (
         parentTarget.type === 'ReturnStatement' ||
         parentTarget.type === 'VExpressionContainer'
@@ -437,6 +463,7 @@ export function definePropertyReferenceExtractor(
     return mergePropertyReferences(
       variable.references.map((reference) => {
         const id = reference.identifier
+        if (id.type !== 'Identifier') return NEVER
         return extractFromExpression(id, false)
       })
     )

@@ -1,3 +1,7 @@
+import type {
+  RuleDefinition,
+  PublicRuleModule
+} from '../../../lib/types/rule.ts'
 import fs from 'node:fs'
 import path from 'node:path'
 import { parseSelector } from '../../../lib/utils/selector'
@@ -43,7 +47,7 @@ function extractElements(code: string, inputSelector: string) {
                 }
               })
             }
-          } as RuleModule
+          } satisfies RuleDefinition as RuleDefinition as PublicRuleModule
         }
       }
     },

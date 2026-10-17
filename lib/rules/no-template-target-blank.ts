@@ -2,6 +2,8 @@
  * @fileoverview disallow target="_blank" attribute without rel="noopener noreferrer"
  * @author Sosukesuzuki
  */
+import type { RuleContext, VAttribute, VStartTag } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -77,7 +79,7 @@ function getSuggestion(node: VAttribute) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -135,4 +137,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

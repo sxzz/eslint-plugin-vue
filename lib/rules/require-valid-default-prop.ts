@@ -2,7 +2,20 @@
  * @fileoverview Enforces props default values to be valid.
  * @author Armano
  */
-import type { TSESTree } from '@typescript-eslint/types'
+import type {
+  ArrowFunctionExpression,
+  BlockStatement,
+  CallExpression,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Identifier,
+  ObjectExpression,
+  Property,
+  ReturnStatement,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import type {
   ComponentObjectProp,
   ComponentTypeProp,
@@ -55,7 +68,7 @@ function getTypes(targetNode: Expression): string[] {
   return []
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -63,7 +76,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/require-valid-default-prop.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       invalidType:
@@ -497,10 +509,7 @@ export default {
               propName: model.name.modelName,
               node: model.typeNode,
               required: false,
-              types: inferRuntimeType(
-                context,
-                model.typeNode as TSESTree.TypeNode
-              )
+              types: inferRuntimeType(context, model.typeNode)
             }
             if (options?.type === 'ObjectExpression') {
               defaultFromOptions = getPropertyNode(options, 'default')
@@ -543,4 +552,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

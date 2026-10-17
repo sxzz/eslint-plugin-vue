@@ -2,6 +2,9 @@
  * @author Mussin Benarbia
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VElement } from '../types/index.ts'
+import type { Normalize } from '../types/ast.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isVElement,
@@ -15,9 +18,12 @@ import {
   getStringLiteralValue
 } from '../utils/index.ts'
 
-export type TypeNode = import('@typescript-eslint/types').TSESTree.TypeNode
-export type TypeElement =
+export type TypeNode = Normalize<
+  import('@typescript-eslint/types').TSESTree.TypeNode
+>
+export type TypeElement = Normalize<
   import('@typescript-eslint/types').TSESTree.TypeElement
+>
 
 function getSlotsName(node: TypeElement) {
   if (
@@ -50,7 +56,7 @@ function getSlotNameNode(node: VElement) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -58,7 +64,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-explicit-slots.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       requireExplicitSlots: 'Slots must be explicitly defined.',
@@ -119,14 +124,13 @@ export default {
 
         const slotsTypeHelper =
           slotsProperty.value.type === 'TSAsExpression' &&
-          slotsProperty.value.typeAnnotation?.typeName.name === 'SlotsType' &&
+          slotsProperty.value.typeAnnotation.type === 'TSTypeReference' &&
+          slotsProperty.value.typeAnnotation.typeName.type === 'Identifier' &&
+          slotsProperty.value.typeAnnotation.typeName.name === 'SlotsType' &&
           slotsProperty.value.typeAnnotation
         if (!slotsTypeHelper) return
 
-        const typeArguments =
-          'typeArguments' in slotsTypeHelper
-            ? slotsTypeHelper.typeArguments
-            : slotsTypeHelper.typeParameters
+        const typeArguments = slotsTypeHelper.typeArguments
         const param = typeArguments?.params[0]
         if (!param) return
 
@@ -175,4 +179,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

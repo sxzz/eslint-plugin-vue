@@ -2,6 +2,13 @@
  * @author Yosuke Ota <https://github.com/ota-meshi>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type { CallExpression, Expression, RuleContext } from '../types/index.ts'
 
 import { findVariable } from '@eslint-community/eslint-utils'
 import {
@@ -15,7 +22,7 @@ import {
   findProperty
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -23,7 +30,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-define-emits.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       hasTypeAndArg: '`defineEmits` has both a type-only emit and an argument.',
@@ -79,7 +85,9 @@ export default {
               continue
             }
 
-            const variable = findVariable(getScope(context, node), node)
+            const variable = (
+              findVariable as unknown as WithVue<typeof findVariable>
+            )(getScope(context, node), node)
             if (
               variable &&
               variable.references.some((ref) => ref.identifier === node) &&
@@ -150,4 +158,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

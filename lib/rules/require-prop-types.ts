@@ -2,6 +2,12 @@
  * @fileoverview Prop definitions should be detailed
  * @author Armano
  */
+import type {
+  Expression,
+  ObjectExpression,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getStaticPropertyName,
@@ -47,7 +53,7 @@ function optionHasType(node: Expression) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -55,7 +61,6 @@ export default {
       categories: ['vue3-strongly-recommended'],
       url: 'https://eslint.vuejs.org/rules/require-prop-types.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       requireType: 'Prop "{{name}}" should define at least its type.'
@@ -116,4 +121,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

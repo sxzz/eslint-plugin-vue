@@ -2,6 +2,8 @@
  * @author Mussin Benarbia
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { isVElement } from '../utils/index.ts'
 
@@ -39,7 +41,7 @@ function getUserDefinedAllowedAttrs(context: RuleContext) {
 
 const defaultAllowedAttrs = ['scoped']
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -48,7 +50,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/enforce-style-attribute.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -147,4 +148,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

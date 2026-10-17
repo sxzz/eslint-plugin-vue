@@ -2,6 +2,14 @@
  * @fileoverview Enforce line breaks style after opening and before closing block-level tags.
  * @author Yosuke Ota
  */
+import type {
+  Program,
+  RuleContext,
+  VElement,
+  VEndTag,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   defineTemplateBodyVisitor,
   hasInvalidEOF,
@@ -35,7 +43,7 @@ function getPhrase(lineBreaks: number) {
 }
 
 const ENUM_OPTIONS = { enum: ['always', 'never', 'consistent', 'ignore'] }
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -335,4 +343,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

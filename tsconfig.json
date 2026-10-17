@@ -24,9 +24,6 @@
     "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true,
     "noUncheckedSideEffectImports": true,
-    "paths": {
-      "*": ["./typings/*"]
-    },
     "skipLibCheck": true,
     "allowImportingTsExtensions": true
   },
@@ -36,7 +33,6 @@
     "eslint-internal-rules/**/*.ts",
     "eslint.config.ts",
     "tests/**/*.ts",
-    "typings/eslint-plugin-vue/global.d.ts",
     "typings/jsdom.d.ts",
     "docs/.vitepress/**/*.ts"
   ],

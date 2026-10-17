@@ -2,6 +2,15 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VAttribute,
+  VDirective,
+  VElement,
+  VExpressionContainer,
+  VText
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { isRegExp, toRegExp, escape } from '../utils/regexp.ts'
 import { isKebabCase, pascalCase } from '../utils/casing.ts'
@@ -94,7 +103,7 @@ function getStringValue(value: VExpressionContainer): string | null {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -273,4 +282,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

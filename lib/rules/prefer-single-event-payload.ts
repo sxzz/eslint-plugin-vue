@@ -2,6 +2,21 @@
  * @author Flo Edelmann
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule,
+  ReportSourceLocation
+} from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  Identifier,
+  ObjectExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+
 import { findVariable } from '@eslint-community/eslint-utils'
 import {
   skipChainExpression,
@@ -19,8 +34,8 @@ import {
   findAssignmentProperty
 } from '../utils/index.ts'
 import type { ComponentEmit, ComponentUnknownEmit } from '../utils'
-import type { ReportSourceLocation } from 'eslint'
-import type { HasLocation } from '../../typings/eslint-plugin-vue/util-types/node'
+
+import type { HasLocation } from '../types/ast.ts'
 
 /**
  * Get the callee member node from the given CallExpression
@@ -51,7 +66,7 @@ function getReportLocation(
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -60,7 +75,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/prefer-single-event-payload.html'
     },
-    fixable: null,
     hasSuggestions: false,
     schema: [],
     messages: {
@@ -186,15 +200,15 @@ export default {
             if (emitParam.type !== 'Identifier') {
               return
             }
-            const variable = findVariable(
-              getScope(context, emitParam),
-              emitParam
-            )
+            const variable = (
+              findVariable as unknown as WithVue<typeof findVariable>
+            )(getScope(context, emitParam), emitParam)
             if (!variable) {
               return
             }
             const emitReferenceIds = new Set<Identifier>()
             for (const reference of variable.references) {
+              if (reference.identifier.type !== 'Identifier') continue
               if (!reference.isRead()) {
                 continue
               }
@@ -244,26 +258,26 @@ export default {
                 return
               }
               const emitParam = emitProperty.value
-              const variable = findVariable(
-                getScope(context, emitParam),
-                emitParam
-              )
+              const variable = (
+                findVariable as unknown as WithVue<typeof findVariable>
+              )(getScope(context, emitParam), emitParam)
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 emitReferenceIds.add(reference.identifier)
               }
             } else {
               if (contextParam.type !== 'Identifier') return
-              const variable = findVariable(
-                getScope(context, contextParam),
-                contextParam
-              )
+              const variable = (
+                findVariable as unknown as WithVue<typeof findVariable>
+              )(getScope(context, contextParam), contextParam)
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 contextReferenceIds.add(reference.identifier)
               }
             }
@@ -313,4 +327,6 @@ export default {
       )
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

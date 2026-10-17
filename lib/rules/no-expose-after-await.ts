@@ -2,6 +2,21 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ArrowFunctionExpression,
+  AwaitExpression,
+  CallExpression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
 
 import { findVariable } from '@eslint-community/eslint-utils'
 import {
@@ -30,7 +45,7 @@ function getCalleeMemberNode(node: CallExpression) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -38,7 +53,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-expose-after-await.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       forbidden: '`{{name}}` is forbidden after an `await` expression.'
@@ -188,12 +202,16 @@ export default {
             // `setup(props, {emit})`
             const variable =
               exposeParam.type === 'Identifier'
-                ? findVariable(getScope(context, exposeParam), exposeParam)
+                ? (findVariable as unknown as WithVue<typeof findVariable>)(
+                    getScope(context, exposeParam),
+                    exposeParam
+                  )
                 : null
             if (!variable) {
               return
             }
             for (const reference of variable.references) {
+              if (reference.identifier.type !== 'Identifier') continue
               if (!reference.isRead()) {
                 continue
               }
@@ -201,14 +219,14 @@ export default {
             }
           } else if (contextParam.type === 'Identifier') {
             // `setup(props, context)`
-            const variable = findVariable(
-              getScope(context, contextParam),
-              contextParam
-            )
+            const variable = (
+              findVariable as unknown as WithVue<typeof findVariable>
+            )(getScope(context, contextParam), contextParam)
             if (!variable) {
               return
             }
             for (const reference of variable.references) {
+              if (reference.identifier.type !== 'Identifier') continue
               if (!reference.isRead()) {
                 continue
               }
@@ -228,4 +246,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

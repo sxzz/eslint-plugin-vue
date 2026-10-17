@@ -2,6 +2,8 @@
  * @author Pig Fang
  * See LICENSE file in root directory for full license.
  */
+import type { Expression, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { executeOnVue, findProperty } from '../utils/index.ts'
 import {
   allowedCaseOptions,
@@ -19,7 +21,7 @@ function getOptionsComponentName(node: Expression): string | null {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -97,4 +99,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

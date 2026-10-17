@@ -2,6 +2,8 @@
  * @author Wayne Zhang
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VAttribute, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import type { CaseChecker } from '../utils/casing.ts'
 import { defineTemplateBodyVisitor, getAttribute } from '../utils/index.ts'
 import { getChecker } from '../utils/casing.ts'
@@ -21,7 +23,7 @@ const allowedCaseOptions: OptionType[] = [
   'singleword'
 ]
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -29,7 +31,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/slot-name-casing.html'
     },
-    fixable: null,
     schema: [
       {
         enum: allowedCaseOptions
@@ -73,4 +74,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,6 +2,17 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ArrowFunctionExpression,
+  AwaitExpression,
+  CallExpression,
+  ChainExpression,
+  FunctionDeclaration,
+  FunctionExpression,
+  Program,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { ReferenceTracker } from '@eslint-community/eslint-utils'
 import {
   compositingVisitors,
@@ -41,7 +52,7 @@ function isMaybeUsedStopHandle(node: CallExpression | ChainExpression) {
   return false
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -49,7 +60,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-watch-after-await.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       forbidden: '`watch` is forbidden after an `await` expression.'
@@ -71,7 +81,11 @@ export default {
     return compositingVisitors(
       {
         Program(program: Program) {
-          const tracker = new ReferenceTracker(getScope(context, program))
+          const tracker = new ReferenceTracker(
+            getScope(context, program) as unknown as ConstructorParameters<
+              typeof ReferenceTracker
+            >[0]
+          )
 
           const watchRefs = iterateReferencesTraceMap(tracker, {
             watch: {
@@ -144,4 +158,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

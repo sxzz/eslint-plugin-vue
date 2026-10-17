@@ -2,6 +2,14 @@
  * @fileoverview Require a name property in Vue components
  * @author LukeeeeBennett
  */
+import type {
+  Property,
+  RuleContext,
+  SourceCode,
+  SpreadElement,
+  Token
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import path from 'node:path'
 import {
@@ -39,7 +47,7 @@ function isNameProperty(node: Property | SpreadElement) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -47,7 +55,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-name-property.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [],
     messages: {
@@ -110,4 +117,6 @@ export default {
       })
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

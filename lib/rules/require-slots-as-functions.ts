@@ -2,6 +2,19 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ChainExpression,
+  Expression,
+  Identifier,
+  MemberExpression,
+  RuleContext
+} from '../types/index.ts'
 
 import {
   getScope,
@@ -20,7 +33,7 @@ const SLOT_USED_AS_VALUE_PARENT_TYPES = new Set([
   'ArrayExpression' // [this.$slots.foo]
 ])
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -28,7 +41,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/require-slots-as-functions.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected: 'Property in `$slots` should be used as function.'
@@ -81,11 +93,14 @@ export default {
      * Verify the references of the given node.
      */
     function verifyReferences(node: Identifier, reportNode: Expression) {
-      const variable = findVariable(getScope(context, node), node)
+      const variable = (
+        findVariable as unknown as WithVue<typeof findVariable>
+      )(getScope(context, node), node)
       if (!variable) {
         return
       }
       for (const reference of variable.references) {
+        if (reference.identifier.type !== 'Identifier') continue
         if (!reference.isRead()) {
           continue
         }
@@ -115,4 +130,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

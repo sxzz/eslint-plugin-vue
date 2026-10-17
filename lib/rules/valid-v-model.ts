@@ -3,6 +3,13 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  RuleContext,
+  VDirective,
+  VElement
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isCustomComponent,
@@ -103,7 +110,7 @@ function getVariable(name: string, leafNode: VElement) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -111,7 +118,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-model.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpectedInvalidElement:
@@ -221,4 +227,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

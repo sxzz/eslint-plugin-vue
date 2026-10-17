@@ -3,6 +3,8 @@
  * @copyright 2017 Toru Nagashima. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective, VIdentifier } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -58,7 +60,7 @@ function isValidModifier(
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -66,7 +68,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-on.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -137,4 +138,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

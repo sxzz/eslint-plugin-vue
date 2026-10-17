@@ -2,6 +2,13 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ObjectExpression,
+  Property,
+  RuleContext,
+  SpreadElement
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   getStaticPropertyName,
   compositingVisitors,
@@ -90,7 +97,7 @@ function defaultMessage(path: string[]) {
   return `Using \`${path.join('.')}\` is not allowed.`
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -98,7 +105,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-component-options.html'
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -136,7 +142,6 @@ export default {
     },
 
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       restrictedOption: '{{message}}'
     }
   },
@@ -200,4 +205,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

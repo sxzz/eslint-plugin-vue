@@ -2,6 +2,8 @@
  * @author Kamogelo Moalusi <github.com/thesheppard>
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirectiveKey } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { toRegExp } from '../utils/regexp.ts'
 
@@ -77,7 +79,7 @@ function defaultMessage(key: VDirectiveKey, option: ParsedOption) {
   return `Using \`${von + arg + mod}\` is not allowed on this ${element}.`
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -85,7 +87,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-v-on.html'
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -122,7 +123,6 @@ export default {
       uniqueItems: true
     },
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       restrictedVOn: '{{message}}'
     }
   },
@@ -151,4 +151,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

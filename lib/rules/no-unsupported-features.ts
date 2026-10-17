@@ -2,6 +2,12 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  RuleListener,
+  TemplateListener
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import semver from 'semver'
 import {
   compositingVisitors,
@@ -62,7 +68,7 @@ function getSemverRange(x: string): semver.Range {
   return ret
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -71,7 +77,7 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-unsupported-features.html'
     },
-    // eslint-disable-next-line eslint-plugin/require-meta-fixable -- fixer is not recognized
+
     fixable: 'code',
     schema: [
       {
@@ -161,4 +167,6 @@ export default {
       scriptVisitor
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

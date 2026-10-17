@@ -2,6 +2,14 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Range,
+  RuleContext,
+  SourceCode,
+  VElement,
+  VEndTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 import { pascalCase, kebabCase } from '../utils/casing.ts'
 import INLINE_ELEMENTS from '../utils/inline-non-void-elements.json' with { type: 'json' }
@@ -35,7 +43,7 @@ function isEmpty(
   return sourceCode.text.slice(start, end).trim() === ''
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -188,4 +196,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

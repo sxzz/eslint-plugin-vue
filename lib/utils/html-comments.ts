@@ -1,3 +1,11 @@
+import type {
+  Range,
+  RuleContext,
+  RuleListener,
+  SourceCode,
+  SourceLocation,
+  Token
+} from '../types/index.ts'
 import { hasInvalidEOF } from './index.ts'
 
 export interface CommentParserConfig {
@@ -32,11 +40,11 @@ const TYPE_HTML_COMMENT_VALUE = 'HTMLCommentValue'
 const TYPE_HTML_COMMENT_CLOSE = 'HTMLCommentClose'
 const TYPE_HTML_COMMENT_CLOSE_DECORATION = 'HTMLCommentCloseDecoration'
 
-function isCommentDirective(comment: HTMLComment): boolean {
+function isCommentDirective(comment: Token): boolean {
   return COMMENT_DIRECTIVE.test(comment.value)
 }
 
-function isIEConditionalComment(comment: HTMLComment): boolean {
+function isIEConditionalComment(comment: Token): boolean {
   return (
     IE_CONDITIONAL_IF.test(comment.value) ||
     IE_CONDITIONAL_ENDIF.test(comment.value)

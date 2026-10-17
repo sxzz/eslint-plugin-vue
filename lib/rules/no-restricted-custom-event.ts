@@ -2,6 +2,19 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  CallExpression,
+  Identifier,
+  ObjectExpression,
+  RuleContext
+} from '../types/index.ts'
+
 import { findVariable } from '@eslint-community/eslint-utils'
 import type { NameWithLoc } from '../utils/index.ts'
 import {
@@ -55,7 +68,7 @@ function getCalleeMemberNode(node: CallExpression) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -63,7 +76,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-restricted-custom-event.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: {
       type: 'array',
@@ -87,7 +99,6 @@ export default {
     },
 
     messages: {
-      // eslint-disable-next-line eslint-plugin/report-message-format
       restrictedEvent: '{{message}}',
       instead: 'Instead, change to `{{suggest}}`.'
     }
@@ -179,27 +190,27 @@ export default {
               }
               const emitParam = emitProperty.value
               // `setup(props, {emit})`
-              const variable = findVariable(
-                getScope(context, emitParam),
-                emitParam
-              )
+              const variable = (
+                findVariable as unknown as WithVue<typeof findVariable>
+              )(getScope(context, emitParam), emitParam)
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 emitReferenceIds.add(reference.identifier)
               }
             } else {
               // `setup(props, context)`
               if (contextParam.type !== 'Identifier') return
-              const variable = findVariable(
-                getScope(context, contextParam),
-                contextParam
-              )
+              const variable = (
+                findVariable as unknown as WithVue<typeof findVariable>
+              )(getScope(context, contextParam), contextParam)
               if (!variable) {
                 return
               }
               for (const reference of variable.references) {
+                if (reference.identifier.type !== 'Identifier') continue
                 contextReferenceIds.add(reference.identifier)
               }
             }
@@ -261,4 +272,6 @@ export default {
       )
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

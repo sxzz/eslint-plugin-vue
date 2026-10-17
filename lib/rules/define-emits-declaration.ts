@@ -2,6 +2,8 @@
  * @author Amorites
  * See LICENSE file in root directory for full license.
  */
+import type { CallExpression, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getScriptSetupElement,
@@ -11,7 +13,7 @@ import {
 
 export type TypeNode = import('@typescript-eslint/types').TSESTree.TypeNode
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -19,7 +21,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/define-emits-declaration.html'
     },
-    fixable: null,
     schema: [
       {
         enum: ['type-based', 'type-literal', 'runtime']
@@ -59,8 +60,7 @@ export default {
           }
 
           case 'runtime': {
-            const typeArguments =
-              'typeArguments' in node ? node.typeArguments : node.typeParameters
+            const typeArguments = node.typeArguments
             if (typeArguments && typeArguments.params.length > 0) {
               context.report({
                 node,
@@ -82,7 +82,7 @@ export default {
         return
       }
 
-      const typeArguments = node.typeArguments || node.typeParameters
+      const typeArguments = node.typeArguments
       const param = typeArguments?.params[0]
       if (!param) return
       if (param.type === 'TSTypeLiteral') {
@@ -104,4 +104,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

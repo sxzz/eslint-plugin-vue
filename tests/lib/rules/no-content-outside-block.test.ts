@@ -10,7 +10,7 @@ const tester = new RuleTester({
   languageOptions: { parser: vueEslintParser, ecmaVersion: 2020 }
 })
 
-tester.run('no-content-outside-block', rule as RuleModule, {
+tester.run('no-content-outside-block', rule, {
   valid: [
     {
       filename: 'test.vue',

@@ -2,6 +2,8 @@
  * @author ItMaga
  * See LICENSE file in root directory for full license.
  */
+import type { Program, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isVElement,
@@ -10,7 +12,7 @@ import {
   defineVueVisitor
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -18,7 +20,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-default-export.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       missing: 'Missing default export.',
@@ -70,4 +71,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

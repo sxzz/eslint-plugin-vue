@@ -1,3 +1,4 @@
+import type { Comment } from '../../../lib/types/index.ts'
 import assert from 'node:assert'
 import { isBlockComment, isJSDocComment } from '../../../lib/utils/comments.js'
 

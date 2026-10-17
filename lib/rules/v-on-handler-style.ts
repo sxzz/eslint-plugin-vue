@@ -2,6 +2,20 @@
  * @author Yosuke Ota <https://github.com/ota-meshi>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ArrowFunctionExpression,
+  BlockStatement,
+  CallExpression,
+  Expression,
+  FunctionExpression,
+  Identifier,
+  RuleContext,
+  Token,
+  VElement,
+  VExpressionContainer,
+  VOnExpression
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -9,7 +23,7 @@ import {
   iterateProperties
 } from '../utils/index.ts'
 
-export type ReportDescriptorFix = import('eslint').ReportDescriptorFix
+export type ReportDescriptorFix = import('../types/rule.ts').ReportDescriptorFix
 export type HandlerKind = 'method' | 'inline' | 'inline-function'
 export type ObjectOption = { ignoreIncludesComment?: boolean }
 
@@ -91,7 +105,7 @@ function getIdentifierCallExpression(node: VOnExpression | BlockStatement) {
   return expression
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -564,4 +578,6 @@ export default {
         : {}
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

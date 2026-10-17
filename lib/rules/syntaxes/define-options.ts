@@ -2,6 +2,13 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  CallExpression,
+  Range,
+  RuleContext,
+  RuleFixer
+} from '../../types/index.ts'
 
 import {
   defineScriptSetupVisitor,

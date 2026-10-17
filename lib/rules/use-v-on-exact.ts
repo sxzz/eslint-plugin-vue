@@ -2,6 +2,13 @@
  * @fileoverview enforce usage of `exact` modifier on `v-on`.
  * @author Armano
  */
+import type {
+  RuleContext,
+  SourceCode,
+  VDirectiveKey,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 export type EventDirective = {
   name: string
@@ -164,7 +171,7 @@ function findConflictedEvents(events: EventDirective[]) {
   return conflictedEvents
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -172,7 +179,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/use-v-on-exact.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       considerExact: "Consider to use '.exact' modifier."
@@ -221,4 +227,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

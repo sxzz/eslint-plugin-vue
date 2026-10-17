@@ -2,10 +2,17 @@
  * @fileoverview Don't use this in a beforeRouteEnter method
  * @author Przemyslaw Jan Beigert
  */
+import type {
+  ArrowFunctionExpression,
+  FunctionDeclaration,
+  FunctionExpression,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineVueVisitor, findProperty } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -13,7 +20,6 @@ export default {
       categories: null,
       url: 'https://eslint.vuejs.org/rules/no-this-in-before-route-enter.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       disallow:
@@ -73,4 +79,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -55,7 +55,7 @@ const anyWith = (opts: RuleOptions) =>
     }
   )
 
-tester.run('html-self-closing', rule as RuleModule, {
+tester.run('html-self-closing', rule, {
   valid: [
     // default
     '<template><div/></template>',

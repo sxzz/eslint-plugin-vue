@@ -9,7 +9,7 @@ const tester = new RuleTester({
   languageOptions: { parser: vueEslintParser, ecmaVersion: 2015 }
 })
 
-tester.run('no-restricted-html-elements', rule as RuleModule, {
+tester.run('no-restricted-html-elements', rule, {
   valid: [
     {
       filename: 'test.vue',

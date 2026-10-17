@@ -2,6 +2,19 @@
  * @author Toru Nagashima
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  ParserServices,
+  RuleContext,
+  SourceCode,
+  VDirective,
+  VElement,
+  VExpressionContainer,
+  VForExpression,
+  VIdentifier,
+  VVariable
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getDirectives,
@@ -221,7 +234,7 @@ function hasInvalidModifiers(vSlot: VDirective, shouldAllowModifiers: boolean) {
     : vSlot.key.modifiers.length > 0
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -229,7 +242,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-slot.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -384,4 +396,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

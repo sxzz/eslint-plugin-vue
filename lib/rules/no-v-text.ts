@@ -2,9 +2,11 @@
  * @author tyankatsu <https://github.com/tyankatsu0105>
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -12,7 +14,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-v-text.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpected: "Don't use 'v-text'."
@@ -30,4 +31,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,6 +2,14 @@
  * @author Flo Edelmann
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Literal,
+  ObjectExpression,
+  RuleContext,
+  RuleFixer,
+  TemplateLiteral
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isStringLiteral,
@@ -38,7 +46,7 @@ function replaceLiteral(
   return fixer.replaceTextRange([node.range[0] + 1, node.range[1] - 1], text)
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -46,7 +54,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-model-definition.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [
       {
@@ -124,4 +131,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

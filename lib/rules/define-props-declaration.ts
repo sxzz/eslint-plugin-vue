@@ -2,6 +2,8 @@
  * @author Amorites
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getScriptSetupElement,
@@ -9,7 +11,7 @@ import {
   defineScriptSetupVisitor
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -17,7 +19,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/define-props-declaration.html'
     },
-    fixable: null,
     schema: [
       {
         enum: ['type-based', 'runtime']
@@ -64,4 +65,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

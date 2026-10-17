@@ -4,6 +4,13 @@
  * @copyright 2021 Flo Edelmann. All rights reserved.
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type { CallExpression, Identifier, RuleContext } from '../types/index.ts'
 
 import { isThis, getScope, defineVueVisitor } from '../utils/index.ts'
 import { findVariable } from '@eslint-community/eslint-utils'
@@ -19,7 +26,10 @@ function getVueNextTickNode(identifier: Identifier, context: RuleContext) {
   }
 
   // import { nextTick as nt } from 'vue'; nt()
-  const variable = findVariable(getScope(context, identifier), identifier)
+  const variable = (findVariable as unknown as WithVue<typeof findVariable>)(
+    getScope(context, identifier),
+    identifier
+  )
 
   if (variable != null && variable.defs.length === 1) {
     const def = variable.defs[0]
@@ -84,7 +94,7 @@ function isAwaitedPromise(callExpression: CallExpression) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -183,4 +193,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

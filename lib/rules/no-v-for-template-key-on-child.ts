@@ -3,6 +3,8 @@
  * This rule is based on X_V_FOR_TEMPLATE_KEY_PLACEMENT error of Vue 3.
  * see https://github.com/vuejs/vue-next/blob/b0d01e9db9ffe5781cce5a2d62c8552db3d615b0/packages/compiler-core/src/errors.ts#L70
  */
+import type { RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -28,7 +30,7 @@ function isUsingIterationVar(vFor: VDirective, vBindKey: VDirective) {
   )
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -37,7 +39,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-v-for-template-key-on-child.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       vForTemplateKeyPlacement:
@@ -81,4 +82,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

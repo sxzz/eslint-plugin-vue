@@ -2,12 +2,14 @@
  * @fileoverview enforce that each component should be in its own file
  * @author Armano
  */
+import type { ObjectExpression, RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   executeOnVueComponent,
   getVueComponentDefinitionType
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -15,7 +17,6 @@ export default {
       categories: ['vue3-strongly-recommended'],
       url: 'https://eslint.vuejs.org/rules/one-component-per-file.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       tooManyComponents: 'There is more than one component in this file.'
@@ -50,4 +51,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

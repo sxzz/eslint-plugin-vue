@@ -2,6 +2,13 @@
  * @author Wayne Zhang
  * See LICENSE file in root directory for full license.
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type { Identifier, Program, RuleContext } from '../types/index.ts'
 
 import {
   isThis,
@@ -12,7 +19,8 @@ import {
 } from '../utils/index.ts'
 import { ReferenceTracker } from '@eslint-community/eslint-utils'
 
-export type TraceMap = import('@eslint-community/eslint-utils').TYPES.TraceMap
+export type TraceMap =
+  import('@eslint-community/eslint-utils').TraceMap<unknown>
 
 const deletedImportApisMap = {
   set: {
@@ -42,7 +50,7 @@ function getVueDeprecatedCallExpression(
   return undefined
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -51,7 +59,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-delete-set.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       deprecated: 'The `$delete`, `$set` is deprecated.'
@@ -78,7 +85,11 @@ export default {
       defineScriptSetupVisitor(context, nodeVisitor),
       {
         Program(node: Program) {
-          const tracker = new ReferenceTracker(getScope(context, node))
+          const tracker = new ReferenceTracker(
+            getScope(context, node) as unknown as ConstructorParameters<
+              typeof ReferenceTracker
+            >[0]
+          )
 
           // import { set } from 'vue'; set()
           const esmTraceMap: TraceMap = {
@@ -95,8 +106,14 @@ export default {
           }
 
           for (const { node } of [
-            ...tracker.iterateEsmReferences(esmTraceMap),
-            ...tracker.iterateCjsReferences(cjsTraceMap as unknown as TraceMap)
+            ...(tracker.iterateEsmReferences(esmTraceMap) as unknown as WithVue<
+              ReturnType<typeof tracker.iterateEsmReferences>
+            >),
+            ...(tracker.iterateCjsReferences(
+              cjsTraceMap as unknown as TraceMap
+            ) as unknown as WithVue<
+              ReturnType<typeof tracker.iterateCjsReferences>
+            >)
           ]) {
             if (node.type !== 'CallExpression') continue
             const refNode = node
@@ -109,4 +126,6 @@ export default {
       }
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

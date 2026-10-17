@@ -3,6 +3,8 @@
  *
  * Style guide: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for
  */
+import type { ASTNode, RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor, hasDirective } from '../utils/index.ts'
 
@@ -30,7 +32,7 @@ function getVForUsingIterationVar(vIf: VDirective) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -38,7 +40,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-use-v-if-with-v-for.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -108,4 +109,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

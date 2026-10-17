@@ -2,6 +2,24 @@
  * @fileoverview Require `expose` in Vue components
  * @author Yosuke Ota <https://github.com/ota-meshi>
  */
+import type {
+  WithVue,
+  RuleDefinition,
+  PublicRuleModule
+} from '../types/rule.ts'
+
+import type {
+  ArrowFunctionExpression,
+  CallExpression,
+  Expression,
+  FunctionDeclaration,
+  FunctionExpression,
+  ObjectExpression,
+  Property,
+  RuleContext,
+  RuleFixer,
+  SpreadElement
+} from '../types/index.ts'
 
 import {
   findVariable,
@@ -56,7 +74,7 @@ function getCalleeMemberNode(node: CallExpression) {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -64,7 +82,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-expose.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [],
     messages: {
@@ -108,7 +125,9 @@ export default {
         return true
       }
       if (node.type === 'Identifier') {
-        const variable = findVariable(getScope(context, node), node)
+        const variable = (
+          findVariable as unknown as WithVue<typeof findVariable>
+        )(getScope(context, node), node)
         if (variable) {
           for (const def of variable.defs) {
             if (def.type === 'FunctionName') {
@@ -151,12 +170,16 @@ export default {
           // `setup(props, {emit})`
           const variable =
             exposeParam.type === 'Identifier'
-              ? findVariable(getScope(context, exposeParam), exposeParam)
+              ? (findVariable as unknown as WithVue<typeof findVariable>)(
+                  getScope(context, exposeParam),
+                  exposeParam
+                )
               : null
           if (!variable) {
             return
           }
           for (const reference of variable.references) {
+            if (reference.identifier.type !== 'Identifier') continue
             if (!reference.isRead()) {
               continue
             }
@@ -164,14 +187,14 @@ export default {
           }
         } else if (contextParam.type === 'Identifier') {
           // `setup(props, context)`
-          const variable = findVariable(
-            getScope(context, contextParam),
-            contextParam
-          )
+          const variable = (
+            findVariable as unknown as WithVue<typeof findVariable>
+          )(getScope(context, contextParam), contextParam)
           if (!variable) {
             return
           }
           for (const reference of variable.references) {
+            if (reference.identifier.type !== 'Identifier') continue
             if (!reference.isRead()) {
               continue
             }
@@ -278,7 +301,7 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition as RuleDefinition as PublicRuleModule
 
 function buildSuggest(object: ObjectExpression, context: RuleContext) {
   const propertyNodes = object.properties.filter(isProperty)
@@ -328,11 +351,11 @@ function buildSuggest(object: ObjectExpression, context: RuleContext) {
       }
       const objectLeftBrace = sourceCode.getFirstToken(
         object,
-        isOpeningBraceToken
+        isOpeningBraceToken as unknown as WithVue<typeof isOpeningBraceToken>
       )
       const objectRightBrace = sourceCode.getLastToken(
         object,
-        isClosingBraceToken
+        isClosingBraceToken as unknown as WithVue<typeof isClosingBraceToken>
       )
       if (!objectLeftBrace || !objectRightBrace) return null
       return fixer.insertTextAfter(
@@ -346,3 +369,5 @@ function buildSuggest(object: ObjectExpression, context: RuleContext) {
     }
   }
 }
+
+export default rule as typeof rule & PublicRuleModule

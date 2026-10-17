@@ -2,6 +2,8 @@
  * @fileoverview enforce valid `v-is` directives
  * @author Yosuke Ota
  */
+import type { RuleContext, VElement } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   isHtmlElementNode,
@@ -17,7 +19,7 @@ function isValidElement(node: VElement) {
   return !isHtmlElementNode(node) || isHtmlWellKnownElementName(node.rawName)
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -25,7 +27,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-is.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpectedArgument: "'v-is' directives require no argument.",
@@ -76,4 +77,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

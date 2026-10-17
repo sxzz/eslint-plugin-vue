@@ -2,6 +2,21 @@
  * @author Flo Edelmann
  * See LICENSE file in root directory for full license.
  */
+import type {
+  ASTNode,
+  Identifier,
+  Literal,
+  ParserServices,
+  RuleContext,
+  RuleFixer,
+  TemplateElement,
+  TemplateLiteral,
+  VAttribute,
+  VDirective,
+  VDirectiveKey,
+  VLiteral
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -121,7 +136,7 @@ function* removeNodeWithComma(
   yield fixer.remove(node)
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -244,4 +259,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

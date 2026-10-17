@@ -2,6 +2,13 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Property,
+  RuleContext,
+  VAttribute,
+  VDirective
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -76,7 +83,7 @@ function getReportNodes(node: VDirective) {
   return [node]
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -84,7 +91,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-static-inline-styles.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -131,4 +137,6 @@ export default {
 
     return defineTemplateBodyVisitor(context, visitor)
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

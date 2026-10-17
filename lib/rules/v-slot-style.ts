@@ -2,6 +2,8 @@
  * @author Toru Nagashima
  * See LICENSE file in root directory for full license.
  */
+import type { Range, RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { pascalCase } from '../utils/casing.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -72,7 +74,7 @@ function getActualStyle(node: VDirective): 'shorthand' | 'longform' | 'v-slot' {
   return 'v-slot'
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -147,4 +149,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

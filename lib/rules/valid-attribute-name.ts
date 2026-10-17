@@ -2,11 +2,18 @@
  * @author Doug Wade <douglas.b.wade@gmail.com>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VAttribute,
+  VDirective,
+  VIdentifier
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.ts'
 import xnv from 'xml-name-validator'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -14,7 +21,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-attribute-name.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       attribute: 'Attribute name {{name}} is not valid.'
@@ -61,4 +67,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

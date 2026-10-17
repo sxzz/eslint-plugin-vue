@@ -2,9 +2,16 @@
  * @fileoverview Restrict or warn use of v-html to prevent XSS attack
  * @author Nathan Zeplowitz
  */
+import type {
+  RuleContext,
+  SourceCode,
+  VDirective,
+  VExpressionContainer
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -12,7 +19,6 @@ export default {
       categories: ['vue3-recommended'],
       url: 'https://eslint.vuejs.org/rules/no-v-html.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -76,4 +82,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

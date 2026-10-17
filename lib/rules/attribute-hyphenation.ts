@@ -2,6 +2,8 @@
  * @fileoverview Define a style for the props casing in templates.
  * @author Armano
  */
+import type { RuleContext, VAttribute, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor, isCustomComponent } from '../utils/index.ts'
 import { getExactConverter } from '../utils/casing.ts'
 import { toRegExpGroupMatcher } from '../utils/regexp.ts'
@@ -23,7 +25,7 @@ function getAttributeName(node: VDirective | VAttribute): string | null {
   return null
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -142,4 +144,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

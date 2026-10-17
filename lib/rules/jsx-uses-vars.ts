@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Prevent variables used in JSX to be marked as unused
+ * @author Yannick Croissant
+ */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 // the following rule is based on yannickcr/eslint-plugin-react
 
 /**
@@ -24,16 +30,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-/**
- * @fileoverview Prevent variables used in JSX to be marked as unused
- * @author Yannick Croissant
- */
-
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'prevent variables used in JSX to be marked as unused', // eslint-disable-line eslint-plugin/require-meta-docs-description
+      description: 'prevent variables used in JSX to be marked as unused',
       categories: ['base'],
       url: 'https://eslint.vuejs.org/rules/jsx-uses-vars.html'
     },
@@ -62,4 +63,6 @@ export default {
       }
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

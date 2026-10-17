@@ -2,10 +2,19 @@
  * @fileoverview require the component to be directly exported
  * @author Hiroki Osame <hiroki.osame@gmail.com>
  */
+import type {
+  BlockStatement,
+  Declaration,
+  ExportDefaultDeclaration,
+  Expression,
+  ReturnStatement,
+  RuleContext
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { isVueFile } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -13,7 +22,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/require-direct-export.html'
     },
-    fixable: null,
     schema: [
       {
         type: 'object',
@@ -139,4 +147,6 @@ export default {
           })
     }
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

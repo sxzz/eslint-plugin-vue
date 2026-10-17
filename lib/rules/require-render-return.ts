@@ -2,6 +2,8 @@
  * @fileoverview Enforces render function to always return value.
  * @author Armano
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   compositingVisitors,
@@ -9,7 +11,7 @@ import {
   executeOnFunctionsWithoutReturn
 } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -17,7 +19,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/require-render-return.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       expectedReturn: 'Expected to return a value in render function.'
@@ -44,4 +45,6 @@ export default {
       })
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

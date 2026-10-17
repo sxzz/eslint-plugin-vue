@@ -1,3 +1,4 @@
+import type { RuleContext, VElement } from '../types/index.ts'
 /* eslint-disable unicorn/consistent-boolean-name -- `VElementMatcher` predicate functions are clear like this */
 
 import parser from 'postcss-selector-parser'

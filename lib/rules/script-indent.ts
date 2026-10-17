@@ -2,9 +2,11 @@
  * @author Toru Nagashima
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineVisitor } from '../utils/indent-common.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -12,7 +14,7 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/script-indent.html'
     },
-    // eslint-disable-next-line eslint-plugin/require-meta-fixable -- fixer is not recognized
+
     fixable: 'whitespace',
     schema: [
       {
@@ -42,4 +44,6 @@ export default {
   create(context: RuleContext) {
     return defineVisitor(context, context.sourceCode, {})
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

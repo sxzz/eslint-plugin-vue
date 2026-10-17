@@ -2,13 +2,15 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
+import type { RuleContext, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
 const DOUBLE_QUOTES_RE = /"/gu
 const SINGLE_QUOTES_RE = /'/gu
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -68,7 +70,8 @@ export default {
         if (expression.expressions.length > 0) {
           return
         }
-        strValue = expression.quasis[0].value.cooked
+        strValue =
+          expression.quasis[0].value.cooked ?? expression.quasis[0].value.raw
         rawValue = expression.quasis[0].value.raw
       } else {
         return
@@ -149,4 +152,6 @@ export default {
         verify
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

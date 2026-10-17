@@ -2,10 +2,12 @@
  * @fileoverview Enforce the location of first attribute
  * @author Yosuke Ota
  */
+import type { RuleContext, VAttribute, VDirective } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -91,4 +93,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

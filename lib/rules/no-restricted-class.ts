@@ -2,6 +2,15 @@
  * @fileoverview Forbid certain classes from being used
  * @author Tao Bojlen
  */
+import type {
+  ESNode,
+  Expression,
+  RuleContext,
+  VAttribute,
+  VExpressionContainer,
+  VLiteral
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import {
   getStaticPropertyName,
   defineTemplateBodyVisitor
@@ -41,7 +50,7 @@ function* extractClassNames(
   }
   if (node.type === 'TemplateLiteral') {
     for (const templateElement of node.quasis) {
-      yield* templateElement.value.cooked
+      yield* (templateElement.value.cooked ?? templateElement.value.raw)
         .split(/\s+/)
         .map((className) => ({ className, reportNode: templateElement }))
     }
@@ -90,7 +99,7 @@ function* extractClassNames(
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -98,7 +107,6 @@ export default {
       url: 'https://eslint.vuejs.org/rules/no-restricted-class.html',
       categories: undefined
     },
-    fixable: null,
     schema: {
       type: 'array',
       items: {
@@ -138,4 +146,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

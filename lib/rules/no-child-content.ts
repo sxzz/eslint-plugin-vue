@@ -2,6 +2,14 @@
  * @author Flo Edelmann
  * See LICENSE file in root directory for full license.
  */
+import type {
+  Position,
+  RuleContext,
+  Token,
+  VDirective,
+  VNode
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
 export type RuleOption = { additionalDirectives: string[] }
@@ -50,7 +58,7 @@ function getLocationRange(nodes: (VNode | Token)[]) {
   return { start, end }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -59,7 +67,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-child-content.html'
     },
-    fixable: null,
     hasSuggestions: true,
     schema: [
       {
@@ -137,4 +144,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

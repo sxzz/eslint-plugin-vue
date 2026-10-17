@@ -2,6 +2,18 @@
  * @fileoverview Disallow unused refs.
  * @author Yosuke Ota
  */
+import type {
+  ChainExpression,
+  Identifier,
+  MemberExpression,
+  ObjectPattern,
+  RuleContext,
+  VAttribute,
+  VExpressionContainer,
+  VLiteral,
+  VReference
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   getStaticPropertyName,
@@ -23,7 +35,7 @@ function getReferences(references: VReference[]) {
     .map((ref: any) => ref.id)
 }
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -31,7 +43,6 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/no-unused-refs.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unused: "'{{name}}' is defined as ref, but never used."
@@ -243,4 +254,6 @@ export default {
       )
     )
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

@@ -2,10 +2,12 @@
  * @fileoverview Alphabetizes static class names.
  * @author Maciej Chmurski
  */
+import type { RuleContext, VAttribute } from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
-export default {
+const rule = {
   meta: {
     type: 'suggestion',
     docs: {
@@ -52,4 +54,6 @@ export default {
         }
       }
     })
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

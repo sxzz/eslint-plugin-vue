@@ -2,6 +2,13 @@
  * @author dev1437
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VElement,
+  VEndTag,
+  VStartTag
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import { defineTemplateBodyVisitor } from '../utils/index.ts'
 
@@ -195,7 +202,7 @@ function checkNewline(context: RuleContext) {
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'layout',
     docs: {
@@ -204,7 +211,7 @@ export default {
       categories: undefined,
       url: 'https://eslint.vuejs.org/rules/padding-line-between-tags.html'
     },
-    // eslint-disable-next-line eslint-plugin/require-meta-fixable -- fixer is not recognized
+
     fixable: 'whitespace',
     schema: [
       {
@@ -232,4 +239,6 @@ export default {
       VElement: checkNewline(context)
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule

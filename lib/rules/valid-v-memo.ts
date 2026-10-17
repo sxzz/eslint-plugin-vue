@@ -2,6 +2,13 @@
  * @author Yosuke Ota <https://github.com/ota-meshi>
  * See LICENSE file in root directory for full license.
  */
+import type {
+  RuleContext,
+  VDirective,
+  VElement,
+  VExpressionContainer
+} from '../types/index.ts'
+import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
 
 import {
   defineTemplateBodyVisitor,
@@ -52,7 +59,7 @@ function verifyMemoExpression(
   }
 }
 
-export default {
+const rule = {
   meta: {
     type: 'problem',
     docs: {
@@ -60,7 +67,6 @@ export default {
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/valid-v-memo.html'
     },
-    fixable: null,
     schema: [],
     messages: {
       unexpectedArgument: "'v-memo' directives require no argument.",
@@ -128,4 +134,6 @@ export default {
       }
     })
   }
-}
+} satisfies RuleDefinition
+
+export default rule as typeof rule & PublicRuleModule
