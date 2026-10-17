@@ -10,8 +10,21 @@
     "jsonc",
     "markdown"
   ],
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  "vetur.validation.script": false,
+  "files.readonlyInclude": {
+    "dist/**": true,
+    "docs/rules/index.md": true,
+    "lib/configs/base.ts": true,
+    "lib/configs/no-layout-rules.ts": true,
+    "lib/configs/vue3-*.ts": true,
+    "lib/eslint-typegen.d.ts": true,
+    "lib/plugin.ts": true,
+    "lib/utils/deprecated-html-elements.json": true,
+    "lib/utils/html-elements.json": true,
+    "lib/utils/svg-elements.json": true,
+    "lib/utils/vue3-export-names.json": true,
+    "pnpm-lock.yaml": true
+  },
+  "js/ts.tsdk.path": "./node_modules/typescript/lib",
   "[typescript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
