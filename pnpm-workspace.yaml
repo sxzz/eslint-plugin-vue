@@ -1,0 +1,8 @@
+packages:
+  - tests/integrations/*
+
+minimumReleaseAgeExcludePrune: true
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - eslint@10.13.0

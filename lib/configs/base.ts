@@ -1,9 +1,11 @@
 /*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "npm run update"
+ * in order to update its content execute "pnpm run update"
  */
-import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
+
+const resolve = createRequire(import.meta.url).resolve
 
 export default {
   parserOptions: {
@@ -18,7 +20,7 @@ export default {
   overrides: [
     {
       files: '*.vue',
-      parser: fileURLToPath(import.meta.resolve('vue-eslint-parser'))
+      parser: resolve('vue-eslint-parser')
     }
   ]
 }

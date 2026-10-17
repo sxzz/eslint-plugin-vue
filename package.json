@@ -14,29 +14,29 @@
   },
   "scripts": {
     "new": "node tools/new-rule.js",
-    "start": "npm run test:base -- --watch",
+    "start": "pnpm test:base -- --watch",
     "test:base": "vitest run --reporter=dot tests/lib",
     "test": "vitest run",
     "test:integrations": "vitest run tests/integrations",
     "debug": "vitest run --inspect --no-file-parallelism --reporter=dot tests/lib",
-    "cover": "npm run cover:test && npm run cover:report",
+    "cover": "pnpm cover:test && pnpm cover:report",
     "cover:test": "vitest run --coverage --reporter=dot tests/lib",
     "cover:report": "echo 'HTML coverage report available at ./coverage/index.html'",
     "lint": "eslint . && markdownlint \"**/*.md\"",
     "lint:fix": "eslint . --fix && markdownlint \"**/*.md\" --fix",
     "tsc": "tsc",
-    "preversion": "npm test && git add .",
-    "version": "npm run generate:version && git add .",
+    "preversion": "pnpm test && git add .",
+    "version": "pnpm generate:version && git add .",
     "update": "node ./tools/update.js",
     "update-resources": "node ./tools/update-resources.js",
     "typegen": "node ./tools/generate-typegen.mjs",
-    "build": "npm run typegen && tsdown",
+    "build": "pnpm typegen && tsdown",
     "docs:watch": "vitepress dev docs",
-    "predocs:build": "npm run update",
+    "predocs:build": "pnpm run update",
     "docs:build": "vitepress build docs",
-    "generate:version": "env-cmd --environments version -- npm run update && npm run lint:fix",
-    "changeset:version": "changeset version && npm run generate:version && git add --all",
-    "changeset:publish": "npm run build && changeset publish"
+    "generate:version": "env-cmd --environments version -- pnpm run update && pnpm lint:fix",
+    "changeset:version": "changeset version && pnpm generate:version && git add --all",
+    "changeset:publish": "pnpm build && changeset publish"
   },
   "files": [
     "dist"
@@ -95,6 +95,7 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@types/eslint": "^9.6.1",
+    "@types/estree": "^1.0.9",
     "@types/natural-compare": "^1.4.3",
     "@types/node": "^26.6.5",
     "@types/semver": "^7.7.1",
@@ -116,7 +117,6 @@
     "eslint-plugin-node-dependencies": "^2.2.0",
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-unicorn": "^70.0.0",
-    "eslint-plugin-vue": "file:.",
     "eslint-typegen": "^2.3.1",
     "eslint-visitor-keys": "^5.0.1",
     "espree": "^11.2.0",
@@ -128,9 +128,12 @@
     "prettier": "^3.9.4",
     "tsdown": "^0.23.1",
     "typescript": "^6.0.3",
+    "vite": "^6.4.4",
     "vite-plugin-eslint4b": "^0.9.0",
     "vitepress": "^1.6.4",
     "vitest": "^4.1.9",
+    "vue": "^3.5.0",
     "vue-eslint-parser": "^10.4.1"
-  }
+  },
+  "packageManager": "pnpm@12.14.0"
 }

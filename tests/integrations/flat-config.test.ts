@@ -11,7 +11,6 @@ let eslintNodeVersion = ''
 
 describe('Integration with flat config', () => {
   beforeAll(() => {
-    execSync('npm i -f', { cwd: TARGET_DIR, stdio: 'inherit' })
     const eslintPackagePath = path.join(
       TARGET_DIR,
       'node_modules/eslint/package.json'

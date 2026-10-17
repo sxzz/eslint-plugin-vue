@@ -54,7 +54,7 @@ function formatCategory(category, shouldAlwaysError = false) {
     return `/*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "npm run update"
+ * in order to update its content execute "ppnpm run update"
  */
 import plugin from '../../plugin.ts'
 import vueParser from 'vue-eslint-parser'
@@ -99,7 +99,7 @@ export default [
   return `/*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "npm run update"
+ * in order to update its content execute "ppnpm run update"
  */
 import config from './${extendsCategoryId}.ts'
 

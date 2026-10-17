@@ -8,6 +8,6 @@
   "license": "MIT",
   "dependencies": {
     "eslint": "^9.0.0-0",
-    "eslint-plugin-vue": "file:../../.."
+    "eslint-plugin-vue": "workspace:*"
   }
 }

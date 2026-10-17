@@ -6,7 +6,7 @@ const logger = console
 // main
 ;((ruleName, authorName) => {
   if (!ruleName || !authorName) {
-    logger.error('Usage: npm run new <rule name> <author name>')
+    logger.error('Usage: pnpm new <rule name> <author name>')
     process.exitCode = 1
     return
   }

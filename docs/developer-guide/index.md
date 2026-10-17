@@ -10,24 +10,24 @@ Please include as much detail as possible to help us properly address your issue
 
 ## :seedling: Project Setup
 
-To develop locally, fork the eslint-plugin-vue repository and clone it in your local machine. Use the [npm](https://www.npmjs.com/) package manager to install and link dependencies and the LTS version of [Node.js](https://nodejs.org/).
+To develop locally, fork the eslint-plugin-vue repository and clone it on your local machine. Use [pnpm](https://pnpm.io/) to install dependencies and the LTS version of [Node.js](https://nodejs.org/).
 
 To develop and test the `eslint-plugin-vue` package:
 
-1. Run `npm install` in the project's root folder.
-2. Run `npm test` to make sure everything is set up correctly.
+1. Run `pnpm install` in the project's root folder.
+2. Run `pnpm build && pnpm test` to make sure everything is set up correctly.
 
 ## :sparkles: Proposing a new rule or a rule change
 
 In order to add a new rule or a rule change, you should:
 
 - Create issue on GitHub with description of proposed rule
-- Generate a new rule using the `npm run new <rule name> <author name>` command
+- Generate a new rule using the `pnpm new <rule name> <author name>` command
 - Write test scenarios & implement logic
 - Describe the rule in the generated `docs` file
 - Make sure all tests are passing
-- Run `npm run lint` and fix any errors
-- Run `npm run update` in order to update readme and recommended configuration
+- Run `pnpm lint` and fix any errors
+- Run `ppnpm run update` in order to update readme and recommended configuration
 - Create PR and link created issue in description
 
 We're more than happy to see potential contributions, so don't hesitate. If you have any suggestions, ideas or problems feel free to add new [issue](https://github.com/vuejs/eslint-plugin-vue/issues), but first please make sure your question does not repeat previous ones.
@@ -64,8 +64,8 @@ If you'll stuck, remember there are plenty of rules you can learn from already, 
 ## :white_check_mark: JSDoc type checking with TypeScript
 
 We have type checking enabled via TypeScript and JSDoc.\
-The command to perform type checking is: `npm run tsc`
+The command to perform type checking is: `pnpm tsc`
 
-Some tests import the built plugin from `dist`, so run `npm run build` first. CI runs the type check on every pull request, and it has to pass.
+Some tests import the built plugin from `dist`, so run `pnpm build` first. CI runs the type check on every pull request, and it has to pass.
 
 This is just to help you write the rules, not to do strict type checking. If you find it difficult to resolve type checking errors, feel free to suppress them using the `// @ts-nocheck` and `// @ts-ignore` comment.

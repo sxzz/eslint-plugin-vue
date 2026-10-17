@@ -23,7 +23,7 @@ function generateConfig(rules) {
   return `/*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "npm run update"
+ * in order to update its content execute "ppnpm run update"
  */
 export default {
   rules: ${formatRules(rules)}

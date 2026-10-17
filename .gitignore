@@ -5,8 +5,6 @@
 /tests/integrations/*/node_modules
 /node_modules
 /test.*
-yarn.lock
-yarn-error.log
 /docs/.vitepress/dist
 /docs/.vitepress/build-system/shim/vue-eslint-parser.mjs
 /docs/.vitepress/build-system/shim/@typescript-eslint/parser.mjs
