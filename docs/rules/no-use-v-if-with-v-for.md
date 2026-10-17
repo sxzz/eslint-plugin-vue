@@ -11,9 +11,9 @@ since: v4.6.0
 > disallow using `v-if` on the same element as `v-for`
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 

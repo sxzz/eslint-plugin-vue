@@ -11,9 +11,9 @@ since: v6.1.0
 > disallow the use of reserved names in component definitions
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 

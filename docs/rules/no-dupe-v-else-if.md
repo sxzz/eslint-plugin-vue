@@ -11,9 +11,9 @@ since: v7.0.0
 > disallow duplicate conditions in `v-if` / `v-else-if` chains
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 

@@ -11,9 +11,9 @@ since: v9.0.0
 > require valid attribute names
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 

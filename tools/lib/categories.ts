@@ -46,9 +46,10 @@ const presetConfigNames: Record<string, string> = {
 }
 
 export const getPresetNames = (presetIds: string[]) =>
-  presetIds.map(
-    (categoryId) => `\`*.configs["${presetConfigNames[categoryId]}"]\``
-  )
+  presetIds.map((categoryId) => {
+    const name = presetConfigNames[categoryId]
+    return `\`*.configs${/^[a-z_$][\w$]*$/i.test(name) ? `.${name}` : `["${name}"]`}\``
+  })
 
 export const categories = categoryIds
   .map((categoryId) => ({

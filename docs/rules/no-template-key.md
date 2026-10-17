@@ -11,9 +11,9 @@ since: v3.4.0
 > disallow `key` attribute on `<template>`
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 Vue.js disallows `key` attribute on `<template>` elements.
 

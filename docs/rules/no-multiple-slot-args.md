@@ -11,7 +11,7 @@ since: v7.0.0
 > disallow passing multiple arguments to scoped slots
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 

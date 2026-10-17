@@ -11,9 +11,9 @@ since: v3.0.0
 > disallow parsing errors in `<template>`
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 This rule reports syntax errors in `<template>`. For example:
 

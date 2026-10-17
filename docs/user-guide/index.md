@@ -36,7 +36,7 @@ import globals from 'globals'
 export default [
   // add more generic rulesets here, such as:
   // js.configs.recommended,
-  ...pluginVue.configs['recommended'],
+  ...pluginVue.configs.recommended,
   {
     rules: {
       // override/add rules settings here, such as:
@@ -60,12 +60,12 @@ This plugin provides some predefined configs.
 You can use the following configs by adding them to `eslint.config.js`.
 (Configs in this plugin are provided as arrays, so spread syntax is required when combining them with other configs.)
 
-- `*.configs["base"]` ... Settings and rules to enable correct ESLint parsing.
+- `*.configs.base` ... Settings and rules to enable correct ESLint parsing.
 - Configurations:
-  - `*.configs["essential"]` ... `base`, plus rules to prevent errors or unintended behavior.
+  - `*.configs.essential` ... `base`, plus rules to prevent errors or unintended behavior.
   - `*.configs["strongly-recommended"]` ... `essential`, plus rules to considerably improve code readability and/or dev experience.
   - `*.configs["strongly-recommended-error"]` ... Same as `strongly-recommended`, except with all rules configured to error instead of warn.
-  - `*.configs["recommended"]` ... `strongly-recommended`, plus rules to enforce subjective community defaults to ensure consistency.
+  - `*.configs.recommended` ... `strongly-recommended`, plus rules to enforce subjective community defaults to ensure consistency.
   - `*.configs["recommended-error"]` ... Same as `recommended`, except with all rules configured to error instead of warn.
 
 :::warning Reporting rules
@@ -156,7 +156,7 @@ import eslintPluginVuekit from 'eslint-plugin-vuekit'
 import { withVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 
 export default withVueTs(
-  eslintPluginVuekit.configs['recommended'],
+  eslintPluginVuekit.configs.recommended,
   vueTsConfigs.recommended
 )
 ```
@@ -182,7 +182,7 @@ export default typescriptEslint.config(
     extends: [
       eslint.configs.recommended,
       ...typescriptEslint.configs.recommended,
-      ...eslintPluginVuekit.configs['recommended'],
+      ...eslintPluginVuekit.configs.recommended,
     ],
     files: ['**/*.{ts,vue}'],
     languageOptions: {
@@ -229,7 +229,7 @@ import ts from 'typescript-eslint'
 export default ts.config(
   js.configs.recommended,
   ...ts.configs.recommended,
-  ...eslintPluginVuekit.configs['recommended'],
+  ...eslintPluginVuekit.configs.recommended,
   {
     files: ['*.vue', '**/*.vue'],
     languageOptions: {

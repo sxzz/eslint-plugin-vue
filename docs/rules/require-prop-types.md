@@ -12,7 +12,7 @@ since: v3.9.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 

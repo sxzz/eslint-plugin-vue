@@ -11,9 +11,9 @@ since: v3.11.0
 > enforce valid `v-once` directives
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 This rule checks whether every `v-once` directive is valid.
 

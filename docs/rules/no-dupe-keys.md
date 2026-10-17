@@ -11,9 +11,9 @@ since: v3.9.0
 > disallow duplication of field names
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 This rule prevents using duplicate key names.
 

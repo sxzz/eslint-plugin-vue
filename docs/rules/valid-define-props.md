@@ -11,9 +11,9 @@ since: v7.13.0
 > enforce valid `defineProps` compiler macro
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 This rule checks whether `defineProps` compiler macro is valid.
 

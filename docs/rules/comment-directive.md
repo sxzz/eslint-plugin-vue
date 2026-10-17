@@ -11,10 +11,10 @@ since: v4.1.0
 > support comment-directives in `<template>`
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["base"]`
-  - `*.configs["essential"]`
+  - `*.configs.base`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 Sole purpose of this rule is to provide `eslint-disable` functionality in the `<template>` and in the block level.
 It supports usage of the following comments:

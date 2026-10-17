@@ -11,9 +11,9 @@ since: v7.11.0
 > disallow deprecated `v-is` directive (in Vue.js 3.1.0+)
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["essential"]`
+  - `*.configs.essential`
   - `*.configs["strongly-recommended"]`
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 

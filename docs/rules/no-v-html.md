@@ -11,7 +11,7 @@ since: v4.7.0
 > disallow use of v-html to prevent XSS attack
 
 - :gear: This rule is included in the following preset configs:
-  - `*.configs["recommended"]`
+  - `*.configs.recommended`
 
 ## :book: Rule Details
 
