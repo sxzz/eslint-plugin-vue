@@ -64,9 +64,7 @@ export default [
   {
     name: 'vue/base/setup',
     plugins: {
-      get vue() {
-        return plugin
-      }
+      vue: plugin
     },
     languageOptions: {
       sourceType: 'module',
@@ -76,9 +74,7 @@ export default [
     name: 'vue/base/setup-for-vue',
     files: ['*.vue', '**/*.vue'],
     plugins: {
-      get vue() {
-        return plugin
-      }
+      vue: plugin
     },
     languageOptions: {
       parser: vueParser,
