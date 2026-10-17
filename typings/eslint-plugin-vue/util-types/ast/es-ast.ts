@@ -1,9 +1,9 @@
 /**
  * @see https://github.com/estree/estree
  */
-import { BaseNode, HasParentNode } from '../node'
-import { Token } from '../node'
-import { ParseError } from '../errors'
+import type { BaseNode, HasParentNode } from '../node'
+import type { Token } from '../node'
+import type { ParseError } from '../errors'
 import * as V from './v-ast'
 import * as TS from './ts-ast'
 import * as JSX from './jsx-ast'

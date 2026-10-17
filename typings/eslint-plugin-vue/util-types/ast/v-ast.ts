@@ -1,9 +1,9 @@
 /**
  * @see https://github.com/vuejs/vue-eslint-parser/blob/master/docs/ast.md
  */
-import { HasParentNode, BaseNode } from '../node'
-import { Token, HTMLComment, HTMLBogusComment, Comment } from '../node'
-import { ParseError } from '../errors'
+import type { HasParentNode, BaseNode } from '../node'
+import type { Token, HTMLComment, HTMLBogusComment, Comment } from '../node'
+import type { ParseError } from '../errors'
 import * as ES from './es-ast'
 
 export type NS = {

@@ -1,7 +1,7 @@
 import * as VNODE from './node'
 import * as VAST from './ast'
 import * as eslint from 'eslint'
-import { ESNode, TSNode } from './ast'
+import type { ESNode, TSNode } from './ast'
 
 type TemplateListenerBase = {
   [T in keyof VAST.VNodeListenerMap]?: (node: VAST.VNodeListenerMap[T]) => void

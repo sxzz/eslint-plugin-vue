@@ -431,7 +431,9 @@ tester.run('no-restricted-call-after-await', rule as RuleModule, {
       }
       </script>
       `,
-      options: [{ module: require.resolve('../../../dist/index.mjs'), path: 'foo' }],
+      options: [
+        { module: require.resolve('../../../dist/index.mjs'), path: 'foo' }
+      ],
       errors: [
         {
           message:

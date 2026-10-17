@@ -1,4 +1,4 @@
-import { HasLocation } from './locations'
+import type { HasLocation } from './locations'
 import * as VAST from '../ast'
 
 export interface BaseNode extends HasLocation {

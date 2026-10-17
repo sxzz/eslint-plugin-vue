@@ -1,7 +1,7 @@
 /**
  * @see https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/typescript-estree/src/ts-estree/ts-estree.ts
  */
-import { HasParentNode } from '../node'
+import type { HasParentNode } from '../node'
 import * as ES from './es-ast'
 import { TSESTree } from '@typescript-eslint/types'
 export type TSNode =

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "moduleDetection": "force",
     "module": "preserve",
     "moduleResolution": "bundler",
     "lib": ["es2022"],
@@ -19,6 +20,8 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
       "*": ["./typings/*"]
@@ -31,5 +34,6 @@
     "tests/**/*.ts",
     "typings/eslint-plugin-vue/global.d.ts",
     "docs/.vitepress/**/*.ts"
-  ]
+  ],
+  "exclude": ["tests/fixtures/typescript/src/**"]
 }
