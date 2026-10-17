@@ -333,36 +333,12 @@ export namespace Rule {
     id: string
     options: ESLintRule.RuleContext['options']
     settings: { [name: string]: any }
-    /** @deprecated removed in ESLint v10 */
-    parserPath?: string
-    /** @deprecated removed in ESLint v10 */
-    parserOptions?: ESLintLinter.ParserOptions
-    /** For flat config  */
     languageOptions?: ESLintLinter.FlatConfig['languageOptions']
-    /** @deprecated removed in ESLint v9 */
-    parserServices?: parserServices.ParserServices
-
-    /** @deprecated removed in ESLint v9 */
-    getAncestors?(): VAST.ESNode[]
-    /** @deprecated removed in ESLint v9 */
-    getDeclaredVariables?(node: VAST.ESNode): Scope.Variable[]
-    /** @deprecated removed in ESLint v10 */
-    getFilename?(): string
     filename: string
-    /** @deprecated removed in ESLint v10 */
-    getPhysicalFilename?(): string
     physicalFilename: string
-    /** @deprecated removed in ESLint v9 */
-    getScope?(): Scope.Scope
-    /** @deprecated removed in ESLint v10 */
-    getSourceCode?(): SourceCode
     sourceCode: SourceCode
-    /** @deprecated removed in ESLint v9 */
-    markVariableAsUsed?(name: string): boolean
     report(descriptor: ReportDescriptor): void
 
-    /** @deprecated removed in ESLint v10 */
-    getCwd?: () => string
     cwd: string
   }
 
@@ -412,25 +388,24 @@ export namespace RuleTester {
 }
 
 export class Linter extends ESLintLinter {
-  getRules(): Map<string, Rule.RuleModule>
   verify(
     code: SourceCode | string,
-    config: Linter.LegacyConfig | Linter.Config | Linter.Config[],
+    config: Linter.Config | Linter.Config[],
     filename?: string
   ): Linter.LintMessage[]
   verify(
     code: SourceCode | string,
-    config: Linter.LegacyConfig | Linter.Config | Linter.Config[],
+    config: Linter.Config | Linter.Config[],
     options: Linter.LintOptions
   ): Linter.LintMessage[]
   verifyAndFix(
     code: string,
-    config: Linter.LegacyConfig | Linter.Config | Linter.Config[],
+    config: Linter.Config | Linter.Config[],
     filename?: string
   ): Linter.FixReport
   verifyAndFix(
     code: string,
-    config: Linter.LegacyConfig | Linter.Config | Linter.Config[],
+    config: Linter.Config | Linter.Config[],
     options: Linter.FixOptions
   ): Linter.FixReport
 }
@@ -438,7 +413,6 @@ export class Linter extends ESLintLinter {
 export namespace Linter {
   type LintMessage = ESLintLinter.LintMessage
   type LintOptions = ESLintLinter.LintOptions
-  type LegacyConfig = ESLintLinter.LegacyConfig
   type FlatConfig = ESLintLinter.FlatConfig
   type LanguageOptions = ESLintLinter.LanguageOptions
   interface Config extends Omit<ESLintLinter.Config, 'plugins'> {

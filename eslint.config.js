@@ -50,7 +50,7 @@ const MD_LINKS_FOR_DOCS = {
 export default typegen([
   eslintConfigFlatGitIgnore(),
   {
-    ignores: ['.changeset/**/*.md', 'tests/fixtures', 'tests/integrations']
+    ignores: ['tests/fixtures', 'tests/integrations']
   },
   eslintPluginPrettierRecommended,
   ...eslintPluginNodeDependencies.configs['flat/recommended'],

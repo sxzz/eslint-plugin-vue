@@ -1,7 +1,7 @@
 /**
  * @author Yosuke Ota
  */
-import { RuleTester } from '../../eslint-compat'
+import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/dot-location'
 import vueEslintParser from 'vue-eslint-parser'
 
@@ -11,12 +11,15 @@ const tester = new RuleTester({
 
 tester.run('dot-location', rule, {
   valid: [
-    `<template>
+    {
+      code: `<template>
       <div
         :attr="foo.
           bar"
       />
     </template>`,
+      options: ['object']
+    },
     {
       code: `
       <template>
@@ -44,6 +47,7 @@ tester.run('dot-location', rule, {
             bar"
         />
       </template>`,
+      options: ['object'],
       errors: [
         {
           message: 'Expected dot to be on same line as object.',

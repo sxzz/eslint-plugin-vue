@@ -3,7 +3,7 @@
  * @author Learning Equality
  */
 import type { Linter as ESLintLinter } from 'eslint'
-import { RuleTester, Linter } from '../../eslint-compat'
+import { RuleTester, Linter } from 'eslint'
 import assert from 'node:assert'
 import rule from '../../../lib/rules/no-unused-properties'
 import noUnusedComponents from '../../../lib/rules/no-unused-components'

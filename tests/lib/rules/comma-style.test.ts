@@ -1,8 +1,7 @@
 /**
  * @author Yosuke Ota
  */
-import semver from 'semver'
-import { RuleTester } from '../../eslint-compat'
+import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/comma-style'
 import { eslintStylisticVersion } from '../../test-utils/eslint-stylistic'
 import vueEslintParser from 'vue-eslint-parser'
@@ -168,11 +167,7 @@ tester.run('comma-style', rule, {
   ]
 })
 
-if (
-  eslintStylisticVersion === undefined ||
-  semver.lt(eslintStylisticVersion, '3.0.0') ||
-  semver.satisfies(process.version, '<19.0.0 || ^21.0.0')
-) {
+if (eslintStylisticVersion === undefined) {
   tester.run('comma-style', rule, {
     valid: [
       `

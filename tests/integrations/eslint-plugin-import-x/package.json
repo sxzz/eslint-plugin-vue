@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "integration-test-for-eslint-plugin-import-x",
+  "version": "1.0.0",
+  "description": "Integration test for eslint-plugin-import-x",
+  "scripts": {},
+  "keywords": [],
+  "author": "Toru Nagashima (https://github.com/mysticatea)",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^10.0.0",
+    "eslint-plugin-vue": "workspace:*",
+    "eslint-plugin-import-x": "^4.17.1"
+  }
+}

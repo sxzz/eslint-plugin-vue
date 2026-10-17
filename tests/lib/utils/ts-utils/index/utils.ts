@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import tsParser from '@typescript-eslint/parser'
 import vueEslintParser from 'vue-eslint-parser'
-import { Linter } from '../../../../eslint-compat'
+import { Linter } from 'eslint'
 import { defineScriptSetupVisitor } from '../../../../../lib/utils/index'
 
 export const FIXTURES_ROOT = path.resolve(

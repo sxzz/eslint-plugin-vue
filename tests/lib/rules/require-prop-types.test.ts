@@ -4,7 +4,7 @@
  */
 import rule from '../../../lib/rules/require-prop-types'
 import { getTypeScriptFixtureTestOptions } from '../../test-utils/typescript'
-import { RuleTester } from '../../eslint-compat'
+import { RuleTester } from 'eslint'
 import vueEslintParser from 'vue-eslint-parser'
 
 const ruleTester = new RuleTester()

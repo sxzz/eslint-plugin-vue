@@ -8,12 +8,12 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import semver from 'semver'
 
-const PLUGIN_DIR = path.join(import.meta.dirname, 'eslint-plugin-import')
+const PLUGIN_DIR = path.join(import.meta.dirname, 'eslint-plugin-import-x')
 const ESLINT = path.join(PLUGIN_DIR, 'node_modules', '.bin', 'eslint')
 
 let eslintNodeVersion = ''
 
-describe('Integration with eslint-plugin-import', () => {
+describe('Integration with eslint-plugin-import-x', () => {
   beforeAll(() => {
     const eslintPackagePath = path.join(
       PLUGIN_DIR,
@@ -23,9 +23,7 @@ describe('Integration with eslint-plugin-import', () => {
       .engines.node
   })
 
-  // https://github.com/vuejs/eslint-plugin-vue/issues/21#issuecomment-308957697
-  // eslint-plugin-vue had been breaking eslint-plugin-import if people use both at the same time.
-  // This test is in order to prevent the regression.
+  // Keep both plugins active to catch integration regressions.
   it.skipIf(!semver.satisfies(process.version, eslintNodeVersion))(
     'should lint without errors',
     () => {

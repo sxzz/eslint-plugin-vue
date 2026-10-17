@@ -1,0 +1,38 @@
+name: Unit Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  unit-test:
+    uses: sxzz/workflows/.github/workflows/unit-test.yml@main
+    with:
+      typecheck: pnpm run tsc
+      os-matrix: '"ubuntu-latest"'
+
+  compatibility:
+    name: Compatibility / ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Without ESLint Stylistic
+            install: pnpm remove -D -w @stylistic/eslint-plugin
+          - name: ESLint Stylistic 5
+            install: pnpm add -D -w @stylistic/eslint-plugin@5
+          - name: ESLint Stylistic 6 beta
+            install: pnpm add -D -w @stylistic/eslint-plugin@6.0.0-beta.6
+    steps:
+      - uses: sxzz/workflows/setup-js@main
+        with:
+          node-version: '22'
+      - run: pnpm run build
+      - run: ${{ matrix.install }}
+      - run: pnpm run test

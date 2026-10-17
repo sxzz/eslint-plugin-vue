@@ -40,7 +40,7 @@ function pickSince(content) {
       return since[1]
     }
   }
-  if (process.env.IN_VERSION_SCRIPT) {
+  if (process.argv.includes('--version')) {
     return `v${packageJson.version}`
   }
   return null

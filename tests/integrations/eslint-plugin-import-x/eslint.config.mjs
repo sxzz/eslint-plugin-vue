@@ -1,5 +1,5 @@
 import vueEslintParser from 'vue-eslint-parser'
-import eslintPluginImport from 'eslint-plugin-import'
+import { importX } from 'eslint-plugin-import-x'
 import eslintPluginVue from 'eslint-plugin-vue'
 
 export default [
@@ -13,15 +13,15 @@ export default [
       }
     },
     plugins: {
-      import: eslintPluginImport,
+      'import-x': importX,
       vue: eslintPluginVue
     },
     rules: {
-      'import/default': 'warn',
-      'import/namespace': 'warn'
+      'import-x/default': 'warn',
+      'import-x/namespace': 'warn'
     },
     settings: {
-      'import/extensions': ['.js', '.vue']
+      'import-x/extensions': ['.js', '.vue']
     }
   }
 ]

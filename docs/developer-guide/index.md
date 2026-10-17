@@ -17,6 +17,10 @@ To develop and test the `eslint-plugin-vue` package:
 1. Run `pnpm install` in the project's root folder.
 2. Run `pnpm build && pnpm test` to make sure everything is set up correctly.
 
+## Releasing
+
+Run `pnpm release` on `main` to choose a version with `bumpp`. The version bump updates rule documentation, creates a commit and a `v*` tag, and pushes them. The tag triggers the release workflow, which builds the package and publishes it through npm trusted publishing. Configure the npm trusted publisher for this repository before the first release.
+
 ## :sparkles: Proposing a new rule or a rule change
 
 In order to add a new rule or a rule change, you should:

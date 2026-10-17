@@ -5,7 +5,7 @@
 import type { Linter } from 'eslint'
 import rule from '../../../lib/rules/require-valid-default-prop'
 import { getTypeScriptFixtureTestOptions } from '../../test-utils/typescript'
-import { RuleTester } from '../../eslint-compat'
+import { RuleTester } from 'eslint'
 import vueEslintParser from 'vue-eslint-parser'
 
 const languageOptions: Linter.LanguageOptions = {

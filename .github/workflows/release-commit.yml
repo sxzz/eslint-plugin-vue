@@ -1,0 +1,12 @@
+name: Publish Any Commit
+
+on: [push, pull_request]
+
+permissions: {}
+
+jobs:
+  release:
+    if: github.repository == 'sxzz/eslint-plugin-vue'
+    uses: sxzz/workflows/.github/workflows/release-commit.yml@main
+    with:
+      compact: true
