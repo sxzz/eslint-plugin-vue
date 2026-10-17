@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-vuekit",
-  "version": "11.0.0-alpha.1",
+  "version": "11.0.0-alpha.2",
   "description": "Modern ESLint plugin for Vue 3",
   "type": "module",
   "exports": {
