@@ -178,9 +178,9 @@ importers:
       postcss-selector-parser:
         specifier: ^7.1.4
         version: 7.1.6
-      semver:
-        specifier: ^7.8.5
-        version: 7.8.5
+      verkit:
+        specifier: ^0.5.0
+        version: 0.5.0
       xml-name-validator:
         specifier: ^5.0.0
         version: 5.0.0
@@ -203,9 +203,6 @@ importers:
       '@types/node':
         specifier: ^26.6.5
         version: 26.6.5
-      '@types/semver':
-        specifier: ^7.7.1
-        version: 7.8.0
       '@types/xml-name-validator':
         specifier: ^4.0.3
         version: 4.0.3
@@ -1443,9 +1440,6 @@ packages:
 
   '@types/node@26.6.5':
     resolution: {integrity: sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==}
-
-  '@types/semver@7.8.0':
-    resolution: {integrity: sha512-1mAINjtQCXXeLkJ9ehXkwOcBpqtLxiVtKhpUf83DdRNdQKV0iXZpaHYqRr7nj+wvxuJzoAmAwXI+sCNMv1CzLQ==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -4375,8 +4369,6 @@ snapshots:
   '@types/node@26.6.5':
     dependencies:
       undici-types: 8.9.0
-
-  '@types/semver@7.8.0': {}
 
   '@types/unist@2.0.11': {}
 

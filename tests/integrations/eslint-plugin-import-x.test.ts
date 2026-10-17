@@ -6,7 +6,7 @@
 import { execSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
-import semver from 'semver'
+import { satisfies } from 'verkit'
 
 const PLUGIN_DIR = path.join(import.meta.dirname, 'eslint-plugin-import-x')
 const ESLINT = path.join(PLUGIN_DIR, 'node_modules', '.bin', 'eslint')
@@ -24,7 +24,7 @@ describe('Integration with eslint-plugin-import-x', () => {
   })
 
   // Keep both plugins active to catch integration regressions.
-  it.skipIf(!semver.satisfies(process.version, eslintNodeVersion))(
+  it.skipIf(!satisfies(process.version, eslintNodeVersion))(
     'should lint without errors',
     () => {
       execSync(`${ESLINT} --config eslint.config.mjs a.vue`, {

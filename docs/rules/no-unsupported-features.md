@@ -20,14 +20,17 @@ This rule reports unsupported Vue.js syntax on the specified version.
 
 ```json
 {
-  "vue/no-unsupported-features": ["error", {
-    "version": "^3.2.0",
-    "ignores": []
-  }]
+  "vue/no-unsupported-features": [
+    "error",
+    {
+      "version": "^3.2.0",
+      "ignores": []
+    }
+  ]
 }
 ```
 
-- `version` ... The `version` option accepts [the valid version range of `node-semver`](https://github.com/npm/node-semver#range-grammar). Set the version of Vue.js you are using. This option is required.
+- `version` ... The `version` option accepts [a semantic version range supported by verkit](https://github.com/sxzz/verkit#ranges). Set the version of Vue.js you are using. This option is required.
 - `ignores` ... You can use this `ignores` option to ignore the given features.
   The `"ignores"` option accepts an array of the following strings.
   - Vue.js 3.4.0+
@@ -58,7 +61,6 @@ This rule reports unsupported Vue.js syntax on the specified version.
 - [Vue RFCs - v-bind .prop shorthand proposal]
 
 [Vue RFCs - 0043-sfc-style-variables]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0043-sfc-style-variables.md
-
 [Vue RFCs - v-bind .prop shorthand proposal]: https://github.com/vuejs/rfcs/pull/18
 
 ## :rocket: Version

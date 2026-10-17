@@ -6,7 +6,7 @@
 import type { RuleTester as ESLintRuleTester } from 'eslint'
 import fs from 'node:fs'
 import path from 'node:path'
-import semver from 'semver'
+import { satisfies } from 'verkit'
 import { createRequire } from 'node:module'
 import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/script-indent'
@@ -52,7 +52,7 @@ function loadPatterns(
           Object.entries(baseObj.requirements as Record<string, string>).some(
             ([pkgName, pkgVersion]) => {
               const pkg = nodeRequire(`${pkgName}/package.json`)
-              return !semver.satisfies(pkg.version, pkgVersion)
+              return !satisfies(pkg.version, pkgVersion)
             }
           )
         ) {

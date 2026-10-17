@@ -2,7 +2,7 @@ import { strict as assert } from 'node:assert'
 import { execSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
-import semver from 'semver'
+import { satisfies } from 'verkit'
 
 const TARGET_DIR = path.join(import.meta.dirname, 'flat-config')
 const ESLINT = path.join(TARGET_DIR, 'node_modules', '.bin', 'eslint')
@@ -19,7 +19,7 @@ describe('Integration with flat config', () => {
       .engines.node
   })
 
-  it.skipIf(!semver.satisfies(process.version, eslintNodeVersion))(
+  it.skipIf(!satisfies(process.version, eslintNodeVersion))(
     'should lint without errors',
     () => {
       const result = JSON.parse(

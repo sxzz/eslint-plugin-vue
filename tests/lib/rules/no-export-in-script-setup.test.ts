@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  * See LICENSE file in root directory for full license.
  */
-import semver from 'semver'
+import { satisfies } from 'verkit'
 import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/no-export-in-script-setup'
 import vueEslintParser from 'vue-eslint-parser'
@@ -41,7 +41,7 @@ ruleTester.run('no-export-in-script-setup', rule, {
       </script>
       `
     },
-    ...(semver.satisfies(typescriptPackageJson.version, '>=4.5.0-0')
+    ...(satisfies(typescriptPackageJson.version, '>=4.5.0-0')
       ? [
           {
             filename: 'test.vue',

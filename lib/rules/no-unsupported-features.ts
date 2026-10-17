@@ -8,7 +8,7 @@ import type {
   TemplateListener
 } from '../types/index.ts'
 import type { RuleDefinition, PublicRuleModule } from '../types/rule.ts'
-import semver from 'semver'
+import { isRangeSubset, parseRange, type SemVerRange } from 'verkit'
 import {
   compositingVisitors,
   defineTemplateBodyVisitor
@@ -48,24 +48,16 @@ const FEATURES = {
 
 const SYNTAX_NAMES = Object.keys(FEATURES) as (keyof typeof FEATURES)[]
 
-const cache = new Map()
-/**
- * Get the `semver.Range` object of a given range text.
- * It's null if the `x` is not a valid range text.
- */
-function getSemverRange(x: string): semver.Range {
-  let ret = cache.get(x) || null
+const cache = new Map<string, SemVerRange>()
 
-  if (!ret) {
-    try {
-      ret = new semver.Range(x)
-    } catch {
-      // Ignore parsing error.
-    }
-    cache.set(x, ret)
+/** Parse and cache a version range. */
+function getSemverRange(range: string): SemVerRange {
+  let parsed = cache.get(range)
+  if (!parsed) {
+    parsed = parseRange(range)
+    cache.set(range, parsed)
   }
-
-  return ret
+  return parsed
 }
 
 const rule = {
@@ -140,7 +132,7 @@ const rule = {
      * Check whether a given case object is full-supported on the configured node version.
      */
     function isNotSupportingVersion(aCase: SyntaxRule): boolean {
-      return !semver.subset(versionRange, getSemverRange(aCase.supported))
+      return !isRangeSubset(versionRange, getSemverRange(aCase.supported))
     }
 
     let templateBodyVisitor: TemplateListener = {}
