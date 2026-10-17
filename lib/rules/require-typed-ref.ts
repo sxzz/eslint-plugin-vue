@@ -8,7 +8,8 @@ import {
   isVueFile,
   isTypeScriptFile,
   isVElement,
-  hasAttribute
+  hasAttribute,
+  getScope
 } from '../utils/index.js'
 
 type FunctionNode =
@@ -38,7 +39,7 @@ function hasTypeAnnotation(node: Pattern): boolean {
  * Resolves the single definition of the given identifier reference.
  */
 function findDefinition(context: RuleContext, node: Identifier) {
-  const variable = findVariable(utils.getScope(context, node), node)
+  const variable = findVariable(getScope(context, node), node)
   return variable?.defs.length === 1 ? variable.defs[0] : null
 }
 
