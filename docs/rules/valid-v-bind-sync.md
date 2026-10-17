@@ -10,14 +10,7 @@ since: v7.0.0
 
 > enforce valid `.sync` modifier on `v-bind` directives
 
-- :no_entry_sign: This rule was **deprecated**.
-- :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/vue2-essential"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
-  - `"plugin:vue/vue2-essential"`
-  - `"plugin:vue/vue2-strongly-recommended"`
-  - `"plugin:vue/vue2-recommended"`
+- :no_entry: This rule was **removed** in eslint-plugin-vue v11.0.0.
 
 This rule checks whether every `.sync` modifier on `v-bind` directives is valid.
 
@@ -29,8 +22,6 @@ This rule reports `.sync` modifier on `v-bind` directives in the following cases
 - The `.sync` modifier has potential null object property access. E.g. `<MyComponent v-bind:aaa.sync="(a?.b).c" />`
 - The `.sync` modifier is on non Vue-components. E.g. `<input v-bind:aaa.sync="foo"></div>`
 - The `.sync` modifier's reference is iteration variables. E.g. `<div v-for="x in list"><MyComponent v-bind:aaa.sync="x" /></div>`
-
-<eslint-code-block :rules="{'vue/valid-v-bind-sync': ['error']}">
 
 ```vue
 <template>
@@ -60,8 +51,6 @@ This rule reports `.sync` modifier on `v-bind` directives in the following cases
 </template>
 ```
 
-</eslint-code-block>
-
 ::: warning Note
 This rule does not check syntax errors in directives because it's checked by [vue/no-parsing-error] rule.
 :::
@@ -77,8 +66,6 @@ Nothing.
 [vue/no-parsing-error]: ./no-parsing-error.md
 
 ## :books: Further Reading
-
-- [Guide (for v2) - `.sync` Modifier](https://v2.vuejs.org/v2/guide/components-custom-events.html#sync-Modifier)
 
 ## :rocket: Version
 

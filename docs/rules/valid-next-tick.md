@@ -12,78 +12,34 @@ since: v7.5.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/essential"]`
-  - `*.configs["flat/vue2-essential"]`
   - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
   - `*.configs["flat/recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
   - `"plugin:vue/essential"`
-  - `"plugin:vue/vue2-essential"`
   - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/vue2-strongly-recommended"`
   - `"plugin:vue/recommended"`
-  - `"plugin:vue/vue2-recommended"`
 - :wrench: The `--fix` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the problems reported by this rule.
 - :bulb: Some problems reported by this rule are manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 ## :book: Rule Details
 
-Calling `Vue.nextTick` or `vm.$nextTick` without passing a callback and without awaiting the returned Promise is likely a mistake (probably a missing `await`).
-
-<eslint-code-block fix :rules="{'vue/valid-next-tick': ['error']}">
+Calling `nextTick()` or `this.$nextTick()` without a callback or awaiting the returned Promise is likely a mistake.
 
 ```vue
 <script>
-import { nextTick as nt } from 'vue';
+import { nextTick } from 'vue'
 
 export default {
   async mounted() {
-    /* ✗ BAD: no callback function or awaited Promise */
-    nt();
-    Vue.nextTick();
-    this.$nextTick();
+    // ✗ BAD
+    nextTick()
 
-    /* ✗ BAD: too many parameters */
-    nt(callback, anotherCallback);
-    Vue.nextTick(callback, anotherCallback);
-    this.$nextTick(callback, anotherCallback);
-
-    /* ✗ BAD: no function call */
-    nt.then(callback);
-    Vue.nextTick.then(callback);
-    this.$nextTick.then(callback);
-    await nt;
-    await Vue.nextTick;
-    await this.$nextTick;
-
-    /* ✗ BAD: both callback function and awaited Promise */
-    nt(callback).then(anotherCallback);
-    Vue.nextTick(callback).then(anotherCallback);
-    this.$nextTick(callback).then(anotherCallback);
-    await nt(callback);
-    await Vue.nextTick(callback);
-    await this.$nextTick(callback);
-
-    /* ✓ GOOD */
-    await nt();
-    await Vue.nextTick();
-    await this.$nextTick();
-
-    /* ✓ GOOD */
-    nt().then(callback);
-    Vue.nextTick().then(callback);
-    this.$nextTick().then(callback);
-
-    /* ✓ GOOD */
-    nt(callback);
-    Vue.nextTick(callback);
-    this.$nextTick(callback);
+    // ✓ GOOD
+    await nextTick()
+    this.$nextTick(callback)
   }
 }
 </script>
 ```
-
-</eslint-code-block>
 
 ## :wrench: Options
 
@@ -91,11 +47,8 @@ Nothing.
 
 ## :books: Further Reading
 
-- [`Vue.nextTick` API in Vue 2](https://v2.vuejs.org/v2/api/#Vue-nextTick)
-- [`vm.$nextTick` API in Vue 2](https://v2.vuejs.org/v2/api/#vm-nextTick)
-- [Global API Treeshaking](https://v3-migration.vuejs.org/breaking-changes/global-api-treeshaking.html)
-- [Global `nextTick` API in Vue 3](https://vuejs.org/api/general.html#nexttick)
-- [Instance `$nextTick` API in Vue 3](https://vuejs.org/api/component-instance.html#nexttick)
+- [Global API: nextTick](https://vuejs.org/api/general.html#nexttick)
+- [Component instance: $nextTick](https://vuejs.org/api/component-instance.html#nexttick)
 
 ## :rocket: Version
 

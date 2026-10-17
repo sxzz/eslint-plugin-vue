@@ -48,8 +48,6 @@ Nothing.
 
 ## :books: Further Reading
 
-- [Guide (for v2) - v-if without key](https://v2.vuejs.org/v2/style-guide/#v-if-v-else-if-v-else-without-key-use-with-caution)
-
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-vue v9.19.0

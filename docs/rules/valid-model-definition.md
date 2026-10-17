@@ -10,21 +10,12 @@ since: v9.0.0
 
 > require valid keys in model option
 
-- :no_entry_sign: This rule was **deprecated**.
-- :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/vue2-essential"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
-  - `"plugin:vue/vue2-essential"`
-  - `"plugin:vue/vue2-strongly-recommended"`
-  - `"plugin:vue/vue2-recommended"`
+- :no_entry: This rule was **removed** in eslint-plugin-vue v11.0.0.
 
 ## :book: Rule Details
 
 This rule is aimed at preventing invalid keys in model option.
 
-<eslint-code-block :rules="{'vue/valid-model-definition': ['error']}">
-
 ```vue
 <script>
 /* ✓ GOOD */
@@ -35,10 +26,6 @@ export default {
 }
 </script>
 ```
-
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/valid-model-definition': ['error']}">
 
 ```vue
 <script>
@@ -51,10 +38,6 @@ export default {
 </script>
 ```
 
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/valid-model-definition': ['error']}">
-
 ```vue
 <script>
 /* ✓ GOOD */
@@ -66,10 +49,6 @@ export default {
 }
 </script>
 ```
-
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/valid-model-definition': ['error']}">
 
 ```vue
 <script>
@@ -82,10 +61,6 @@ export default {
 }
 </script>
 ```
-
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/valid-model-definition': ['error']}">
 
 ```vue
 <script>
@@ -98,10 +73,6 @@ export default {
 }
 </script>
 ```
-
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/valid-model-definition': ['error']}">
 
 ```vue
 <script>
@@ -115,8 +86,6 @@ export default {
 }
 </script>
 ```
-
-</eslint-code-block>
 
 ## :rocket: Version
 

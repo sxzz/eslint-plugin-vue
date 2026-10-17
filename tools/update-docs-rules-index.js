@@ -12,9 +12,6 @@ import categories from './lib/categories.js'
 const { getPresetIds, formatItems } = docsUtils
 const { getPresetNames } = categories
 
-const VUE3_EMOJI = ':three:'
-const VUE2_EMOJI = ':two:'
-
 // -----------------------------------------------------------------------------
 const categorizedRules = rules.filter(
   (rule) => rule.meta.docs.categories && !rule.meta.docs.extensionSource
@@ -69,7 +66,9 @@ function toRemovedRuleRow({
   const link = `[vue/${ruleName}]`
   const replacement =
     replacedBy.map((name) => `[vue/${name}]`).join(', ') || '(no replacement)'
-  const deprecatedVersionLink = `[${deprecatedInVersion}]`
+  const deprecatedVersionLink = deprecatedInVersion
+    ? `[${deprecatedInVersion}]`
+    : '—'
   const removedVersionLink = `[${removedInVersion}]`
 
   return `| ${link} | ${replacement} | ${deprecatedVersionLink} | ${removedVersionLink} |`
@@ -80,26 +79,22 @@ const categoryGroups = [
     title: 'Base Rules (Enabling Correct ESLint Parsing)',
     description:
       'Rules in this category are enabled for all presets provided by eslint-plugin-vue.',
-    categoryIdForVue3: 'base',
-    categoryIdForVue2: 'base',
+    categoryId: 'base',
     useMark: false
   },
   {
     title: 'Priority A: Essential (Error Prevention)',
-    categoryIdForVue3: 'vue3-essential',
-    categoryIdForVue2: 'vue2-essential',
+    categoryId: 'vue3-essential',
     useMark: true
   },
   {
     title: 'Priority B: Strongly Recommended (Improving Readability)',
-    categoryIdForVue3: 'vue3-strongly-recommended',
-    categoryIdForVue2: 'vue2-strongly-recommended',
+    categoryId: 'vue3-strongly-recommended',
     useMark: true
   },
   {
     title: 'Priority C: Recommended (Potentially Dangerous Patterns)',
-    categoryIdForVue3: 'vue3-recommended',
-    categoryIdForVue2: 'vue2-recommended',
+    categoryId: 'vue3-recommended',
     useMark: true
   }
 ]
@@ -107,10 +102,8 @@ const categoryGroups = [
 // -----------------------------------------------------------------------------
 let rulesTableContent = categoryGroups
   .map((group) => {
-    const rules = categorizedRules.filter(
-      (rule) =>
-        rule.meta.docs.categories.includes(group.categoryIdForVue3) ||
-        rule.meta.docs.categories.includes(group.categoryIdForVue2)
+    const rules = categorizedRules.filter((rule) =>
+      rule.meta.docs.categories.includes(group.categoryId)
     )
     let content = `
 ## ${group.title}
@@ -122,21 +115,12 @@ ${group.description}
 `
     }
     if (group.useMark) {
-      const presetsForVue3 = getPresetNames(
-        getPresetIds([group.categoryIdForVue3])
-      )
-      const presetsForVue2 = getPresetNames(
-        getPresetIds([group.categoryIdForVue2])
-      )
+      const presets = getPresetNames(getPresetIds([group.categoryId]))
       content += `
-- ${VUE3_EMOJI} Indicates that the rule is for Vue 3 and is included in ${formatItems(
-        presetsForVue3,
-        ['preset', 'presets']
-      )}.
-- ${VUE2_EMOJI} Indicates that the rule is for Vue 2 and is included in ${formatItems(
-        presetsForVue2,
-        ['preset', 'presets']
-      )}.
+- The rules in this category are included in ${formatItems(presets, [
+        'preset',
+        'presets'
+      ])}.
 `
     }
 
@@ -145,21 +129,7 @@ ${group.description}
 
 | Rule ID | Description |    |    |
 |:--------|:------------|:--:|:--:|
-${rules
-  .map((rule) => {
-    const mark = group.useMark
-      ? [
-          rule.meta.docs.categories.includes(group.categoryIdForVue3)
-            ? [VUE3_EMOJI]
-            : [],
-          rule.meta.docs.categories.includes(group.categoryIdForVue2)
-            ? [VUE2_EMOJI]
-            : []
-        ].flat()
-      : []
-    return toRuleRow(rule, mark)
-  })
-  .join('\n')}
+${rules.map((rule) => toRuleRow(rule)).join('\n')}
 
 </rules-table>
 `
@@ -234,7 +204,7 @@ ${deprecatedRules.map(toDeprecatedRuleRow).join('\n')}
 rulesTableContent += `
 ## Removed
 
-- :no_entry: These rules have been removed in a previous major release, after they have been deprecated for a while.
+- :no_entry: These rules have been removed.
 
 | Rule ID | Replaced by | Deprecated in version  | Removed in version |
 |:--------|:------------|:-----------------------|:-------------------|
@@ -244,10 +214,9 @@ ${removedRules.map(toRemovedRuleRow).join('\n')}
 // -----------------------------------------------------------------------------
 const releases = [
   ...new Set(
-    removedRules.flatMap((rule) => [
-      rule.deprecatedInVersion,
-      rule.removedInVersion
-    ])
+    removedRules
+      .flatMap((rule) => [rule.deprecatedInVersion, rule.removedInVersion])
+      .filter(Boolean)
   )
 ].sort((a, b) => a.localeCompare(b))
 const ruleLinkDefinitions = rules.map(

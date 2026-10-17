@@ -7,14 +7,7 @@ import {
   compositingVisitors,
   defineTemplateBodyVisitor
 } from '../utils/index.js'
-import slotScopeAttribute from './syntaxes/slot-scope-attribute.js'
-import dynamicDirectiveArguments from './syntaxes/dynamic-directive-arguments.js'
-import vSlot from './syntaxes/v-slot.js'
-import scriptSetup from './syntaxes/script-setup.js'
 import styleCssVarsInjection from './syntaxes/style-css-vars-injection.ts'
-import vModelArgument from './syntaxes/v-model-argument.js'
-import vModelCustomModifiers from './syntaxes/v-model-custom-modifiers.js'
-import vIs from './syntaxes/v-is.js'
 import isAttributeWithVuePrefix from './syntaxes/is-attribute-with-vue-prefix.js'
 import vMemo from './syntaxes/v-memo.js'
 import vBindPropModifierShorthand from './syntaxes/v-bind-prop-modifier-shorthand.js'
@@ -31,18 +24,8 @@ interface SyntaxRule {
 }
 
 const FEATURES = {
-  // Vue.js 2.5.0+
-  'slot-scope-attribute': slotScopeAttribute,
-  // Vue.js 2.6.0+
-  'dynamic-directive-arguments': dynamicDirectiveArguments,
-  'v-slot': vSlot,
-  // Vue.js 2.7.0+
-  'script-setup': scriptSetup,
+  // Vue.js 3.0.3+
   'style-css-vars-injection': styleCssVarsInjection,
-  // Vue.js 3.0.0+
-  'v-model-argument': vModelArgument,
-  'v-model-custom-modifiers': vModelCustomModifiers,
-  'v-is': vIs,
   // Vue.js 3.1.0+
   'is-attribute-with-vue-prefix': isAttributeWithVuePrefix,
   // Vue.js 3.2.0+
@@ -109,24 +92,9 @@ export default {
       }
     ],
     messages: {
-      // Vue.js 2.5.0+
-      forbiddenSlotScopeAttribute:
-        '`slot-scope` are not supported except Vue.js ">=2.5.0 <3.0.0".',
-      // Vue.js 2.6.0+
-      forbiddenDynamicDirectiveArguments:
-        'Dynamic arguments are not supported until Vue.js "2.6.0".',
-      forbiddenVSlot: '`v-slot` are not supported until Vue.js "2.6.0".',
-      // Vue.js 2.7.0+
-      forbiddenScriptSetup:
-        '`<script setup>` is not supported until Vue.js "2.7.0".',
+      // Vue.js 3.0.3+
       forbiddenStyleCssVarsInjection:
-        'SFC CSS variable injection is not supported until Vue.js ">=3.0.3 || >=2.7.0 <3.0.0".',
-      // Vue.js 3.0.0+
-      forbiddenVModelArgument:
-        'Argument on `v-model` is not supported until Vue.js "3.0.0".',
-      forbiddenVModelCustomModifiers:
-        'Custom modifiers on `v-model` are not supported until Vue.js "3.0.0".',
-      forbiddenVIs: '`v-is` are not supported until Vue.js "3.0.0".',
+        'SFC CSS variable injection is not supported until Vue.js "3.0.3".',
       // Vue.js 3.1.0+
       forbiddenIsAttributeWithVuePrefix:
         '`is="vue:"` are not supported until Vue.js "3.1.0".',

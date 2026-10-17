@@ -33,9 +33,6 @@ This rule reports use of deprecated `$delete` and `$set`. (in Vue.js 3.0.0+).
       this.$set(obj, key, value)
       this.$delete(obj, key)
 
-      Vue.set(obj, key, value)
-      Vue.delete(obj, key)
-
       set(obj, key, value)
       del(obj, key)
     }

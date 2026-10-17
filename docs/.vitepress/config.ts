@@ -29,42 +29,12 @@ export default async () => {
 
   const sidebarCategories = [
     { title: 'Base Rules', categoryIds: ['base'] },
-    {
-      title: 'Priority A: Essential',
-      categoryIds: ['vue3-essential', 'vue2-essential']
-    },
-    {
-      title: 'Priority A: Essential for Vue.js 3.x',
-      categoryIds: ['vue3-essential']
-    },
-    {
-      title: 'Priority A: Essential for Vue.js 2.x',
-      categoryIds: ['vue2-essential']
-    },
+    { title: 'Priority A: Essential', categoryIds: ['vue3-essential'] },
     {
       title: 'Priority B: Strongly Recommended',
-      categoryIds: ['vue3-strongly-recommended', 'vue2-strongly-recommended']
-    },
-    {
-      title: 'Priority B: Strongly Recommended for Vue.js 3.x',
       categoryIds: ['vue3-strongly-recommended']
     },
-    {
-      title: 'Priority B: Strongly Recommended for Vue.js 2.x',
-      categoryIds: ['vue2-strongly-recommended']
-    },
-    {
-      title: 'Priority C: Recommended',
-      categoryIds: ['vue3-recommended', 'vue2-recommended']
-    },
-    {
-      title: 'Priority C: Recommended for Vue.js 3.x',
-      categoryIds: ['vue3-recommended']
-    },
-    {
-      title: 'Priority C: Recommended for Vue.js 2.x',
-      categoryIds: ['vue2-recommended']
-    }
+    { title: 'Priority C: Recommended', categoryIds: ['vue3-recommended'] }
   ]
 
   const categorizedRules: DefaultTheme.SidebarItem[] = []

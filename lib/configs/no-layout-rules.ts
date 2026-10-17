@@ -1,7 +1,7 @@
 /*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "pnpm run update"
+ * in order to update its content execute "ppnpm run update"
  */
 export default {
   rules: {

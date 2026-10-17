@@ -191,20 +191,6 @@ tester.run('no-undef-properties', rule, {
       </script>
       `
     },
-    {
-      filename: 'test.vue',
-      code: `
-      <script>
-        export default {
-          functional: true,
-          props: ['foo'],
-          render (_, {props}) {
-            return h(props.foo)
-          }
-        };
-      </script>
-      `
-    },
 
     // arg vm
     {
@@ -517,24 +503,6 @@ tester.run('no-undef-properties', rule, {
         };
       </script>
       `
-    },
-
-    // Vue2 functional component
-    {
-      filename: 'test.vue',
-      code: `
-      <template functional>
-        <div>{{props.a}} {{props.b}}</div>
-      </template>
-
-      <script>
-      export default {
-        props: {
-          a: String,
-          b: String,
-        },
-      };
-      </script>`
     },
 
     {
@@ -1106,31 +1074,6 @@ tester.run('no-undef-properties', rule, {
         }
       ]
     },
-    {
-      filename: 'test.vue',
-      code: `
-      <script>
-        export default {
-          functional: true,
-          computed: {
-            foo () {}
-          },
-          render (_, {props}) {
-            return h(props.foo)
-          }
-        };
-      </script>
-      `,
-      errors: [
-        {
-          message: "'foo' is not defined in props.",
-          line: 9,
-          column: 28,
-          endLine: 9,
-          endColumn: 31
-        }
-      ]
-    },
 
     // arg vm
     {
@@ -1549,33 +1492,6 @@ tester.run('no-undef-properties', rule, {
           column: 24,
           endLine: 16,
           endColumn: 29
-        }
-      ]
-    },
-
-    // Vue2 functional component
-    {
-      filename: 'test.vue',
-      code: `
-      <template functional>
-        <div>{{props.a}} {{props.b}} {{props.c}}</div>
-      </template>
-
-      <script>
-      export default {
-        props: {
-          a: String,
-          b: String,
-        },
-      };
-      </script>`,
-      errors: [
-        {
-          message: "'c' is not defined.",
-          line: 3,
-          column: 46,
-          endLine: 3,
-          endColumn: 47
         }
       ]
     },

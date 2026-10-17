@@ -41,23 +41,6 @@ tester.run('no-ref-as-operand', rule, {
     </script>
     `,
     `
-    <script>
-      import { ref } from '@vue/composition-api'
-      export default {
-        setup() {
-          const count = ref(0)
-          console.log(count.value) // 0
-
-          count.value++
-          console.log(count.value) // 1
-          return {
-            count
-          }
-        }
-      }
-    </script>
-    `,
-    `
     import { ref } from 'vue'
     const count = ref(0)
     if (count.value) {}
@@ -374,65 +357,6 @@ tester.run('no-ref-as-operand', rule, {
       output: `
       <script>
         import { ref } from 'vue'
-        export default {
-          setup() {
-            let count = ref(0)
-
-            count.value++ // error
-            console.log(count.value + 1) // error
-            console.log(1 + count.value) // error
-            return {
-              count
-            }
-          }
-        }
-      </script>
-      `,
-      errors: [
-        {
-          messageId: 'requireDotValue',
-          line: 8,
-          column: 13,
-          endLine: 8,
-          endColumn: 18
-        },
-        {
-          messageId: 'requireDotValue',
-          line: 9,
-          column: 25,
-          endLine: 9,
-          endColumn: 30
-        },
-        {
-          messageId: 'requireDotValue',
-          line: 10,
-          column: 29,
-          endLine: 10,
-          endColumn: 34
-        }
-      ]
-    },
-    {
-      code: `
-      <script>
-        import { ref } from '@vue/composition-api'
-        export default {
-          setup() {
-            let count = ref(0)
-
-            count++ // error
-            console.log(count + 1) // error
-            console.log(1 + count) // error
-            return {
-              count
-            }
-          }
-        }
-      </script>
-      `,
-      output: `
-      <script>
-        import { ref } from '@vue/composition-api'
         export default {
           setup() {
             let count = ref(0)

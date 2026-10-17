@@ -20,23 +20,6 @@ tester.run('no-unsupported-features/is-attribute-with-vue-prefix', rule, {
          <div is="vue:foo" />
        </template>`,
       options: buildOptions()
-    },
-    {
-      code: `
-       <template>
-         <div is="foo" />
-       </template>`,
-      options: buildOptions({ version: '^2.5.0' })
-    },
-    {
-      code: `
-       <template>
-         <div is="vue:foo" />
-       </template>`,
-      options: buildOptions({
-        version: '^2.5.0',
-        ignores: ['is-attribute-with-vue-prefix']
-      })
     }
   ],
   invalid: [

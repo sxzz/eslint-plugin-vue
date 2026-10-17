@@ -79,7 +79,7 @@ describe('flat configs', () => {
   })
 
   it('should export strongly-recommended config', () => {
-    const stronglyRecommended = plugin.configs['flat/vue2-strongly-recommended']
+    const stronglyRecommended = plugin.configs['flat/strongly-recommended']
     assert.ok(stronglyRecommended)
     assert.equal(typeof stronglyRecommended, 'object')
 
@@ -108,92 +108,6 @@ describe('flat configs', () => {
 
   it('should export recommended config', () => {
     const recommended = plugin.configs['flat/recommended']
-    assert.ok(recommended)
-    assert.equal(typeof recommended, 'object')
-
-    const forVue = mergeConfig(
-      recommended.filter(
-        (config) => config.files?.includes('*.vue') || !config.files
-      )
-    )
-    assert.strictEqual(forVue.plugins!.vue, plugin)
-    assert.strictEqual(forVue.rules!['vue/comment-directive'], 'error')
-    assert.strictEqual(forVue.rules!['vue/multi-word-component-names'], 'error')
-    assert.strictEqual(forVue.rules!['vue/attributes-order'], 'warn')
-
-    const forOtherThanVue = mergeConfig(
-      recommended.filter((config) => !config.files?.includes('*.vue'))
-    )
-    assert.strictEqual(forOtherThanVue.plugins!.vue, plugin)
-    assert.strictEqual(
-      forOtherThanVue.rules!['vue/comment-directive'],
-      undefined
-    )
-    assert.strictEqual(
-      forOtherThanVue.rules!['vue/multi-word-component-names'],
-      'error'
-    )
-    assert.strictEqual(forOtherThanVue.rules!['vue/attributes-order'], 'warn')
-  })
-
-  it('should export vue2-essential config', () => {
-    const essential = plugin.configs['flat/vue2-essential']
-    assert.ok(essential)
-    assert.equal(typeof essential, 'object')
-
-    const forVue = mergeConfig(
-      essential.filter(
-        (config) => config.files?.includes('*.vue') || !config.files
-      )
-    )
-    assert.strictEqual(forVue.plugins!.vue, plugin)
-    assert.strictEqual(forVue.rules!['vue/comment-directive'], 'error')
-    assert.strictEqual(forVue.rules!['vue/multi-word-component-names'], 'error')
-
-    const forOtherThanVue = mergeConfig(
-      essential.filter((config) => !config.files?.includes('*.vue'))
-    )
-    assert.strictEqual(forOtherThanVue.plugins!.vue, plugin)
-    assert.strictEqual(
-      forOtherThanVue.rules!['vue/comment-directive'],
-      undefined
-    )
-    assert.strictEqual(
-      forOtherThanVue.rules!['vue/multi-word-component-names'],
-      'error'
-    )
-  })
-
-  it('should export vue2-strongly-recommended config', () => {
-    const stronglyRecommended = plugin.configs['flat/vue2-strongly-recommended']
-    assert.ok(stronglyRecommended)
-    assert.equal(typeof stronglyRecommended, 'object')
-
-    const forVue = mergeConfig(
-      stronglyRecommended.filter(
-        (config) => config.files?.includes('*.vue') || !config.files
-      )
-    )
-    assert.strictEqual(forVue.plugins!.vue, plugin)
-    assert.strictEqual(forVue.rules!['vue/comment-directive'], 'error')
-    assert.strictEqual(forVue.rules!['vue/multi-word-component-names'], 'error')
-
-    const forOtherThanVue = mergeConfig(
-      stronglyRecommended.filter((config) => !config.files?.includes('*.vue'))
-    )
-    assert.strictEqual(forOtherThanVue.plugins!.vue, plugin)
-    assert.strictEqual(
-      forOtherThanVue.rules!['vue/comment-directive'],
-      undefined
-    )
-    assert.strictEqual(
-      forOtherThanVue.rules!['vue/multi-word-component-names'],
-      'error'
-    )
-  })
-
-  it('should export vue2-recommended config', () => {
-    const recommended = plugin.configs['flat/vue2-recommended']
     assert.ok(recommended)
     assert.equal(typeof recommended, 'object')
 

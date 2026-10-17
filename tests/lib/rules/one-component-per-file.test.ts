@@ -16,17 +16,6 @@ ruleTester.run('one-component-per-file', rule, {
   valid: [
     {
       filename: 'test.js',
-      code: `Vue.component('name', {})`
-    },
-    {
-      filename: 'test.js',
-      code: `
-        Vue.component('name', {})
-        new Vue({})
-      `
-    },
-    {
-      filename: 'test.js',
       code: `
         const foo = {}
         new Vue({})
@@ -45,13 +34,6 @@ ruleTester.run('one-component-per-file', rule, {
           }
         }
       }`
-    },
-    {
-      filename: 'test.js',
-      code: `
-        Vue.mixin({})
-        Vue.component('name', {})
-      `
     },
     {
       filename: 'test.js',
@@ -103,180 +85,9 @@ ruleTester.run('one-component-per-file', rule, {
   ],
   invalid: [
     {
-      filename: 'test.js',
-      code: `
-        Vue.component('name', {})
-        Vue.component('name', {})
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 2,
-          column: 31,
-          endLine: 2,
-          endColumn: 33
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 3,
-          column: 31,
-          endLine: 3,
-          endColumn: 33
-        }
-      ]
-    },
-    {
-      filename: 'test.js',
-      code: `
-        Vue.component('TodoList', {
-          // ...
-        })
-
-        Vue.component('TodoItem', {
-          // ...
-        })
-        export default {}
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 2,
-          column: 35,
-          endLine: 4,
-          endColumn: 10
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 6,
-          column: 35,
-          endLine: 8,
-          endColumn: 10
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        Vue.component('name', {})
-        export default {}
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 2,
-          column: 31,
-          endLine: 2,
-          endColumn: 33
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 3,
-          column: 24,
-          endLine: 3,
-          endColumn: 26
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        import { component } from 'vue'
-        component('', {})
-        component('', {})
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 3,
-          column: 23,
-          endLine: 3,
-          endColumn: 25
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 4,
-          column: 23,
-          endLine: 4,
-          endColumn: 25
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        const { component } = Vue
-        component('', {})
-        component('', {})
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 3,
-          column: 23,
-          endLine: 3,
-          endColumn: 25
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 4,
-          column: 23,
-          endLine: 4,
-          endColumn: 25
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        import { component } from '@vue/composition-api'
-        component('', {})
-        component('', {})
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 3,
-          column: 23,
-          endLine: 3,
-          endColumn: 25
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 4,
-          column: 23,
-          endLine: 4,
-          endColumn: 25
-        }
-      ]
-    },
-    {
       filename: 'test.vue',
       code: `
         import { createApp } from 'vue'
-        createApp({})
-        createApp({})
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 3,
-          column: 19,
-          endLine: 3,
-          endColumn: 21
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 4,
-          column: 19,
-          endLine: 4,
-          endColumn: 21
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        import { createApp } from '@vue/composition-api'
         createApp({})
         createApp({})
       `,
@@ -366,30 +177,6 @@ ruleTester.run('one-component-per-file', rule, {
           column: 25,
           endLine: 4,
           endColumn: 27
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        import { defineComponent } from '@vue/composition-api'
-        defineComponent('', {})
-        defineComponent('', {})
-      `,
-      errors: [
-        {
-          message: 'There is more than one component in this file.',
-          line: 3,
-          column: 29,
-          endLine: 3,
-          endColumn: 31
-        },
-        {
-          message: 'There is more than one component in this file.',
-          line: 4,
-          column: 29,
-          endLine: 4,
-          endColumn: 31
         }
       ]
     },

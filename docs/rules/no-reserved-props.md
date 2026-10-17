@@ -12,17 +12,11 @@ since: v8.0.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/essential"]`
-  - `*.configs["flat/vue2-essential"]`
   - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
   - `*.configs["flat/recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
   - `"plugin:vue/essential"`
-  - `"plugin:vue/vue2-essential"`
   - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/vue2-strongly-recommended"`
   - `"plugin:vue/recommended"`
-  - `"plugin:vue/vue2-recommended"`
 
 ## :book: Rule Details
 
@@ -49,15 +43,7 @@ export default {
 
 ## :wrench: Options
 
-```json
-{
-  "vue/no-reserved-props": ["error", {
-    "vueVersion": 3, // or 2
-  }]
-}
-```
-
-- `vueVersion` (`2 | 3`) ... Specify the version of Vue you are using. Default is `3`.
+The optional `vueVersion` setting accepts `3`. It defaults to Vue 3 behavior.
 
 ## :rocket: Version
 

@@ -27,13 +27,6 @@ tester.run('no-unsupported-features/v-memo', rule, {
         <div :memo="foo" />
       </template>`,
       options: buildOptions()
-    },
-    {
-      code: `
-      <template>
-        <div v-memo="foo" />
-      </template>`,
-      options: buildOptions({ version: '^2.5.0', ignores: ['v-memo'] })
     }
   ],
   invalid: [

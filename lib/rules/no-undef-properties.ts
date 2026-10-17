@@ -622,20 +622,9 @@ export default {
         onRenderFunctionEnter(node, vueData) {
           const ctx = getVueComponentContext(vueData.node)
 
-          // Check for Vue 3.x render
           const propertyReferences =
             propertyReferenceExtractor.extractFromFunctionParam(node, 0)
           ctx.verifyReferences(propertyReferences)
-
-          if (vueData.functional) {
-            // Check for Vue 2.x render & functional
-            const propertyReferencesForV2 =
-              propertyReferenceExtractor.extractFromFunctionParam(node, 1)
-
-            ctx.verifyReferences(propertyReferencesForV2.getNest('props'), {
-              isProps: true
-            })
-          }
         },
         'ThisExpression, Identifier'(
           node: ThisExpression | Identifier,

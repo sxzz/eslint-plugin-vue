@@ -43,7 +43,6 @@ Nothing.
 
 - [Migration Guide - Functional Components](https://v3-migration.vuejs.org/breaking-changes/functional-components.html)
 - [Vue RFCs - 0007-functional-async-api-change](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0007-functional-async-api-change.md)
-- [Guide - Functional Components](https://v2.vuejs.org/v2/guide/render-function.html#Functional-Components)
 
 ## :rocket: Version
 

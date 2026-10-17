@@ -81,21 +81,6 @@ function validTests(ext: string) {
     },
     {
       filename: `test.${ext}`,
-      code: `Vue.component('async-example', function (resolve, reject) { })`,
-      languageOptions
-    },
-    {
-      filename: `test.${ext}`,
-      code: `Vue.component('async-example', function (resolve, reject) { resolve({}) })`,
-      languageOptions
-    },
-    {
-      filename: `test.${ext}`,
-      code: `new Vue({ })`,
-      languageOptions
-    },
-    {
-      filename: `test.${ext}`,
       code: `{
         foo: {}
       }`,
@@ -132,36 +117,6 @@ function invalidTests(ext: string) {
   return [
     {
       filename: `test.${ext}`,
-      code: `
-        Vue.component('async-example', function (resolve, reject) {
-          // @vue/component
-          resolve({})
-        })
-        // ${ext}
-      `,
-      languageOptions,
-      errors: [makeError(4, 19, 4, 21)]
-    },
-    {
-      filename: `test.${ext}`,
-      code: `Vue.component({})`,
-      languageOptions,
-      errors: [makeError(1, 15, 1, 17)]
-    },
-    {
-      filename: `test.${ext}`,
-      code: `Vue.mixin({})`,
-      languageOptions,
-      errors: [makeError(1, 11, 1, 13)]
-    },
-    {
-      filename: `test.${ext}`,
-      code: `Vue.extend({})`,
-      languageOptions,
-      errors: [makeError(1, 12, 1, 14)]
-    },
-    {
-      filename: `test.${ext}`,
       code: `app.component('name', {})`,
       languageOptions,
       errors: [makeError(1, 23, 1, 25)]
@@ -171,33 +126,6 @@ function invalidTests(ext: string) {
       code: `app.mixin({})`,
       languageOptions,
       errors: [makeError(1, 11, 1, 13)]
-    },
-    {
-      filename: `test.${ext}`,
-      code: `export default (Vue as VueConstructor<Vue>).extend({})`,
-      languageOptions: {
-        ...languageOptions,
-        parser: tsEslintParser
-      },
-      errors: [makeError(1, 52, 1, 54)]
-    },
-    {
-      filename: `test.${ext}`,
-      code: `export default Vue.extend({})`,
-      languageOptions: {
-        ...languageOptions,
-        parser: tsEslintParser
-      },
-      errors: [makeError(1, 27, 1, 29)]
-    },
-    {
-      filename: `test.${ext}`,
-      code: `export default Vue.extend({} as ComponentOptions)`,
-      languageOptions: {
-        ...languageOptions,
-        parser: tsEslintParser
-      },
-      errors: [makeError(1, 27, 1, 29)]
     },
     {
       filename: `test.${ext}`,

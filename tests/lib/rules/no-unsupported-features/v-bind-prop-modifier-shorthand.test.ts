@@ -7,7 +7,7 @@ import { RuleTester } from '../../../eslint-compat'
 import rule from '../../../../lib/rules/no-unsupported-features'
 import { optionsBuilder } from './utils.ts'
 
-const buildOptions = optionsBuilder('v-bind-prop-modifier-shorthand', '^2.6.0')
+const buildOptions = optionsBuilder('v-bind-prop-modifier-shorthand', '^3.0.0')
 const tester = new RuleTester({
   languageOptions: { parser: vueESLintParser, ecmaVersion: 2019 }
 })
@@ -19,28 +19,7 @@ tester.run('no-unsupported-features/v-bind-prop-modifier-shorthand', rule, {
       <template>
         <a .href="'/xxx'" />
       </template>`,
-      options: buildOptions({ version: '2.6.0-beta.1' })
-    },
-    {
-      code: `
-      <template>
-        <a .href="'/xxx'" />
-      </template>`,
       options: buildOptions({ version: '3.2.0' })
-    },
-    {
-      code: `
-      <template>
-        <a .href="'/xxx'" />
-      </template>`,
-      options: buildOptions({ version: '2.6.0-beta.2' })
-    },
-    {
-      code: `
-      <template>
-        <a .href="'/xxx'" />
-      </template>`,
-      options: buildOptions({ version: '2.6.0-beta.3' })
     },
     {
       code: `
@@ -61,26 +40,6 @@ tester.run('no-unsupported-features/v-bind-prop-modifier-shorthand', rule, {
         <a :href.prop="'/xxx'" />
       </template>`,
       options: buildOptions(),
-      errors: [
-        {
-          message: '`.prop` shorthand are not supported until Vue.js "3.2.0".',
-          line: 3,
-          column: 12,
-          endLine: 3,
-          endColumn: 17
-        }
-      ]
-    },
-    {
-      code: `
-      <template>
-        <a .href="'/xxx'" />
-      </template>`,
-      output: `
-      <template>
-        <a :href.prop="'/xxx'" />
-      </template>`,
-      options: buildOptions({ version: '2.5.99' }),
       errors: [
         {
           message: '`.prop` shorthand are not supported until Vue.js "3.2.0".',

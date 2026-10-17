@@ -9,7 +9,7 @@ export default {
   meta: {
     type: 'suggestion',
     docs: {
-      description: 'disallow deprecated `scope` attribute (in Vue.js 2.5.0+)',
+      description: 'disallow deprecated `scope` attribute',
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-scope-attribute.html'
     },

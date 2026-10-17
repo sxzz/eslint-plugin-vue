@@ -93,27 +93,6 @@ tester.run('no-deprecated-model-definition', rule, {
       filename: 'test.vue',
       code: `
         <script>
-        export default Vue.extend({
-          model: {
-            event: 'update'
-          }
-        })
-        </script>
-      `,
-      errors: [
-        {
-          message: '`model` definition is deprecated.',
-          line: 4,
-          column: 11,
-          endLine: 6,
-          endColumn: 12
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        <script>
         export default defineComponent({
           model: {
             prop: 'foo',
@@ -141,29 +120,6 @@ tester.run('no-deprecated-model-definition', rule, {
             prop: 'foo',
           }
         }
-        </script>
-      `,
-      options: [{ allowVue3Compat: true }],
-      errors: [
-        {
-          message:
-            '`model` definition is deprecated. You may use the Vue 3-compatible `modelValue`/`update:modelValue` though.',
-          line: 4,
-          column: 11,
-          endLine: 6,
-          endColumn: 12
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        <script>
-        export default Vue.extend({
-          model: {
-            event: 'update'
-          }
-        })
         </script>
       `,
       options: [{ allowVue3Compat: true }],

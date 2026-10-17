@@ -12,9 +12,7 @@ since: v4.3.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
   - `"plugin:vue/recommended"`
-  - `"plugin:vue/vue2-recommended"`
 - :wrench: The `--fix` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the problems reported by this rule.
 
 ## :book: Rule Details
@@ -353,7 +351,6 @@ When set to `true`, the `v-bind="object"` directive will be excluded from the at
 ## :books: Further Reading
 
 - [Style guide - Element attribute order](https://vuejs.org/style-guide/rules-recommended.html#element-attribute-order)
-- [Style guide (for v2) - Element attribute order](https://v2.vuejs.org/v2/style-guide/#Element-attribute-order-recommended)
 
 ## :rocket: Version
 

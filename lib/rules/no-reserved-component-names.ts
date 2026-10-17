@@ -55,7 +55,7 @@ export default {
     docs: {
       description:
         'disallow the use of reserved names in component definitions',
-      categories: ['vue3-essential', 'vue2-essential'],
+      categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-reserved-component-names.html'
     },
     fixable: null,
@@ -63,9 +63,6 @@ export default {
       {
         type: 'object',
         properties: {
-          disallowVueBuiltInComponents: {
-            type: 'boolean'
-          },
           disallowVue3BuiltInComponents: {
             type: 'boolean'
           },
@@ -79,14 +76,11 @@ export default {
     messages: {
       reserved: 'Name "{{name}}" is reserved.',
       reservedInHtml: 'Name "{{name}}" is reserved in HTML.',
-      reservedInVue: 'Name "{{name}}" is reserved in Vue.js.',
       reservedInVue3: 'Name "{{name}}" is reserved in Vue.js 3.x.'
     }
   },
   create(context: RuleContext) {
     const options = context.options[0] || {}
-    const shouldDisallowVueBuiltInComponents =
-      options.disallowVueBuiltInComponents === true
     const shouldDisallowVue3BuiltInComponents =
       options.disallowVue3BuiltInComponents === true
     const isHtmlElementCaseSensitive = options.htmlElementCaseSensitive === true
@@ -101,14 +95,11 @@ export default {
       RESERVED_NAMES_IN_OTHERS.has(name) ||
       (!isHtmlElementCaseSensitive &&
         CAPITALIZED_RESERVED_NAMES_IN_OTHERS.has(name)) ||
-      (shouldDisallowVueBuiltInComponents &&
-        utils.VUE2_BUILTIN_COMPONENT_NAMES.has(name)) ||
       (shouldDisallowVue3BuiltInComponents &&
         utils.VUE3_BUILTIN_COMPONENT_NAMES.has(name))
 
     function getMessageId(name: string): string {
       if (isReservedInHtml(name)) return 'reservedInHtml'
-      if (utils.VUE2_BUILTIN_COMPONENT_NAMES.has(name)) return 'reservedInVue'
       if (utils.VUE3_BUILTIN_COMPONENT_NAMES.has(name)) return 'reservedInVue3'
       return 'reserved'
     }

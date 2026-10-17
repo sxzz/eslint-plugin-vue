@@ -10,27 +10,18 @@ since: v7.0.0
 
 > disallow `key` attribute on `<template v-for>`
 
-- :no_entry_sign: This rule was **deprecated**.
-- :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/vue2-essential"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
-  - `"plugin:vue/vue2-essential"`
-  - `"plugin:vue/vue2-strongly-recommended"`
-  - `"plugin:vue/vue2-recommended"`
+- :no_entry: This rule was **removed** in eslint-plugin-vue v11.0.0.
 
 ## :book: Rule Details
 
 This rule reports the `<template v-for>` elements which have `key` attribute.
 
-In Vue.js 2.x, disallows `key` attribute on `<template>` elements.
+This removed rule disallowed `key` on `<template>` elements.
 
 ::: warning Note
-This rule is targeted at Vue.js 2.x.
+
 If you are using Vue.js 3.x, enable the [vue/no-v-for-template-key-on-child] rule instead. Don't enable both rules together; they are conflicting.
 :::
-
-<eslint-code-block :rules="{'vue/no-v-for-template-key': ['error']}">
 
 ```vue
 <template>
@@ -45,8 +36,6 @@ If you are using Vue.js 3.x, enable the [vue/no-v-for-template-key-on-child] rul
   </template>
 </template>
 ```
-
-</eslint-code-block>
 
 ::: tip Note
 If you want to report keys placed on `<template>` without `v-for`, use the [vue/no-template-key] rule.
@@ -67,7 +56,6 @@ Nothing.
 ## :books: Further Reading
 
 - [API - Special Attributes - key](https://vuejs.org/api/built-in-special-attributes.html#key)
-- [API (for v2) - Special Attributes - key](https://v2.vuejs.org/v2/api/#key)
 
 ## :rocket: Version
 

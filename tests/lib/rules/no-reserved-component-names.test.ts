@@ -409,7 +409,7 @@ for (const element of invalidElements) {
   }
 }
 
-const vue2BuiltInComponents = [
+const sharedBuiltInComponents = [
   'component',
   'Component',
   'transition',
@@ -454,21 +454,6 @@ ruleTester.run('no-reserved-component-names', rule, {
           name: 'FooBar'
         }
       `,
-      languageOptions
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default {
-          name: 'FooBar'
-        }
-      `,
-      options: [
-        {
-          disallowVueBuiltInComponents: true,
-          disallowVue3BuiltInComponents: true
-        }
-      ],
       languageOptions
     },
     {
@@ -529,7 +514,7 @@ ruleTester.run('no-reserved-component-names', rule, {
       code: `fn1(component.data)`,
       languageOptions
     },
-    ...vue2BuiltInComponents.map((name) => ({
+    ...sharedBuiltInComponents.map((name) => ({
       filename: `${name}.vue`,
       code: `
           export default {
@@ -546,16 +531,6 @@ ruleTester.run('no-reserved-component-names', rule, {
           }
         `,
       languageOptions
-    })),
-    ...vue3BuiltInComponents.map((name) => ({
-      filename: `${name}.vue`,
-      code: `
-          export default {
-            name: '${name}'
-          }
-        `,
-      languageOptions,
-      options: [{ disallowVueBuiltInComponents: true }]
     })),
     ...invalidUpperCaseElements.map((name) => ({
       filename: `${name}.vue`,
@@ -745,27 +720,7 @@ ruleTester.run('no-reserved-component-names', rule, {
         }
       ]
     })),
-    ...vue2BuiltInComponents.map((name) => ({
-      filename: `${name}.vue`,
-      code: `
-          export default {
-            name: '${name}'
-          }
-        `,
-      languageOptions,
-      options: [{ disallowVueBuiltInComponents: true }],
-      errors: [
-        {
-          messageId: 'reservedInVue',
-          data: { name },
-          line: 3,
-          column: 19,
-          endLine: 3,
-          endColumn: 19 + name.length + 2
-        }
-      ]
-    })),
-    ...vue2BuiltInComponents.map((name) => ({
+    ...sharedBuiltInComponents.map((name) => ({
       filename: `${name}.vue`,
       code: `
           export default {
@@ -776,7 +731,7 @@ ruleTester.run('no-reserved-component-names', rule, {
       options: [{ disallowVue3BuiltInComponents: true }],
       errors: [
         {
-          messageId: 'reservedInVue',
+          messageId: 'reservedInVue3',
           data: { name },
           line: 3,
           column: 19,

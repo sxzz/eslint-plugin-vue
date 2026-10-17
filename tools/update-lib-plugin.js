@@ -20,7 +20,7 @@ const filePath = path.resolve(import.meta.dirname, '../lib/plugin.ts')
 const content = `/*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "ppnpm run update"
+ * in order to update its content execute "pnpm run update"
  */
 import meta from './meta.ts'
 import processor from './processor.ts'

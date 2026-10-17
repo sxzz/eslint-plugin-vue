@@ -2,13 +2,13 @@
 pageClass: rule-details
 sidebarDepth: 0
 title: vue/no-deprecated-scope-attribute
-description: disallow deprecated `scope` attribute (in Vue.js 2.5.0+)
+description: disallow deprecated `scope` attribute
 since: v6.0.0
 ---
 
 # vue/no-deprecated-scope-attribute
 
-> disallow deprecated `scope` attribute (in Vue.js 2.5.0+)
+> disallow deprecated `scope` attribute
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/essential"]`
@@ -48,8 +48,6 @@ This rule reports deprecated `scope` attribute in Vue.js v2.5.0+.
 </eslint-code-block>
 
 ## :books: Further Reading
-
-- [API - scope](https://v2.vuejs.org/v2/api/#scope-removed)
 
 ## :rocket: Version
 

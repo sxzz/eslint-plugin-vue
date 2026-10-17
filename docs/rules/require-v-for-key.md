@@ -12,17 +12,11 @@ since: v3.0.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/essential"]`
-  - `*.configs["flat/vue2-essential"]`
   - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
   - `*.configs["flat/recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
   - `"plugin:vue/essential"`
-  - `"plugin:vue/vue2-essential"`
   - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/vue2-strongly-recommended"`
   - `"plugin:vue/recommended"`
-  - `"plugin:vue/vue2-recommended"`
 
 ## :book: Rule Details
 
@@ -61,7 +55,6 @@ Nothing.
 ## :books: Further Reading
 
 - [Style guide - Keyed v-for](https://vuejs.org/style-guide/rules-essential.html#use-keyed-v-for)
-- [Guide (for v2) - v-for with a Component](https://v2.vuejs.org/v2/guide/list.html#v-for-with-a-Component)
 
 ## :rocket: Version
 

@@ -12,17 +12,11 @@ since: v6.1.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/essential"]`
-  - `*.configs["flat/vue2-essential"]`
   - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
   - `*.configs["flat/recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
   - `"plugin:vue/essential"`
-  - `"plugin:vue/vue2-essential"`
   - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/vue2-strongly-recommended"`
   - `"plugin:vue/recommended"`
-  - `"plugin:vue/vue2-recommended"`
 
 ## :book: Rule Details
 
@@ -46,31 +40,14 @@ export default {
 ```json
 {
   "vue/no-reserved-component-names": ["error", {
-    "disallowVueBuiltInComponents": false,
     "disallowVue3BuiltInComponents": false,
     "htmlElementCaseSensitive": false,
   }]
 }
 ```
 
-- `disallowVueBuiltInComponents` (`boolean`) ... If `true`, disallow Vue.js 2.x built-in component names. Default is `false`.
 - `disallowVue3BuiltInComponents` (`boolean`) ... If `true`, disallow Vue.js 3.x built-in component names. Default is `false`.
 - `htmlElementCaseSensitive` (`boolean`) ... If `true`, component names must exactly match the case of an HTML element to be considered conflicting. Default is `false` (i.e. case-insensitve comparison).
-
-### `"disallowVueBuiltInComponents": true`
-
-<eslint-code-block :rules="{'vue/no-reserved-component-names': ['error', {disallowVueBuiltInComponents: true}]}">
-
-```vue
-<script>
-/* ✗ BAD */
-export default {
-  name: 'transition-group'
-}
-</script>
-```
-
-</eslint-code-block>
 
 ### `"disallowVue3BuiltInComponents": true`
 
@@ -126,7 +103,6 @@ export default {
 - [Kebab case elements](https://stackoverflow.com/questions/22545621/do-custom-elements-require-a-dash-in-their-name/22545622#22545622)
 - [Valid custom element name](https://html.spec.whatwg.org/multipage/custom-elements.html#valid-custom-element-name)
 - [API - Built-In Components](https://vuejs.org/api/built-in-components.html)
-- [API (for v2) - Built-In Components](https://v2.vuejs.org/v2/api/index.html#Built-In-Components)
 
 ## :rocket: Version
 

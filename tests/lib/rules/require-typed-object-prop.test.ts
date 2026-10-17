@@ -33,16 +33,6 @@ ruleTester.run('require-typed-object-prop', rule, {
     {
       filename: 'test.vue',
       code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: {}
-      });
-      </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
       <script setup lang="ts">
       defineProps({});
       </script>
@@ -56,16 +46,6 @@ ruleTester.run('require-typed-object-prop', rule, {
       export default {
         props: ['foo']
       }
-      </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: ['foo']
-      });
       </script>
       `
     },
@@ -91,16 +71,6 @@ ruleTester.run('require-typed-object-prop', rule, {
     {
       filename: 'test.vue',
       code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: String }
-      });
-      </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
       <script setup lang="ts">
       defineProps({ foo: String });
       </script>
@@ -120,16 +90,6 @@ ruleTester.run('require-typed-object-prop', rule, {
     {
       filename: 'test.vue',
       code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: [Number, String, Boolean] }
-      });
-      </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
       <script setup lang="ts">
       defineProps({ foo: [Number, String, Boolean] });
       </script>
@@ -143,16 +103,6 @@ ruleTester.run('require-typed-object-prop', rule, {
       export default {
         props: { foo: someFunction() }
       }
-      </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: someFunction() }
-      });
       </script>
       `
     },
@@ -188,16 +138,6 @@ ruleTester.run('require-typed-object-prop', rule, {
     {
       filename: 'test.vue',
       code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: Object as PropType<User> }
-      });
-      </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
       <script setup lang="ts">
       defineProps({ foo: Object as PropType<User> });
       </script>
@@ -211,16 +151,6 @@ ruleTester.run('require-typed-object-prop', rule, {
       export default {
         props: { foo: Object as () => User }
       }
-      </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: Object as () => User }
-      });
       </script>
       `
     },
@@ -253,18 +183,6 @@ ruleTester.run('require-typed-object-prop', rule, {
         </script>
       `
     },
-    {
-      filename: 'test.vue',
-      code: `
-      <script lang="ts">
-        export default Vue.extend({
-          props: {
-            foo: { type: Object as any }
-          }
-        });
-        </script>
-      `
-    },
     // unknown
     {
       filename: 'test.vue',
@@ -286,18 +204,6 @@ ruleTester.run('require-typed-object-prop', rule, {
         </script>
       `
     },
-    {
-      filename: 'test.vue',
-      code: `
-      <script lang="ts">
-        export default Vue.extend({
-          props: {
-            foo: { type: Object as unknown }
-          }
-        });
-        </script>
-      `
-    },
     // JavaScript components
     {
       filename: 'test.vue',
@@ -305,24 +211,6 @@ ruleTester.run('require-typed-object-prop', rule, {
       <script setup>
       defineProps({ foo: Object });
       </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script>
-      export default Vue.extend({
-        props: { foo: { type: Object } }
-      });
-      </script>
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      export default Vue.extend({
-        props: { foo: Object }
-      });
       `
     }
   ],
@@ -448,92 +336,6 @@ ruleTester.run('require-typed-object-prop', rule, {
       filename: 'test.vue',
       code: `
       <script lang="ts">
-      export default Vue.extend({
-        props: { foo: Object }
-      });
-      </script>
-      `,
-      errors: [
-        {
-          messageId: 'expectedTypeAnnotation',
-          line: 4,
-          column: 23,
-          endLine: 4,
-          endColumn: 29,
-          suggestions: [
-            {
-              messageId: 'addTypeAnnotation',
-              data: { type: 'any' },
-              output: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: Object as PropType<any> }
-      });
-      </script>
-      `
-            },
-            {
-              messageId: 'addTypeAnnotation',
-              data: { type: 'unknown' },
-              output: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: Object as PropType<unknown> }
-      });
-      </script>
-      `
-            }
-          ]
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: { type: Object } }
-      });
-      </script>
-      `,
-      errors: [
-        {
-          messageId: 'expectedTypeAnnotation',
-          line: 4,
-          column: 31,
-          endLine: 4,
-          endColumn: 37,
-          suggestions: [
-            {
-              messageId: 'addTypeAnnotation',
-              data: { type: 'any' },
-              output: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: { type: Object as PropType<any> } }
-      });
-      </script>
-      `
-            },
-            {
-              messageId: 'addTypeAnnotation',
-              data: { type: 'unknown' },
-              output: `
-      <script lang="ts">
-      export default Vue.extend({
-        props: { foo: { type: Object as PropType<unknown> } }
-      });
-      </script>
-      `
-            }
-          ]
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script lang="ts">
       export default {
         props: { foo: { type: Object } }
       }
@@ -604,44 +406,6 @@ ruleTester.run('require-typed-object-prop', rule, {
       <script setup lang="ts">
       defineProps({ foo: { type: Object as PropType<unknown> } });
       </script>
-      `
-            }
-          ]
-        }
-      ]
-    },
-    {
-      // `.ts` file
-      filename: 'test.ts',
-      code: `
-      export default Vue.extend({
-        props: { foo: Object }
-      });
-      `,
-      errors: [
-        {
-          messageId: 'expectedTypeAnnotation',
-          line: 3,
-          column: 23,
-          endLine: 3,
-          endColumn: 29,
-          suggestions: [
-            {
-              messageId: 'addTypeAnnotation',
-              data: { type: 'any' },
-              output: `
-      export default Vue.extend({
-        props: { foo: Object as PropType<any> }
-      });
-      `
-            },
-            {
-              messageId: 'addTypeAnnotation',
-              data: { type: 'unknown' },
-              output: `
-      export default Vue.extend({
-        props: { foo: Object as PropType<unknown> }
-      });
       `
             }
           ]

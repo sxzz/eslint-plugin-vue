@@ -5,7 +5,6 @@
 import rule from '../../../lib/rules/require-prop-types'
 import { getTypeScriptFixtureTestOptions } from '../../test-utils/typescript'
 import { RuleTester } from '../../eslint-compat'
-import tsParser from '@typescript-eslint/parser'
 import vueEslintParser from 'vue-eslint-parser'
 
 const ruleTester = new RuleTester()
@@ -126,40 +125,6 @@ ruleTester.run('require-prop-types', rule, {
     {
       filename: 'test.vue',
       code: `
-        export default (Vue as VueConstructor<Vue>).extend({
-          props: {
-            foo: {
-              type: String
-            } as PropOptions<string>
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default Vue.extend({
-          props: {
-            foo: {
-              type: String
-            } as PropOptions<string>
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
-    },
-    {
-      filename: 'test.vue',
-      code: `
       <script setup>
       defineProps({
         foo: String
@@ -275,45 +240,6 @@ ruleTester.run('require-prop-types', rule, {
       ]
     },
     {
-      filename: 'test.js',
-      code: `
-        new Vue({
-          props: ['foo', bar, \`baz\`, foo()]
-        })
-      `,
-      languageOptions: { ecmaVersion: 6, sourceType: 'module' },
-      errors: [
-        {
-          message: 'Prop "foo" should define at least its type.',
-          line: 3,
-          column: 19,
-          endLine: 3,
-          endColumn: 24
-        },
-        {
-          message: 'Prop "bar" should define at least its type.',
-          line: 3,
-          column: 26,
-          endLine: 3,
-          endColumn: 29
-        },
-        {
-          message: 'Prop "baz" should define at least its type.',
-          line: 3,
-          column: 31,
-          endLine: 3,
-          endColumn: 36
-        },
-        {
-          message: 'Prop "Unknown prop" should define at least its type.',
-          line: 3,
-          column: 38,
-          endLine: 3,
-          endColumn: 43
-        }
-      ]
-    },
-    {
       filename: 'test.vue',
       code: `
         export default {
@@ -373,54 +299,6 @@ ruleTester.run('require-prop-types', rule, {
           column: 13,
           endLine: 4,
           endColumn: 21
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default Vue.extend({
-          props: {
-            foo: {} as PropOptions<string>
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
-      errors: [
-        {
-          message: 'Prop "foo" should define at least its type.',
-          line: 4,
-          column: 13,
-          endLine: 4,
-          endColumn: 43
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default (Vue as VueConstructor<Vue>).extend({
-          props: {
-            foo: {} as PropOptions<string>
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
-      errors: [
-        {
-          message: 'Prop "foo" should define at least its type.',
-          line: 4,
-          column: 13,
-          endLine: 4,
-          endColumn: 43
         }
       ]
     },

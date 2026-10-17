@@ -42,19 +42,6 @@ tester.run('prefer-prop-type-boolean-first', rule, {
     {
       filename: 'test.vue',
       code: `
-        <script>
-          export default Vue.extend({
-            props: {
-              a: [Boolean, String],
-              b: { type: [Boolean, String] },
-            }
-          })
-        </script>
-      `
-    },
-    {
-      filename: 'test.vue',
-      code: `
         <script setup>
           defineProps({
             a: [Boolean, String],
@@ -136,76 +123,6 @@ tester.run('prefer-prop-type-boolean-first', rule, {
               foo: { type: [Boolean, String] }
             }
           }
-        </script>
-      `
-            }
-          ]
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        <script>
-          export default Vue.extend({
-            props: {
-              foo: [String, Boolean]
-            }
-          })
-        </script>
-      `,
-      errors: [
-        {
-          messageId: 'shouldBeFirst',
-          line: 5,
-          column: 29,
-          endLine: 5,
-          endColumn: 36,
-          suggestions: [
-            {
-              messageId: 'moveToFirst',
-              output: `
-        <script>
-          export default Vue.extend({
-            props: {
-              foo: [Boolean, String]
-            }
-          })
-        </script>
-      `
-            }
-          ]
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        <script>
-          export default Vue.extend({
-            props: {
-              foo: { type: [String, Boolean] }
-            }
-          })
-        </script>
-      `,
-      errors: [
-        {
-          messageId: 'shouldBeFirst',
-          line: 5,
-          column: 37,
-          endLine: 5,
-          endColumn: 44,
-          suggestions: [
-            {
-              messageId: 'moveToFirst',
-              output: `
-        <script>
-          export default Vue.extend({
-            props: {
-              foo: { type: [Boolean, String] }
-            }
-          })
         </script>
       `
             }

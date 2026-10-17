@@ -9,7 +9,7 @@ export default {
   meta: {
     type: 'suggestion',
     docs: {
-      description: 'disallow deprecated `slot` attribute (in Vue.js 2.6.0+)',
+      description: 'disallow deprecated `slot` attribute',
       categories: ['vue3-essential'],
       url: 'https://eslint.vuejs.org/rules/no-deprecated-slot-attribute.html'
     },

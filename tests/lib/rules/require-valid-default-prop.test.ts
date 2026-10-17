@@ -6,7 +6,6 @@ import type { Linter } from 'eslint'
 import rule from '../../../lib/rules/require-valid-default-prop'
 import { getTypeScriptFixtureTestOptions } from '../../test-utils/typescript'
 import { RuleTester } from '../../eslint-compat'
-import tsParser from '@typescript-eslint/parser'
 import vueEslintParser from 'vue-eslint-parser'
 
 const languageOptions: Linter.LanguageOptions = {
@@ -53,64 +52,6 @@ ruleTester.run('require-valid-default-prop', rule, {
         }
       }`,
       languageOptions
-    },
-    {
-      filename: 'test.vue',
-      code: `Vue.component('example', {
-        props: {
-          foo: null,
-          foo: Number,
-          foo: [String, Number],
-          foo: { },
-          foo: { type: String },
-          foo: { type: Number, default: VAR_BAR },
-          foo: { type: Number, default: 100 },
-          foo: { type: Number, default: Number.MAX_VALUE },
-          foo: { type: Number, default: Foo.BAR },
-          foo: { type: {}, default: '' },
-          foo: { type: [String, Number], default: '' },
-          foo: { type: [String, Number], default: 0 },
-          foo: { type: String, default: '' },
-          foo: { type: String, default: \`\` },
-          foo: { type: Boolean, default: false },
-          foo: { type: Object, default: () => { } },
-          foo: { type: Array, default () { } },
-          foo: { type: String, default () { } },
-          foo: { type: Number, default () { } },
-          foo: { type: Boolean, default () { } },
-          foo: { type: Symbol, default () { } },
-          foo: { type: Array, default () { } },
-          foo: { type: Symbol, default: Symbol('a') },
-          foo: { type: String, default: \`Foo\` },
-          foo: { type: Foo, default: Foo('a') },
-          foo: { type: String, default: \`Foo\` },
-          foo: { type: BigInt, default: 1n },
-          foo: { type: String, default: null },
-          foo: { type: String, default () { return Foo } },
-          foo: { type: Number, default () { return Foo } },
-          foo: { type: Object, default () { return Foo } },
-          foo: { type: Object, default: null },
-        }
-      })`,
-      languageOptions
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default (Vue as VueConstructor<Vue>).extend({
-          props: {
-            foo: {
-              type: [Object, Number],
-              default: 10
-            } as PropOptions<object>
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
     },
     {
       filename: 'test.vue',
@@ -189,56 +130,6 @@ ruleTester.run('require-valid-default-prop', rule, {
         }
       }`,
       languageOptions
-    },
-    {
-      filename: 'test.vue',
-      code: `export default Vue.extend({
-          props: {
-            foo: {
-              type: Array as PropType<string[]>,
-              default: () => []
-            }
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ...languageOptions
-      }
-    },
-    {
-      filename: 'test.vue',
-      code: `export default Vue.extend({
-          props: {
-            foo: {
-              type: Object as PropType<{ [key: number]: number }>,
-              default: () => {}
-            }
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
-    },
-    {
-      filename: 'test.vue',
-      code: `export default Vue.extend({
-          props: {
-            foo: {
-              type: Function as PropType<() => number>,
-              default: () => 10
-            }
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      }
     },
     {
       // https://github.com/vuejs/eslint-plugin-vue/issues/1853
@@ -920,32 +811,6 @@ ruleTester.run('require-valid-default-prop', rule, {
         }
       ]
     },
-    {
-      filename: 'test.vue',
-      code: `export default (Vue as VueConstructor<Vue>).extend({
-        props: {
-          foo: {
-            type: [Object, Number],
-            default: {}
-          } as PropOptions<object>
-        }
-      });`,
-
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
-      errors: [
-        {
-          message: `Type of the default value for 'foo' prop must be a function or number.`,
-          line: 5,
-          column: 22,
-          endLine: 5,
-          endColumn: 24
-        }
-      ]
-    },
 
     {
       filename: 'test.vue',
@@ -1302,84 +1167,6 @@ ruleTester.run('require-valid-default-prop', rule, {
           column: 22,
           endLine: 5,
           endColumn: 32
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `export default Vue.extend({
-          props: {
-            foo: {
-              type: Array as PropType<string[]>,
-              default: []
-            }
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
-      errors: [
-        {
-          message: `Type of the default value for 'foo' prop must be a function.`,
-          line: 5,
-          column: 24,
-          endLine: 5,
-          endColumn: 26
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `export default Vue.extend({
-          props: {
-            foo: {
-              type: Object as PropType<{ [key: number]: number }>,
-              default: {}
-            }
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
-      errors: [
-        {
-          message: `Type of the default value for 'foo' prop must be a function.`,
-          line: 5,
-          column: 24,
-          endLine: 5,
-          endColumn: 26
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `export default Vue.extend({
-          props: {
-            foo: {
-              type: Function as PropType<() => number>,
-              default: 10
-            }
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsParser,
-        ecmaVersion: 6,
-        sourceType: 'module'
-      },
-      errors: [
-        {
-          message: `Type of the default value for 'foo' prop must be a function.`,
-          line: 5,
-          column: 24,
-          endLine: 5,
-          endColumn: 26
         }
       ]
     },

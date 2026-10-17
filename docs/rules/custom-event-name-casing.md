@@ -16,14 +16,6 @@ Define a style for custom event name casing for consistency purposes.
 
 This rule aims to warn the custom event names other than the configured casing. (Default is **camelCase**.)
 
-Vue 2 recommends using kebab-case for custom event names.
-
-> Event names will never be used as variable or property names in JavaScript, so there’s no reason to use camelCase or PascalCase. Additionally, `v-on` event listeners inside DOM templates will be automatically transformed to lowercase (due to HTML’s case-insensitivity), so `v-on:myEvent` would become `v-on:myevent` – making `myEvent` impossible to listen to.
->
-> For these reasons, we recommend you **always use kebab-case for event names**.
-
-See [Guide (for v2) - Custom Events] for more details.
-
 In Vue 3, using either camelCase or kebab-case for your custom event name does not limit its use in v-on. However, following JavaScript conventions, camelCase is more natural.
 
 See [Guide - Custom Events] for more details.
@@ -174,10 +166,8 @@ export default {
 ## :books: Further Reading
 
 - [Guide - Custom Events]
-- [Guide (for v2) - Custom Events]
 
 [Guide - Custom Events]: https://vuejs.org/guide/components/events.html
-[Guide (for v2) - Custom Events]: https://v2.vuejs.org/v2/guide/components-custom-events.html
 
 ## :rocket: Version
 

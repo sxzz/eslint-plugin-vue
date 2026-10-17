@@ -15,17 +15,13 @@ import categoriesModule1 from './lib/categories.js'
 const { ESLint } = ESLintModule
 const { categories } = categoriesModule1
 
-const errorCategories = new Set(['base', 'vue2-essential', 'vue3-essential'])
+const errorCategories = new Set(['base', 'vue3-essential'])
 
 const extendsCategories = {
   base: null,
-  'vue2-essential': 'base',
   'vue3-essential': 'base',
-  'vue2-strongly-recommended': 'vue2-essential',
   'vue3-strongly-recommended': 'vue3-essential',
-  'vue2-recommended': 'vue2-strongly-recommended',
   'vue3-recommended': 'vue3-strongly-recommended',
-  'vue2-use-with-caution': 'vue2-recommended',
   'vue3-use-with-caution': 'vue3-recommended'
 }
 
@@ -37,8 +33,7 @@ function formatRules(rules, categoryId, shouldAlwaysError) {
       const defaultOptions =
         rule.meta && rule.meta.docs && rule.meta.docs.defaultOptions
       if (defaultOptions) {
-        const v = categoryId.startsWith('vue3') ? 3 : 2
-        const defaultOption = defaultOptions[`vue${v}`]
+        const defaultOption = defaultOptions.vue3
         if (defaultOption) {
           options = [options, ...defaultOption]
         }
@@ -54,7 +49,7 @@ function formatCategory(category, shouldAlwaysError = false) {
     return `/*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "ppnpm run update"
+ * in order to update its content execute "pnpm run update"
  */
 import plugin from '../../plugin.ts'
 import vueParser from 'vue-eslint-parser'
@@ -99,7 +94,7 @@ export default [
   return `/*
  * IMPORTANT!
  * This file has been automatically generated,
- * in order to update its content execute "ppnpm run update"
+ * in order to update its content execute "pnpm run update"
  */
 import config from './${extendsCategoryId}.ts'
 

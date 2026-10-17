@@ -11,30 +11,22 @@ import {
 } from '../utils/index.js'
 import { kebabCase } from '../utils/casing.ts'
 
-const RESERVED = {
-  3: ['key', 'ref'],
-  2: ['key', 'ref', 'is', 'slot', 'slot-scope', 'slotScope', 'class', 'style']
-}
+const RESERVED = new Set(['key', 'ref'])
 
 export default {
   meta: {
     type: 'problem',
     docs: {
       description: 'disallow reserved names in props',
-      categories: ['vue3-essential', 'vue2-essential'],
-      url: 'https://eslint.vuejs.org/rules/no-reserved-props.html',
-      defaultOptions: {
-        vue2: [{ vueVersion: 2 }]
-      }
+      categories: ['vue3-essential'],
+      url: 'https://eslint.vuejs.org/rules/no-reserved-props.html'
     },
     fixable: null,
     schema: [
       {
         type: 'object',
         properties: {
-          vueVersion: {
-            enum: [2, 3]
-          }
+          vueVersion: { enum: [3] }
         },
         additionalProperties: false
       }
@@ -45,14 +37,9 @@ export default {
     }
   },
   create(context: RuleContext) {
-    const options = context.options[0] || {}
-    const vueVersion: 2 | 3 = options.vueVersion || 3
-
-    const reserved = new Set(RESERVED[vueVersion])
-
     function processProps(props: ComponentProp[]) {
       for (const prop of props) {
-        if (prop.propName != null && reserved.has(prop.propName)) {
+        if (prop.propName != null && RESERVED.has(prop.propName)) {
           context.report({
             node: prop.node,
             messageId: `reserved`,

@@ -15,7 +15,6 @@ const tester = new RuleTester({
 tester.run('prefer-import-from-vue', rule, {
   valid: [
     `import { createApp } from 'vue'`,
-    `import { ref, reactive } from '@vue/composition-api'`,
     `export { createApp } from 'vue'`,
     `export * from 'vue'`,
     `import Foo from 'foo'`,

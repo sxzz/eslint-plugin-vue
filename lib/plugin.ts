@@ -71,7 +71,6 @@ import noComputedPropertiesInData from './rules/no-computed-properties-in-data.j
 import noConsole from './rules/no-console.js'
 import noConstantCondition from './rules/no-constant-condition.js'
 import noContentOutsideBlock from './rules/no-content-outside-block.ts'
-import noCustomModifiersOnVModel from './rules/no-custom-modifiers-on-v-model.js'
 import noDefineModelDefault from './rules/no-define-model-default.ts'
 import noDeprecatedDataObjectDeclaration from './rules/no-deprecated-data-object-declaration.js'
 import noDeprecatedDeleteSet from './rules/no-deprecated-delete-set.js'
@@ -114,7 +113,6 @@ import noLossOfPrecision from './rules/no-loss-of-precision.js'
 import noMultiSpaces from './rules/no-multi-spaces.js'
 import noMultipleObjectsInClass from './rules/no-multiple-objects-in-class.js'
 import noMultipleSlotArgs from './rules/no-multiple-slot-args.js'
-import noMultipleTemplateRoot from './rules/no-multiple-template-root.js'
 import noMutatingProps from './rules/no-mutating-props.js'
 import noNegatedCondition from './rules/no-negated-condition.js'
 import noNegatedVIfCondition from './rules/no-negated-v-if-condition.js'
@@ -168,9 +166,7 @@ import noUselessMustaches from './rules/no-useless-mustaches.js'
 import noUselessTemplateAttributes from './rules/no-useless-template-attributes.js'
 import noUselessVBind from './rules/no-useless-v-bind.js'
 import noVForTemplateKeyOnChild from './rules/no-v-for-template-key-on-child.js'
-import noVForTemplateKey from './rules/no-v-for-template-key.js'
 import noVHtml from './rules/no-v-html.js'
-import noVModelArgument from './rules/no-v-model-argument.js'
 import noVTextVHtmlOnComponent from './rules/no-v-text-v-html-on-component.ts'
 import noVText from './rules/no-v-text.js'
 import noWatchAfterAwait from './rules/no-watch-after-await.js'
@@ -240,10 +236,8 @@ import validAttributeName from './rules/valid-attribute-name.js'
 import validDefineEmits from './rules/valid-define-emits.js'
 import validDefineOptions from './rules/valid-define-options.js'
 import validDefineProps from './rules/valid-define-props.js'
-import validModelDefinition from './rules/valid-model-definition.js'
 import validNextTick from './rules/valid-next-tick.js'
 import validTemplateRoot from './rules/valid-template-root.js'
-import validVBindSync from './rules/valid-v-bind-sync.js'
 import validVBind from './rules/valid-v-bind.js'
 import validVCloak from './rules/valid-v-cloak.js'
 import validVElseIf from './rules/valid-v-else-if.js'
@@ -331,7 +325,6 @@ export default {
     'no-console': noConsole,
     'no-constant-condition': noConstantCondition,
     'no-content-outside-block': noContentOutsideBlock,
-    'no-custom-modifiers-on-v-model': noCustomModifiersOnVModel,
     'no-define-model-default': noDefineModelDefault,
     'no-deprecated-data-object-declaration': noDeprecatedDataObjectDeclaration,
     'no-deprecated-delete-set': noDeprecatedDeleteSet,
@@ -374,7 +367,6 @@ export default {
     'no-multi-spaces': noMultiSpaces,
     'no-multiple-objects-in-class': noMultipleObjectsInClass,
     'no-multiple-slot-args': noMultipleSlotArgs,
-    'no-multiple-template-root': noMultipleTemplateRoot,
     'no-mutating-props': noMutatingProps,
     'no-negated-condition': noNegatedCondition,
     'no-negated-v-if-condition': noNegatedVIfCondition,
@@ -429,9 +421,7 @@ export default {
     'no-useless-template-attributes': noUselessTemplateAttributes,
     'no-useless-v-bind': noUselessVBind,
     'no-v-for-template-key-on-child': noVForTemplateKeyOnChild,
-    'no-v-for-template-key': noVForTemplateKey,
     'no-v-html': noVHtml,
-    'no-v-model-argument': noVModelArgument,
     'no-v-text-v-html-on-component': noVTextVHtmlOnComponent,
     'no-v-text': noVText,
     'no-watch-after-await': noWatchAfterAwait,
@@ -502,10 +492,8 @@ export default {
     'valid-define-emits': validDefineEmits,
     'valid-define-options': validDefineOptions,
     'valid-define-props': validDefineProps,
-    'valid-model-definition': validModelDefinition,
     'valid-next-tick': validNextTick,
     'valid-template-root': validTemplateRoot,
-    'valid-v-bind-sync': validVBindSync,
     'valid-v-bind': validVBind,
     'valid-v-cloak': validVCloak,
     'valid-v-else-if': validVElseIf,

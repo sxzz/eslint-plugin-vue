@@ -140,18 +140,14 @@ export default {
 <!-- ✗ BAD -->
 <template>
 
-
 <input>
-
 
 </template>
 
 <script>
 
-
 export default {
 }
-
 
 </script>
 ```

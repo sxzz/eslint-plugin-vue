@@ -19,12 +19,11 @@ export default {
     return defineTemplateBodyVisitor(context, visitor)
   },
 
-  // eslint-disable-next-line eslint-plugin/prefer-message-ids
   meta: {
     type: 'layout',
     docs: {
       description: 'enforce consistent indentation in `<template>`',
-      categories: ['vue3-strongly-recommended', 'vue2-strongly-recommended'],
+      categories: ['vue3-strongly-recommended'],
       url: 'https://eslint.vuejs.org/rules/html-indent.html'
     },
     // eslint-disable-next-line eslint-plugin/require-meta-fixable -- fixer is not recognized

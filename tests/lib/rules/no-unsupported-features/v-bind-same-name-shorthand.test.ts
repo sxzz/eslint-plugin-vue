@@ -54,27 +54,6 @@ tester.run('no-unsupported-features/v-bind-same-name-shorthand', rule, {
     {
       code: `
       <template>
-        <div :x />
-      </template>`,
-      output: `
-      <template>
-        <div :x="x" />
-      </template>`,
-      options: buildOptions({ version: '2.7.0' }),
-      errors: [
-        {
-          message:
-            '`v-bind` same-name shorthand is not supported until Vue.js "3.4.0".',
-          line: 3,
-          column: 14,
-          endLine: 3,
-          endColumn: 16
-        }
-      ]
-    },
-    {
-      code: `
-      <template>
         <div :data-x />
       </template>`,
       output: `

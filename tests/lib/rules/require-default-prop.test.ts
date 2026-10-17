@@ -5,7 +5,6 @@
 import type { Linter } from 'eslint'
 import rule from '../../../lib/rules/require-default-prop'
 import { RuleTester } from '../../eslint-compat'
-import tsEslintParser from '@typescript-eslint/parser'
 import vueEslintParser from 'vue-eslint-parser'
 
 const languageOptions: Linter.LanguageOptions = {
@@ -104,39 +103,6 @@ ruleTester.run('require-default-prop', rule, {
           }
         }
       `
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default (Vue as VueConstructor<Vue>).extend({
-          props: {
-            a: {
-              type: String,
-              required: true
-            } as PropOptions<string>
-          }
-        });
-      `,
-
-      languageOptions: {
-        parser: tsEslintParser
-      }
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default Vue.extend({
-          props: {
-            a: {
-              type: String,
-              required: true
-            } as PropOptions<string>
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsEslintParser
-      }
     },
     {
       filename: 'test.vue',
@@ -621,52 +587,6 @@ ruleTester.run('require-default-prop', rule, {
           column: 13,
           endLine: 16,
           endColumn: 14
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default (Vue as VueConstructor<Vue>).extend({
-          props: {
-            a: {
-              type: String
-            } as PropOptions<string>
-          }
-        });
-      `,
-      languageOptions: {
-        parser: tsEslintParser
-      },
-      errors: [
-        {
-          message: `Prop 'a' requires default value to be set.`,
-          line: 4,
-          column: 13,
-          endLine: 6,
-          endColumn: 37
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-        export default Vue.extend({
-          props: {
-            a: {
-              type: String
-            } as PropOptions<string>
-          }
-        });
-      `,
-      languageOptions: { parser: tsEslintParser },
-      errors: [
-        {
-          message: `Prop 'a' requires default value to be set.`,
-          line: 4,
-          column: 13,
-          endLine: 6,
-          endColumn: 37
         }
       ]
     },

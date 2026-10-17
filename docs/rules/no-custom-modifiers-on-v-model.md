@@ -10,13 +10,7 @@ since: v7.0.0
 
 > disallow custom modifiers on v-model used on the component
 
-- :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/vue2-essential"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
-  - `"plugin:vue/vue2-essential"`
-  - `"plugin:vue/vue2-strongly-recommended"`
-  - `"plugin:vue/vue2-recommended"`
+- :no_entry: This rule was **removed** in eslint-plugin-vue v11.0.0.
 
 This rule checks whether `v-model` used on the component do not have custom modifiers.
 
@@ -25,8 +19,6 @@ This rule checks whether `v-model` used on the component do not have custom modi
 This rule reports `v-model` directives in the following cases:
 
 - The directive used on the component has custom modifiers. E.g. `<MyComponent v-model.aaa="foo" />`
-
-<eslint-code-block :rules="{'vue/no-custom-modifiers-on-v-model': ['error']}">
 
 ```vue
 <template>
@@ -41,8 +33,6 @@ This rule reports `v-model` directives in the following cases:
   <MyComponent v-model.aaa.bbb="foo" />
 </template>
 ```
-
-</eslint-code-block>
 
 ## :wrench: Options
 

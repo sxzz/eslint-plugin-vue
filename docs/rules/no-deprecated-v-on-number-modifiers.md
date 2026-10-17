@@ -34,7 +34,6 @@ See [Migration Guide - KeyCode Modifiers](https://v3-migration.vuejs.org/breakin
   <input @keyup.page-down="onArrowUp">
   <input @keyup.9="onArrowUp"> <!-- 9 is KeyboardEvent.key -->
 
-
   <!-- ✗ BAD -->
   <input v-on:keyup.34="onArrowUp">
   <input @keyup.34="onArrowUp">

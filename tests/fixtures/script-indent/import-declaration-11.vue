@@ -2,6 +2,6 @@
 <script>
     import {
         computed, defineComponent, PropType, ref, watch,
-    } from '@vue/composition-api';
+    } from 'vue';
 </script>
 <!-- https://github.com/vuejs/eslint-plugin-vue/issues/1524 -->

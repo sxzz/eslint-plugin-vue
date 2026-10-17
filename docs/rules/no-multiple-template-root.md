@@ -10,28 +10,16 @@ since: v7.0.0
 
 > disallow adding multiple root nodes to the template
 
-- :gear: This rule is included in the following preset configs:
-  - `*.configs["flat/vue2-essential"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
-  - `"plugin:vue/vue2-essential"`
-  - `"plugin:vue/vue2-strongly-recommended"`
-  - `"plugin:vue/vue2-recommended"`
+- :no_entry: This rule was **removed** in eslint-plugin-vue v11.0.0.
 
 ## :book: Rule Details
 
-This rule checks whether template contains single root element valid for Vue 2.
-
-<eslint-code-block :rules="{'vue/no-multiple-template-root': ['error']}">
+This removed rule required a single root element in the template.
 
 ```vue
 <!-- The root is text -->
 <template>Lorem ipsum</template>
 ```
-
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/no-multiple-template-root': ['error']}">
 
 ```vue
 <!-- There are multiple root elements -->
@@ -41,10 +29,6 @@ This rule checks whether template contains single root element valid for Vue 2.
 </template>
 ```
 
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/no-multiple-template-root': ['error']}">
-
 ```vue
 <!-- The root element has `v-for` directives -->
 <template>
@@ -52,18 +36,12 @@ This rule checks whether template contains single root element valid for Vue 2.
 </template>
 ```
 
-</eslint-code-block>
-
-<eslint-code-block :rules="{'vue/no-multiple-template-root': ['error']}">
-
 ```vue
 <!-- The root element is `<template>` or `<slot>` -->
 <template>
   <slot />
 </template>
 ```
-
-</eslint-code-block>
 
 ## :wrench: Options
 
@@ -79,8 +57,6 @@ This rule checks whether template contains single root element valid for Vue 2.
 
 ### "disallowComments": true
 
-<eslint-code-block :rules="{'vue/no-multiple-template-root': ['error', {disallowComments: true}]}">
-
 ```vue
 /* ✗ BAD */
 <template>
@@ -91,8 +67,6 @@ This rule checks whether template contains single root element valid for Vue 2.
   <!-- root comment -->
 </template>
 ```
-
-</eslint-code-block>
 
 ## :rocket: Version
 

@@ -12,9 +12,7 @@ since: v3.2.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
   - `"plugin:vue/recommended"`
-  - `"plugin:vue/vue2-recommended"`
 - :wrench: The `--fix` option on the [command line](https://eslint.org/docs/user-guide/command-line-interface#fix-problems) can automatically fix some of the problems reported by this rule.
 - :bulb: Some problems reported by this rule are manually fixable by editor [suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
@@ -121,7 +119,6 @@ export default {
 ## :books: Further Reading
 
 - [Style guide - Component/instance options order](https://vuejs.org/style-guide/rules-recommended.html#component-instance-options-order)
-- [Style guide (for v2) - Component/instance options order](https://v2.vuejs.org/v2/style-guide/#Component-instance-options-order-recommended)
 
 ## :rocket: Version
 

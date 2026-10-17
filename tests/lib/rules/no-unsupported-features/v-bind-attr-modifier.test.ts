@@ -27,16 +27,6 @@ tester.run('no-unsupported-features/v-bind-attr-modifier', rule, {
         <div v-bind:attr="foo" />
       </template>`,
       options: buildOptions()
-    },
-    {
-      code: `
-      <template>
-        <div :foo.attr="foo" />
-      </template>`,
-      options: buildOptions({
-        version: '^2.5.0',
-        ignores: ['v-bind-attr-modifier']
-      })
     }
   ],
   invalid: [

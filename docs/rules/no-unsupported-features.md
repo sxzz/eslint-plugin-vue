@@ -21,7 +21,7 @@ This rule reports unsupported Vue.js syntax on the specified version.
 ```json
 {
   "vue/no-unsupported-features": ["error", {
-    "version": "^2.6.0",
+    "version": "^3.2.0",
     "ignores": []
   }]
 }
@@ -42,68 +42,8 @@ This rule reports unsupported Vue.js syntax on the specified version.
     - `"v-bind-attr-modifier"` ... `.attr` modifier on `v-bind` directive.
   - Vue.js 3.1.0+
     - `"is-attribute-with-vue-prefix"` ... [`is` attribute with `vue:` prefix](https://vuejs.org/api/built-in-special-attributes.html#is)
-  - Vue.js 3.0.0+
-    - `"v-model-argument"` ... [argument on `v-model`][Vue RFCs - 0005-replace-v-bind-sync-with-v-model-argument]
-    - `"v-model-custom-modifiers"` ... [custom modifiers on `v-model`][Vue RFCs - 0011-v-model-api-change]
-    - `"v-is"` ... [v-is](https://v3.vuejs.org/api/directives.html#v-is) directive.
-  - Vue.js 2.7.0+
-    - `"style-css-vars-injection"` ... [SFC CSS variable injection][Vue RFCs - 0043-sfc-style-variables]
-    - `"script-setup"` ... [`<script setup>`][Vue RFCs - 0040-script-setup]
-  - Vue.js 2.6.0+
-    - `"dynamic-directive-arguments"` ... [dynamic directive arguments](https://vuejs.org/guide/essentials/template-syntax.html#dynamic-arguments).
-    - `"v-slot"` ... [v-slot](https://vuejs.org/api/built-in-directives.html#v-slot) directive.
-  - Vue.js 2.5.0+
-    - `"slot-scope-attribute"` ... [slot-scope](https://v2.vuejs.org/v2/api/#slot-scope-deprecated) attributes.
-
-### `{"version": "^2.6.0"}`
-
-<eslint-code-block fix :rules="{'vue/no-unsupported-features': ['error', {'version': '^2.6.0'}]}">
-
-```vue
-<template>
-  <!-- ✓ GOOD -->
-  <MyInput v-bind:foo.sync="val" />
-
-  <!-- ✗ BAD -->
-  <!-- argument on `v-model` -->
-  <MyInput v-model:foo="val" />
-  <!-- custom modifiers on `v-model` -->
-  <MyComp v-model.foo.bar="text" />
-</template>
-```
-
-</eslint-code-block>
-
-### `{"version": "^2.5.0"}`
-
-<eslint-code-block fix :rules="{'vue/no-unsupported-features': ['error', {'version': '^2.5.0'}]}">
-
-```vue
-<template>
-  <!-- ✓ GOOD -->
-  <CustomComponent :foo="val" />
-  <ListComponent>
-    <template slot="name" slot-scope="props">
-      {{ props.title }}
-    </template>
-  </ListComponent>
-
-  <!-- ✗ BAD -->
-  <!-- dynamic directive arguments -->
-  <CustomComponent :[foo]="val" />
-  <ListComponent>
-    <!-- v-slot -->
-    <template v-slot:name="props">
-      {{ props.title }}
-    </template>
-    <template #name="props">
-      {{ props.title }}
-    </template>
-  </ListComponent>
-</template>
-```
-
-</eslint-code-block>
+  - Vue.js 3.0.3+
+    - `"style-css-vars-injection"` ... [SFC CSS variable injection][Vue RFCs - 0043-sfc-style-variables].
 
 ## :books: Further Reading
 
@@ -114,22 +54,9 @@ This rule reports unsupported Vue.js syntax on the specified version.
 - [API - v-is (Old)](https://github.com/vuejs/docs-next/blob/008613756c3d781128d96b64a2d27f7598f8f548/src/api/directives.md#v-is)
 - [Guide - Dynamic Arguments](https://vuejs.org/guide/essentials/template-syntax.html#dynamic-arguments)
 - [API - v-slot](https://vuejs.org/api/built-in-directives.html#v-slot)
-- [API (for v2) - slot-scope](https://v2.vuejs.org/v2/api/#slot-scope-deprecated)
-- [Vue RFCs - 0001-new-slot-syntax]
-- [Vue RFCs - 0002-slot-syntax-shorthand]
-- [Vue RFCs - 0003-dynamic-directive-arguments]
-- [Vue RFCs - 0005-replace-v-bind-sync-with-v-model-argument]
-- [Vue RFCs - 0011-v-model-api-change]
-- [Vue RFCs - 0040-script-setup]
 - [Vue RFCs - 0043-sfc-style-variables]
 - [Vue RFCs - v-bind .prop shorthand proposal]
 
-[Vue RFCs - 0001-new-slot-syntax]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0001-new-slot-syntax.md
-[Vue RFCs - 0002-slot-syntax-shorthand]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0002-slot-syntax-shorthand.md
-[Vue RFCs - 0003-dynamic-directive-arguments]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0003-dynamic-directive-arguments.md
-[Vue RFCs - 0005-replace-v-bind-sync-with-v-model-argument]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0005-replace-v-bind-sync-with-v-model-argument.md
-[Vue RFCs - 0011-v-model-api-change]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0011-v-model-api-change.md
-[Vue RFCs - 0040-script-setup]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0040-script-setup.md
 [Vue RFCs - 0043-sfc-style-variables]: https://github.com/vuejs/rfcs/blob/master/active-rfcs/0043-sfc-style-variables.md
 
 [Vue RFCs - v-bind .prop shorthand proposal]: https://github.com/vuejs/rfcs/pull/18

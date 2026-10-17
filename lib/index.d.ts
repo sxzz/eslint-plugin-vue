@@ -6,12 +6,6 @@ declare const vue: {
   configs: {
     base: Linter.LegacyConfig
 
-    'vue2-essential': Linter.LegacyConfig
-    'vue2-strongly-recommended': Linter.LegacyConfig
-    'vue2-strongly-recommended-error': Linter.LegacyConfig
-    'vue2-recommended': Linter.LegacyConfig
-    'vue2-recommended-error': Linter.LegacyConfig
-
     essential: Linter.LegacyConfig
     'strongly-recommended': Linter.LegacyConfig
     'strongly-recommended-error': Linter.LegacyConfig
@@ -19,12 +13,6 @@ declare const vue: {
     'recommended-error': Linter.LegacyConfig
 
     'flat/base': Linter.FlatConfig[]
-
-    'flat/vue2-essential': Linter.FlatConfig[]
-    'flat/vue2-strongly-recommended': Linter.FlatConfig[]
-    'flat/vue2-strongly-recommended-error': Linter.FlatConfig[]
-    'flat/vue2-recommended': Linter.FlatConfig[]
-    'flat/vue2-recommended-error': Linter.FlatConfig[]
 
     'flat/essential': Linter.FlatConfig[]
     'flat/strongly-recommended': Linter.FlatConfig[]

@@ -14,90 +14,32 @@ since: v7.5.0
 
 ## :book: Rule Details
 
-This rule enforces whether the callback version or Promise version (which was introduced in Vue v2.1.0) should be used in `Vue.nextTick` and `this.$nextTick`.
-
-<eslint-code-block fix :rules="{'vue/next-tick-style': ['error']}">
+This rule enforces either Promise or callback style for `nextTick()` and `this.$nextTick()`.
 
 ```vue
 <script>
-import { nextTick as nt } from 'vue';
+import { nextTick } from 'vue'
 
 export default {
-  async mounted() {
-    /* ✓ GOOD */
-    nt().then(() => callback());
-    await nt(); callback();
-    Vue.nextTick().then(() => callback());
-    await Vue.nextTick(); callback();
-    this.$nextTick().then(() => callback());
-    await this.$nextTick(); callback();
+  mounted() {
+    // ✓ GOOD with the default Promise style
+    nextTick().then(callback)
 
-    /* ✗ BAD */
-    nt(() => callback());
-    nt(callback);
-    Vue.nextTick(() => callback());
-    Vue.nextTick(callback);
-    this.$nextTick(() => callback());
-    this.$nextTick(callback);
+    // ✗ BAD with the default Promise style
+    this.$nextTick(callback)
   }
 }
 </script>
 ```
-
-</eslint-code-block>
 
 ## :wrench: Options
 
-Default is set to `promise`.
-
-```json
-{
-  "vue/next-tick-style": ["error", "promise" | "callback"]
-}
-```
-
-- `"promise"` (default) ... requires using the promise version.
-- `"callback"` ... requires using the callback version. Use this if you use a Vue version below v2.1.0.
-
-### `"callback"`
-
-<eslint-code-block fix :rules="{'vue/next-tick-style': ['error', 'callback']}">
-
-```vue
-<script>
-import { nextTick as nt } from 'vue';
-
-export default {
-  async mounted() {
-    /* ✓ GOOD */
-    nt(() => callback());
-    nt(callback);
-    Vue.nextTick(() => callback());
-    Vue.nextTick(callback);
-    this.$nextTick(() => callback());
-    this.$nextTick(callback);
-
-    /* ✗ BAD */
-    nt().then(() => callback());
-    await nt(); callback();
-    Vue.nextTick().then(() => callback());
-    await Vue.nextTick(); callback();
-    this.$nextTick().then(() => callback());
-    await this.$nextTick(); callback();
-  }
-}
-</script>
-```
-
-</eslint-code-block>
+The default is `"promise"`. Set the option to `"callback"` to require a callback instead.
 
 ## :books: Further Reading
 
-- [`Vue.nextTick` API in Vue 2](https://v2.vuejs.org/v2/api/#Vue-nextTick)
-- [`vm.$nextTick` API in Vue 2](https://v2.vuejs.org/v2/api/#vm-nextTick)
-- [Global API Treeshaking](https://v3-migration.vuejs.org/breaking-changes/global-api-treeshaking.html)
-- [Global `nextTick` API in Vue 3](https://vuejs.org/api/general.html#nexttick)
-- [Instance `$nextTick` API in Vue 3](https://vuejs.org/api/component-instance.html#nexttick)
+- [Global API: nextTick](https://vuejs.org/api/general.html#nexttick)
+- [Component instance: $nextTick](https://vuejs.org/api/component-instance.html#nexttick)
 
 ## :rocket: Version
 

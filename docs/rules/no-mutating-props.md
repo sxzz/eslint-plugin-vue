@@ -12,17 +12,11 @@ since: v7.0.0
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/essential"]`
-  - `*.configs["flat/vue2-essential"]`
   - `*.configs["flat/strongly-recommended"]`
-  - `*.configs["flat/vue2-strongly-recommended"]`
   - `*.configs["flat/recommended"]`
-  - `*.configs["flat/vue2-recommended"]`
   - `"plugin:vue/essential"`
-  - `"plugin:vue/vue2-essential"`
   - `"plugin:vue/strongly-recommended"`
-  - `"plugin:vue/vue2-strongly-recommended"`
   - `"plugin:vue/recommended"`
-  - `"plugin:vue/vue2-recommended"`
 
 ## :book: Rule Details
 
@@ -176,7 +170,6 @@ export default {
 ## :books: Further Reading
 
 - [Style guide - Implicit parent-child communication](https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication)
-- [Vue - Prop Mutation - deprecated](https://v2.vuejs.org/v2/guide/migration.html#Prop-Mutation-deprecated)
 
 ## :rocket: Version
 

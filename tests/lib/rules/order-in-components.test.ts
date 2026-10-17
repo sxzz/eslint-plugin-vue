@@ -124,67 +124,6 @@ ruleTester.run('order-in-components', rule, {
       languageOptions
     },
     {
-      filename: 'test.js',
-      code: `
-        Vue.component('smart-list', {
-          name: 'app',
-          components: {},
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          }
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
-      filename: 'test.js',
-      code: `
-        Vue.component('example')
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
-      filename: 'test.js',
-      code: `
-        const { component } = Vue;
-        component('smart-list', {
-          name: 'app',
-          components: {},
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          }
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
-      filename: 'test.js',
-      code: `
-        new Vue({
-          el: '#app',
-          name: 'app',
-          components: {},
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          }
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
-      filename: 'test.js',
-      code: `
-        new Vue()
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
       filename: 'example.vue',
       code: `
       <script setup>
@@ -398,44 +337,6 @@ ruleTester.run('order-in-components', rule, {
     {
       filename: 'test.js',
       code: `
-        Vue.component('smart-list', {
-          name: 'app',
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          components: {},
-          template: '<div></div>'
-        })
-      `,
-      output: `
-        Vue.component('smart-list', {
-          name: 'app',
-          components: {},
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          template: '<div></div>'
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 },
-      errors: [
-        {
-          message:
-            'The "components" property should be above the "data" property on line 4.',
-          line: 9,
-          column: 11,
-          endLine: 9,
-          endColumn: 25
-        }
-      ]
-    },
-    {
-      filename: 'test.js',
-      code: `
         app.component('smart-list', {
           name: 'app',
           data () {
@@ -467,94 +368,6 @@ ruleTester.run('order-in-components', rule, {
           line: 9,
           column: 11,
           endLine: 9,
-          endColumn: 25
-        }
-      ]
-    },
-    {
-      filename: 'test.js',
-      code: `
-        const { component } = Vue;
-        component('smart-list', {
-          name: 'app',
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          components: {},
-          template: '<div></div>'
-        })
-      `,
-      output: `
-        const { component } = Vue;
-        component('smart-list', {
-          name: 'app',
-          components: {},
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          template: '<div></div>'
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 },
-      errors: [
-        {
-          message:
-            'The "components" property should be above the "data" property on line 5.',
-          line: 10,
-          column: 11,
-          endLine: 10,
-          endColumn: 25
-        }
-      ]
-    },
-    {
-      filename: 'test.js',
-      code: `
-        new Vue({
-          name: 'app',
-          el: '#app',
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          components: {},
-          template: '<div></div>'
-        })
-      `,
-      output: `
-        new Vue({
-          el: '#app',
-          name: 'app',
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          components: {},
-          template: '<div></div>'
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 },
-      errors: [
-        {
-          message:
-            'The "el" property should be above the "name" property on line 3.',
-          line: 4,
-          column: 11,
-          endLine: 4,
-          endColumn: 21
-        },
-        {
-          message:
-            'The "components" property should be above the "data" property on line 5.',
-          line: 10,
-          column: 11,
-          endLine: 10,
           endColumn: 25
         }
       ]

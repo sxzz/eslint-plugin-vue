@@ -2,13 +2,13 @@
 pageClass: rule-details
 sidebarDepth: 0
 title: vue/no-deprecated-slot-attribute
-description: disallow deprecated `slot` attribute (in Vue.js 2.6.0+)
+description: disallow deprecated `slot` attribute
 since: v6.1.0
 ---
 
 # vue/no-deprecated-slot-attribute
 
-> disallow deprecated `slot` attribute (in Vue.js 2.6.0+)
+> disallow deprecated `slot` attribute
 
 - :gear: This rule is included in the following preset configs:
   - `*.configs["flat/essential"]`
@@ -122,7 +122,6 @@ This rule reports deprecated `slot` attribute in Vue.js v2.6.0+.
 
 ## :books: Further Reading
 
-- [API - slot](https://v2.vuejs.org/v2/api/#slot-deprecated)
 - [Web - slot](https://developer.mozilla.org/en-US/docs/Web/API/Element/slot)
 
 ## :rocket: Version

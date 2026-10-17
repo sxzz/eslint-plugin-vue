@@ -234,33 +234,6 @@ tester.run('no-deprecated-delete-set', rule, {
     },
     // from vue
     {
-      filename: 'test.js',
-      code: `
-        app.component('some-comp', {
-          mounted () {
-            Vue.set(obj, key, value)
-            Vue.delete(obj, key)
-          }
-        })
-      `,
-      errors: [
-        {
-          messageId: 'deprecated',
-          line: 4,
-          column: 17,
-          endLine: 4,
-          endColumn: 20
-        },
-        {
-          messageId: 'deprecated',
-          line: 5,
-          column: 17,
-          endLine: 5,
-          endColumn: 23
-        }
-      ]
-    },
-    {
       filename: 'test.vue',
       code: `
         <script>

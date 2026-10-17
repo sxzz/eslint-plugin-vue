@@ -18,20 +18,6 @@ ruleTester.run('sort-keys', rule, {
     {
       filename: 'test.vue',
       code: `
-        const obj = {
-          foo() {
-            Vue.component('my-component', {
-              name: 'app',
-              data() {}
-            })
-          }
-        }
-      `,
-      languageOptions
-    },
-    {
-      filename: 'test.vue',
-      code: `
         export default {
           name: 'app',
           props: {
@@ -97,52 +83,6 @@ ruleTester.run('sort-keys', rule, {
         }
       `,
       languageOptions
-    },
-    {
-      filename: 'test.js',
-      code: `
-        Vue.component('example')
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
-      filename: 'test.js',
-      code: `
-        const { component } = Vue;
-        component('smart-list', {
-          name: 'app',
-          components: {},
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          }
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
-      filename: 'test.js',
-      code: `
-        new Vue({
-          el: '#app',
-          name: 'app',
-          components: {},
-          data () {
-            return {
-              msg: 'Welcome to Your Vue.js App'
-            }
-          }
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 }
-    },
-    {
-      filename: 'test.js',
-      code: `
-        new Vue()
-      `,
-      languageOptions: { ecmaVersion: 6 }
     },
     // default (asc)
     {
@@ -2213,117 +2153,6 @@ ruleTester.run('sort-keys', rule, {
       ]
     },
     {
-      filename: 'test.js',
-      code: `
-        const dict = { zd: 1, a: 2 };
-        new Vue({
-          name: 'app',
-          el: '#app',
-          data () {
-            return {
-              z: 2,
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          components: {},
-          template: '<div></div>'
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 },
-      errors: [
-        {
-          message:
-            "Expected object keys to be in ascending order. 'a' should be before 'zd'.",
-          line: 2,
-          column: 31,
-          endLine: 2,
-          endColumn: 32
-        },
-        {
-          message:
-            "Expected object keys to be in ascending order. 'msg' should be before 'z'.",
-          line: 9,
-          column: 15,
-          endLine: 9,
-          endColumn: 18
-        }
-      ]
-    },
-    {
-      filename: 'test.js',
-      code: `
-        const dict = { zd: 1, a: 2 };
-
-        Vue.component('smart-list', {
-          name: 'app',
-          data () {
-            return {
-              z: 2,
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          components: {},
-          template: '<div></div>'
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 },
-      errors: [
-        {
-          message:
-            "Expected object keys to be in ascending order. 'a' should be before 'zd'.",
-          line: 2,
-          column: 31,
-          endLine: 2,
-          endColumn: 32
-        },
-        {
-          message:
-            "Expected object keys to be in ascending order. 'msg' should be before 'z'.",
-          line: 9,
-          column: 15,
-          endLine: 9,
-          endColumn: 18
-        }
-      ]
-    },
-    {
-      filename: 'test.js',
-      code: `
-        const dict = { zd: 1, a: 2 };
-        const { component } = Vue;
-        component('smart-list', {
-          name: 'app',
-          data () {
-            return {
-              z: 2,
-              msg: 'Welcome to Your Vue.js App'
-            }
-          },
-          components: {},
-          template: '<div></div>'
-        })
-      `,
-      languageOptions: { ecmaVersion: 6 },
-      errors: [
-        {
-          message:
-            "Expected object keys to be in ascending order. 'a' should be before 'zd'.",
-          line: 2,
-          column: 31,
-          endLine: 2,
-          endColumn: 32
-        },
-        {
-          message:
-            "Expected object keys to be in ascending order. 'msg' should be before 'z'.",
-          line: 9,
-          column: 15,
-          endLine: 9,
-          endColumn: 18
-        }
-      ]
-    },
-    {
       filename: 'propsOrder.vue',
       code: `
         export default {
@@ -2346,40 +2175,6 @@ ruleTester.run('sort-keys', rule, {
           column: 15,
           endLine: 7,
           endColumn: 22
-        }
-      ]
-    },
-    {
-      filename: 'propsOrder.vue',
-      code: `
-        const obj = {
-          z: 1,
-          foo() {
-            Vue.component('my-component', {
-              name: 'app',
-              data: {}
-            })
-          },
-          a: 2
-        }
-      `,
-      languageOptions,
-      errors: [
-        {
-          message:
-            "Expected object keys to be in ascending order. 'foo' should be before 'z'.",
-          line: 4,
-          column: 11,
-          endLine: 4,
-          endColumn: 14
-        },
-        {
-          message:
-            "Expected object keys to be in ascending order. 'a' should be before 'foo'.",
-          line: 10,
-          column: 11,
-          endLine: 10,
-          endColumn: 12
         }
       ]
     },

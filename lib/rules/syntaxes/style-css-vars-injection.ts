@@ -5,7 +5,7 @@
 import { getStyleVariablesContext } from '../../utils/style-variables/index.ts'
 
 export default {
-  supported: '>=3.0.3 || >=2.7.0 <3.0.0',
+  supported: '>=3.0.3',
   createScriptVisitor(context: RuleContext): TemplateListener {
     const styleVars = getStyleVariablesContext(context)
     if (!styleVars) {

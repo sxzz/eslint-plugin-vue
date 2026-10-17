@@ -26,7 +26,8 @@ tester.run('no-reserved-props', rule, {
         }
       }
       </script>
-      `
+      `,
+      options: [{ vueVersion: 3 }]
     },
     {
       filename: 'test.vue',
@@ -121,39 +122,6 @@ tester.run('no-reserved-props', rule, {
       }
       </script>
       `,
-      errors: [
-        {
-          message: "'ref' is a reserved attribute and cannot be used as props.",
-          line: 5,
-          column: 11,
-          endLine: 5,
-          endColumn: 22
-        },
-        {
-          message: "'key' is a reserved attribute and cannot be used as props.",
-          line: 6,
-          column: 11,
-          endLine: 6,
-          endColumn: 22
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script>
-      export default {
-        props: {
-          ref: String,
-          key: String,
-          is: String,
-          slot: String,
-          "slot-scope": String,
-        }
-      }
-      </script>
-      `,
-      options: [{ vueVersion: 3 }],
       errors: [
         {
           message: "'ref' is a reserved attribute and cannot be used as props.",
@@ -300,159 +268,6 @@ tester.run('no-reserved-props', rule, {
           column: 9,
           endLine: 5,
           endColumn: 21
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script>
-      export default {
-        props: {
-          ref: String,
-          key: String,
-          is: String,
-          slot: String,
-          "slot-scope": String,
-        }
-      }
-      </script>
-      `,
-      options: [{ vueVersion: 2 }],
-      errors: [
-        {
-          message: "'ref' is a reserved attribute and cannot be used as props.",
-          line: 5,
-          column: 11,
-          endLine: 5,
-          endColumn: 22
-        },
-        {
-          message: "'key' is a reserved attribute and cannot be used as props.",
-          line: 6,
-          column: 11,
-          endLine: 6,
-          endColumn: 22
-        },
-        {
-          message: "'is' is a reserved attribute and cannot be used as props.",
-          line: 7,
-          column: 11,
-          endLine: 7,
-          endColumn: 21
-        },
-        {
-          message:
-            "'slot' is a reserved attribute and cannot be used as props.",
-          line: 8,
-          column: 11,
-          endLine: 8,
-          endColumn: 23
-        },
-        {
-          message:
-            "'slot-scope' is a reserved attribute and cannot be used as props.",
-          line: 9,
-          column: 11,
-          endLine: 9,
-          endColumn: 31
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script>
-      export default {
-        props: [
-          'ref',
-          'key',
-          'is',
-          'slot',
-          "slot-scope",
-        ]
-      }
-      </script>
-      `,
-      options: [{ vueVersion: 2 }],
-      errors: [
-        {
-          message: "'ref' is a reserved attribute and cannot be used as props.",
-          line: 5,
-          column: 11,
-          endLine: 5,
-          endColumn: 16
-        },
-        {
-          message: "'key' is a reserved attribute and cannot be used as props.",
-          line: 6,
-          column: 11,
-          endLine: 6,
-          endColumn: 16
-        },
-        {
-          message: "'is' is a reserved attribute and cannot be used as props.",
-          line: 7,
-          column: 11,
-          endLine: 7,
-          endColumn: 15
-        },
-        {
-          message:
-            "'slot' is a reserved attribute and cannot be used as props.",
-          line: 8,
-          column: 11,
-          endLine: 8,
-          endColumn: 17
-        },
-        {
-          message:
-            "'slot-scope' is a reserved attribute and cannot be used as props.",
-          line: 9,
-          column: 11,
-          endLine: 9,
-          endColumn: 23
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `
-      <script>
-      export default {
-        props: [
-          "slotScope",
-          'class',
-          \`style\`
-        ]
-      }
-      </script>
-      `,
-      options: [{ vueVersion: 2 }],
-      errors: [
-        {
-          message:
-            "'slot-scope' is a reserved attribute and cannot be used as props.",
-          line: 5,
-          column: 11,
-          endLine: 5,
-          endColumn: 22
-        },
-        {
-          message:
-            "'class' is a reserved attribute and cannot be used as props.",
-          line: 6,
-          column: 11,
-          endLine: 6,
-          endColumn: 18
-        },
-        {
-          message:
-            "'style' is a reserved attribute and cannot be used as props.",
-          line: 7,
-          column: 11,
-          endLine: 7,
-          endColumn: 18
         }
       ]
     }

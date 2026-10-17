@@ -1543,156 +1543,6 @@ tester.run('no-unused-properties', rule, {
     },
 
     // render & functional
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('smart-list', {
-        functional: true,
-        props: {
-          items: {
-            type: Array,
-            required: true
-          },
-          isOrdered: Boolean
-        },
-        render: function (createElement, context) {
-          function appropriateListComponent () {
-            var items = context.props.items
-
-            if (items.length === 0)           return EmptyList
-            if (typeof items[0] === 'object') return TableList
-            if (context.props.isOrdered)      return OrderedList
-
-            return UnorderedList
-          }
-
-          return createElement(
-            appropriateListComponent(),
-            context.data,
-            context.children
-          )
-        }
-      })
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo'],
-        render: function (createElement, {props}) {
-          return createElement('button', props.foo)
-        }
-      })
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo'],
-        render: function (createElement, ctx) {
-          return createElement('button', fn(ctx.props))
-        }
-      })
-
-      function fn(props) {
-        return props.foo
-      }
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo'],
-        render: function (createElement, ctx) {
-          return createElement('button', fn(ctx))
-        }
-      })
-
-      function fn({props}) {
-        return props.foo
-      }
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo'],
-        render: function (createElement, {props:{foo}}) {
-          return createElement('button', foo)
-        }
-      })
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo'],
-        render: function (createElement, {props:[bar]}) {
-          return createElement('button')
-        }
-      })
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo'],
-        render: function (createElement, {props:bar={}}) {
-          return createElement('button', bar.foo)
-        }
-      })
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo'],
-        render: function (createElement, {...foo}) {
-          return createElement('button')
-        }
-      })
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo', 'bar'],
-        render: function (createElement, ctx) {
-          const a = ctx.props
-          const b = ctx.props
-          return createElement('button', a.foo + b.bar)
-        }
-      })
-      `
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo', 'bar'],
-        render: function (createElement, {props: a, props: b}) {
-          return createElement('button', a.foo + b.bar)
-        }
-      })
-      `
-    },
     // render for Vue 3.x
     {
       filename: 'test.vue',
@@ -1791,20 +1641,6 @@ tester.run('no-unused-properties', rule, {
           return a?.foo + a?.bar
         }
       </script>`
-    },
-    {
-      filename: 'test.js',
-      code: `
-      Vue.component('MyButton', {
-        functional: true,
-        props: ['foo', 'bar'],
-        render: function (createElement, ctx) {
-          const a = ctx
-          const b = a?.props?.foo
-          const c = (a?.props)?.bar
-        }
-      })
-      `
     },
     // handlers
     {
@@ -2450,23 +2286,6 @@ tester.run('no-unused-properties', rule, {
       }
     },
 
-    // Vue2 functional component
-    {
-      filename: 'test.vue',
-      code: `
-      <template functional>
-        <div>{{props.a}} {{props.b}}</div>
-      </template>
-
-      <script>
-      export default {
-        props: {
-          a: String,
-          b: String,
-        },
-      };
-      </script>`
-    },
     {
       // defineModel
       filename: 'test.vue',
@@ -5139,40 +4958,6 @@ tester.run('no-unused-properties', rule, {
           column: 17,
           endLine: 13,
           endColumn: 20
-        }
-      ]
-    },
-
-    // Vue2 functional component
-    {
-      filename: 'test.vue',
-      code: `
-      <template functional>
-        <div>{{a}} {{b}} {{props.c}}</div>
-      </template>
-
-      <script>
-      export default {
-        props: {
-          a: String,
-          b: String,
-        },
-      };
-      </script>`,
-      errors: [
-        {
-          message: "'a' of property found, but never used.",
-          line: 9,
-          column: 11,
-          endLine: 9,
-          endColumn: 12
-        },
-        {
-          message: "'b' of property found, but never used.",
-          line: 10,
-          column: 11,
-          endLine: 10,
-          endColumn: 12
         }
       ]
     },
