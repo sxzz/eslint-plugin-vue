@@ -12,7 +12,6 @@ jobs:
     if: github.repository == 'sxzz/eslint-plugin-vuekit'
     uses: sxzz/workflows/.github/workflows/release.yml@main
     with:
-      build: pnpm run build
       publish: true
       stage: true
     permissions:
