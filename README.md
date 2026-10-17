@@ -1,15 +1,17 @@
-# eslint-plugin-vue
+# eslint-plugin-v
 
-[![NPM version](https://img.shields.io/npm/v/eslint-plugin-vue.svg?style=flat)](https://npmjs.org/package/eslint-plugin-vue)
-[![NPM downloads](https://img.shields.io/npm/dm/eslint-plugin-vue.svg?style=flat)](https://npmjs.org/package/eslint-plugin-vue)
+[![NPM version](https://img.shields.io/npm/v/eslint-plugin-v.svg?style=flat)](https://npmjs.org/package/eslint-plugin-v)
+[![NPM downloads](https://img.shields.io/npm/dm/eslint-plugin-v.svg?style=flat)](https://npmjs.org/package/eslint-plugin-v)
 [![CI](https://img.shields.io/github/actions/workflow/status/sxzz/eslint-plugin-vue/CI.yml?style=flat&label=CI)](https://github.com/sxzz/eslint-plugin-vue/actions/workflows/CI.yml)
 [![License](https://img.shields.io/github/license/sxzz/eslint-plugin-vue.svg?style=flat)](https://github.com/sxzz/eslint-plugin-vue/blob/main/LICENSE)
 
-> Official ESLint plugin for Vue.js
+> Modern ESLint plugin for Vue 3
+
+A fork of [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue), with ESLint 10+, flat config, and ESM support.
 
 ## :book: Documentation
 
-Please refer to the [official website](https://eslint.vuejs.org).
+Please refer to the [upstream documentation](https://eslint.vuejs.org).
 
 ## :anchor: Versioning Policy
 

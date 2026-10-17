@@ -10,6 +10,9 @@
     "jsonc",
     "markdown"
   ],
+  "eslint.options": {
+    "flags": ["unstable_native_nodejs_ts_config"]
+  },
   "files.readonlyInclude": {
     "dist/**": true,
     "docs/rules/index.md": true,

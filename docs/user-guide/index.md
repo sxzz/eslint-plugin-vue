@@ -5,13 +5,13 @@
 Via [npm](https://www.npmjs.com/):
 
 ```bash
-npm install --save-dev eslint eslint-plugin-vue
+npm install --save-dev eslint eslint-plugin-v
 ```
 
 Via [yarn](https://yarnpkg.com/):
 
 ```bash
-yarn add -D eslint eslint-plugin-vue vue-eslint-parser globals
+yarn add -D eslint eslint-plugin-v vue-eslint-parser globals
 ```
 
 ::: tip Requirements
@@ -30,7 +30,7 @@ Use `eslint.config.js` to configure rules. See also: <https://eslint.org/docs/la
 Example **eslint.config.js**:
 
 ```js
-import pluginVue from 'eslint-plugin-vue'
+import pluginVue from 'eslint-plugin-v'
 import globals from 'globals'
 
 export default [
@@ -80,7 +80,7 @@ Apart from the entries that this plugin restricts to `.vue` files, the configs a
 
 ```js [eslint.config.js]
 import { defineConfig } from 'eslint/config'
-import pluginVue from 'eslint-plugin-vue'
+import pluginVue from 'eslint-plugin-v'
 import tsParser from '@typescript-eslint/parser'
 
 export default defineConfig([
@@ -148,11 +148,11 @@ export default [
 `@vue/eslint-config-typescript` is the Vue team's config for Vue 3 + TypeScript projects and the one `create-vue` sets up. It applies the typescript-eslint configs to `.vue` files too and takes care of the parser setup:
 
 ```bash
-npm install --save-dev eslint eslint-plugin-vue @vue/eslint-config-typescript typescript
+npm install --save-dev eslint eslint-plugin-v @vue/eslint-config-typescript typescript
 ```
 
 ```js
-import eslintPluginVue from 'eslint-plugin-vue'
+import eslintPluginVue from 'eslint-plugin-v'
 import { withVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 
 export default withVueTs(
@@ -166,13 +166,13 @@ Its [README](https://github.com/vuejs/eslint-config-typescript#readme) covers ty
 #### Example configuration with [typescript-eslint](https://typescript-eslint.io/) and [Prettier](https://prettier.io/)
 
 ```bash
-npm install --save-dev eslint eslint-config-prettier eslint-plugin-vue globals typescript-eslint
+npm install --save-dev eslint eslint-config-prettier eslint-plugin-v globals typescript-eslint
 ```
 
 ```ts
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginVue from 'eslint-plugin-vue';
+import eslintPluginVue from 'eslint-plugin-v';
 import globals from 'globals';
 import typescriptEslint from 'typescript-eslint';
 
@@ -223,7 +223,7 @@ Full example:
 
 ```js [eslint.config.js]
 import js from '@eslint/js'
-import eslintPluginVue from 'eslint-plugin-vue'
+import eslintPluginVue from 'eslint-plugin-v'
 import ts from 'typescript-eslint'
 
 export default ts.config(
@@ -312,7 +312,7 @@ If you want to disallow `eslint-disable` functionality in `<template>`, disable 
 This plugin uses [vue-eslint-parser]. Set its `vueFeatures` options in `languageOptions.parserOptions` for `.vue` files:
 
 ```js
-import pluginVue from 'eslint-plugin-vue'
+import pluginVue from 'eslint-plugin-v'
 
 export default [
   ...pluginVue.configs.recommended,
@@ -387,7 +387,7 @@ read more: [JetBrains - ESLint](https://www.jetbrains.com/help/idea/eslint.html)
 
 ### What is the "Use the latest vue-eslint-parser" error?
 
-Most `eslint-plugin-vue` rules require [vue-eslint-parser] to check `<template>` ASTs.
+Most `eslint-plugin-v` rules require [vue-eslint-parser] to check `<template>` ASTs.
 
 Include `...pluginVue.configs.recommended` (or `...pluginVue.configs.base`) in your `eslint.config.js` so `.vue` files use [vue-eslint-parser]. If you use another parser, set it in `languageOptions.parserOptions.parser` for `.vue` files, as shown in [How to use a custom parser?](#how-to-use-a-custom-parser).
 
@@ -395,7 +395,7 @@ See also: "[How to use a custom parser?](#how-to-use-a-custom-parser)" section.
 
 ### Why doesn't it work on .vue files?
 
-1. Make sure you don't have `eslint-plugin-html` in your config. The `eslint-plugin-html` extracts the content from `<script>` tags, but `eslint-plugin-vue` requires `<script>` tags and `<template>` tags in order to distinguish template and script in single file components.
+1. Make sure you don't have `eslint-plugin-html` in your config. The `eslint-plugin-html` extracts the content from `<script>` tags, but `eslint-plugin-v` requires `<script>` tags and `<template>` tags in order to distinguish template and script in single file components.
 
   ```diff
     "plugins": [
@@ -406,7 +406,7 @@ See also: "[How to use a custom parser?](#how-to-use-a-custom-parser)" section.
 
 1. Make sure your tool is set to lint `.vue` files.
 
-    - Make sure you are using the shareable config provided by `eslint-plugin-vue`.
+    - Make sure you are using the shareable config provided by `eslint-plugin-v`.
     - If you are having issues with configuring editor, please read [editor integrations](#editor-integrations)
 
 ### Conflict with [Prettier]
@@ -417,7 +417,7 @@ Example **eslint.config.js**:
 
 ```js
 import eslintConfigPrettier from 'eslint-config-prettier'
-import pluginVue from 'eslint-plugin-vue'
+import pluginVue from 'eslint-plugin-v'
 
 export default [
   ...pluginVue.configs.recommended,

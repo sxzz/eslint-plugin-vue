@@ -25,7 +25,7 @@ about: Create a report to help us improve
 **Tell us about your environment**
 
 - **ESLint version:** 
-- **eslint-plugin-vue version:** 
+- **eslint-plugin-v version:**
 - **Vue version:** 
 - **Node version:** 
 - **Operating System:** 

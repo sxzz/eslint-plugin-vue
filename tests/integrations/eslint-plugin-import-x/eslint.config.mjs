@@ -1,6 +1,6 @@
 import vueEslintParser from 'vue-eslint-parser'
 import { importX } from 'eslint-plugin-import-x'
-import eslintPluginVue from 'eslint-plugin-vue'
+import eslintPluginVue from 'eslint-plugin-v'
 
 export default [
   {

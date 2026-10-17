@@ -12,7 +12,7 @@ Please include as much detail as possible to help us properly address your issue
 
 To develop locally, fork the eslint-plugin-vue repository and clone it on your local machine. Use [pnpm](https://pnpm.io/) to install dependencies and the LTS version of [Node.js](https://nodejs.org/).
 
-To develop and test the `eslint-plugin-vue` package:
+To develop and test the `eslint-plugin-v` package:
 
 1. Run `pnpm install` in the project's root folder.
 2. Run `pnpm build && pnpm test` to make sure everything is set up correctly.

@@ -103,8 +103,8 @@ export default async () => {
   }
   return defineConfig({
     base: '/',
-    title: 'eslint-plugin-vue',
-    description: 'Official ESLint plugin for Vue.js',
+    title: 'eslint-plugin-v',
+    description: 'Modern ESLint plugin for Vue 3',
     head: [['link', { rel: 'icon', href: '/favicon.png' }]],
 
     vite: {

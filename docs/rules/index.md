@@ -21,7 +21,7 @@ Mark indicating rule type:
 
 ## Base Rules (Enabling Correct ESLint Parsing)
 
-Rules in this category are enabled for all presets provided by eslint-plugin-vue.
+Rules in this category are enabled for all presets provided by eslint-plugin-v.
 
 <rules-table>
 

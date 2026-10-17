@@ -4,7 +4,7 @@ sidebarDepth: 0
 
 # Introduction
 
-Official ESLint plugin for Vue.js.
+Modern ESLint plugin for Vue 3, forked from [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue).
 
 This plugin allows us to check the `<template>` and `<script>` of `.vue` files with ESLint, as well as Vue code in `.js` files.
 
