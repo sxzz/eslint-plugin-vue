@@ -4,12 +4,12 @@
 import esbuild from 'esbuild'
 import path from 'pathe'
 import fs from 'node:fs'
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
 
 build(
-  path.join(
-    import.meta.dirname,
-    '../../../node_modules/@typescript-eslint/parser/dist/index.js'
-  ),
+  require.resolve('@typescript-eslint/parser'),
   path.join(import.meta.dirname, './shim/@typescript-eslint/parser.mjs'),
   [
     'node:util',
@@ -23,10 +23,7 @@ build(
 )
 
 build(
-  path.join(
-    import.meta.dirname,
-    '../../../node_modules/vue-eslint-parser/dist/index.cjs'
-  ),
+  require.resolve('vue-eslint-parser'),
   path.join(import.meta.dirname, './shim/vue-eslint-parser.mjs'),
   [
     'node:path',

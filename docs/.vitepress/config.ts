@@ -1,11 +1,11 @@
 import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import path from 'pathe'
-import { viteCommonjs, vitePluginRequireResolve } from './vite-plugin.mjs'
+import { viteCommonjs, vitePluginRequireResolve } from './vite-plugin.ts'
 import eslint4b, { requireESLintUseAtYourOwnRisk4b } from 'vite-plugin-eslint4b'
 
 // Pre-build cjs packages that cannot be bundled well.
-import './build-system/build.mjs'
+import './build-system/build.ts'
 
 // eslint-disable-next-line unicorn/no-anonymous-default-export
 export default async () => {
